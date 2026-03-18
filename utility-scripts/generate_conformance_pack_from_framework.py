@@ -6,6 +6,7 @@ conformance pack template.
 """
 
 import argparse
+import os
 import re
 import sys
 from collections import OrderedDict
@@ -207,7 +208,7 @@ def main():
     )
     parser.add_argument(
         "-o", "--output",
-        help="Output file path (default: <framework_name>.yaml)",
+        help="Output file path (default: audit-manager-framework-templates/<framework_id>.yaml)",
         default=None
     )
     parser.add_argument(
@@ -239,8 +240,9 @@ def main():
         else:
             output_file = args.output
             if not output_file:
-                sanitized_name = sanitize_framework_name(framework_name)
-                output_file = f"{sanitized_name}.yaml"
+                output_dir = "audit-manager-framework-templates"
+                os.makedirs(output_dir, exist_ok=True)
+                output_file = os.path.join(output_dir, f"{args.framework_id}.yaml")
 
             with open(output_file, "w", encoding="utf-8") as f:
                 f.write(yaml_content)
