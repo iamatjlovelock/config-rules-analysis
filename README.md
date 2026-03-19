@@ -321,6 +321,31 @@ python utility-scripts/generate_template_compliance_report.py <framework.json> -
 
 ### Standalone Utility Scripts
 
+#### generate_index_page.py
+
+Generate an HTML index page listing all frameworks from Frameworks.xlsx with links to their summary reports.
+
+```bash
+# Generate index page (default location: compliance-dashboards/index.html)
+python utility-scripts/generate_index_page.py
+
+# Custom output path
+python utility-scripts/generate_index_page.py -o custom/path/index.html
+```
+
+**Key Features:**
+- Lists all frameworks from Frameworks.xlsx
+- Links to summary reports in compliance-dashboards/
+- Shows conformance pack template and security standard badges
+- Includes search functionality
+- Displays statistics (total frameworks, with reports, with templates, with standards)
+
+**Output:**
+```
+compliance-dashboards/
+└── index.html    # Main index page linking to all framework reports
+```
+
 #### generate_conformance_pack_from_framework.py
 
 Generate a Conformance Pack YAML template from an AWS Audit Manager framework. This extracts all AWS_Config evidence sources from the framework and creates a deployable conformance pack.
