@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra Rules Report - Health Insurance Portability and Accountability Act (HIPAA) Security Rule: Feb 2003</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .report-header {
+            background: linear-gradient(135deg, #2c5282 0%, #4299e1 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2c5282;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #2c5282;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .rule-entry {
+            border-left: 4px solid #4299e1;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #ebf8ff;
+            border-radius: 0 8px 8px 0;
+        }
+        .rule-entry h3 {
+            margin: 0 0 10px 0;
+            color: #2c5282;
+            font-size: 16px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        }
+        .rule-identifier {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #666;
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .rule-description {
+            color: #4a5568;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .rule-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 10px;
+        }
+        .rule-meta span {
+            margin-right: 15px;
+        }
+        .info-box {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            color: #2c5282;
+            font-size: 16px;
+        }
+        .info-box p {
+            margin: 0;
+            color: #2a4365;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="compliance_report_hipaa-best-practice_summary.html">&larr; Back to Summary Report</a>
+    </nav>
+
+    <div class="report-header">
+        <h1>Extra Rules Report</h1>
+        <div class="meta">
+            <div>Framework: Health Insurance Portability and Accountability Act (HIPAA) Security Rule: Feb 2003</div>
+            <div>Conformance Pack: hipaa-best-practice</div>
+            <div>Generated: 2026-03-12T18:11:10.491769+00:00</div>
+        </div>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Extra Rules in Pack</h3>
+            <div class="value">63</div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h3>What does this report show?</h3>
+        <p>
+            This report lists AWS Config rules that are deployed in the <strong>hipaa-best-practice</strong> conformance pack
+            but are not referenced by the Health Insurance Portability and Accountability Act (HIPAA) Security Rule: Feb 2003 framework.
+            These rules provide additional compliance coverage beyond what the framework requires.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Extra Config Rules (63)</h2>
+
+        <div class="rule-entry">
+            <h3>acm-certificate-expiration-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ACM_CERTIFICATE_EXPIRATION_CHECK">ACM_CERTIFICATE_EXPIRATION_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>alb-waf-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ALB_WAF_ENABLED">ALB_WAF_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS WAF is enabled on Application Load Balancers (ALBs). The rule is NON_COMPLIANT if key: waf.enabled is set to false.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>annual-risk-assessment-performed-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#AWS_CONFIG_PROCESS_CHECK">AWS_CONFIG_PROCESS_CHECK</a></span></div>
+            <div class="rule-description">Perform an annual risk assessment on your organization. Risk assessments can assist in determining the likelihood and impact of identified risks and/or vulnerabilities affecting an organization.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>api-gw-associated-with-waf-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#API_GW_ASSOCIATED_WITH_WAF">API_GW_ASSOCIATED_WITH_WAF</a></span></div>
+            <div class="rule-description">Checks if an Amazon API Gateway API stage is using an AWS WAF web access control list (web ACL). The rule is NON_COMPLIANT if an AWS WAF Web ACL is not used or if a used AWS Web ACL does not match what is listed in the rule parameter.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>api-gw-ssl-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#API_GW_SSL_ENABLED">API_GW_SSL_ENABLED</a></span></div>
+            <div class="rule-description">Checks if a REST API stage uses an SSL certificate. The rule is NON_COMPLIANT if the REST API stage does not have an associated SSL certificate.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>autoscaling-group-elb-healthcheck-required-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#AUTOSCALING_GROUP_ELB_HEALTHCHECK_REQUIRED">AUTOSCALING_GROUP_ELB_HEALTHCHECK_REQUIRED</a></span></div>
+            <div class="rule-description">Checks if your Amazon EC2 Auto Scaling groups that are associated with an Elastic Load Balancer use Elastic Load Balancing health checks. The rule is NON_COMPLIANT if the Amazon EC2 Auto Scaling groups are not using Elastic Load Balancing health checks.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>autoscaling-launch-config-public-ip-disabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#AUTOSCALING_LAUNCH_CONFIG_PUBLIC_IP_DISABLED">AUTOSCALING_LAUNCH_CONFIG_PUBLIC_IP_DISABLED</a></span></div>
+            <div class="rule-description">Detects whether Amazon EC2 Auto Scaling groups have public IP addresses enabled through launch configurations. This rule is NON_COMPLIANT if the launch configuration for an Auto Scaling group has the value of the field AssociatePublicIpAddress set as True.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>backup-recovery-point-manual-deletion-disabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED">BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED</a></span></div>
+            <div class="rule-description">Checks if a backup vault has an attached resource-based policy which prevents deletion of recovery points. The rule is NON_COMPLIANT if the Backup Vault does not have resource-based policies or has policies without a suitable &#x27;Deny&#x27; statement.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>cloud-trail-cloud-watch-logs-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS CloudTrail trails are configured to send logs to CloudWatch logs. The trail is NON_COMPLIANT if the CloudWatchLogsLogGroupArn property of the trail is empty.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>cloud-trail-encryption-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#CLOUD_TRAIL_ENCRYPTION_ENABLED">CLOUD_TRAIL_ENCRYPTION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS CloudTrail is configured to use the server side encryption (SSE) AWS Key Management Service (AWS KMS) encryption. The rule is COMPLIANT if the KmsKeyId is defined.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>cloud-trail-log-file-validation-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS CloudTrail creates a signed digest file with logs. AWS recommends that the file validation must be enabled on all trails. The rule is NON_COMPLIANT if the validation is not enabled.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>codebuild-project-envvar-awscred-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK">CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK</a></span></div>
+            <div class="rule-description">Checks if the project contains environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY. The rule is NON_COMPLIANT when the project environment variables contains plaintext credentials.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>dms-replication-not-public-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#DMS_REPLICATION_NOT_PUBLIC">DMS_REPLICATION_NOT_PUBLIC</a></span></div>
+            <div class="rule-description">Detects whether AWS Database Migration Service replication instances are public. The rule is NON_COMPLIANT if the value of the PubliclyAccessible field is set as True.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>dynamodb-autoscaling-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#DYNAMODB_AUTOSCALING_ENABLED">DYNAMODB_AUTOSCALING_ENABLED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>dynamodb-throughput-limit-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#DYNAMODB_THROUGHPUT_LIMIT_CHECK">DYNAMODB_THROUGHPUT_LIMIT_CHECK</a></span></div>
+            <div class="rule-description">Checks whether provisioned DynamoDB throughput is approaching the maximum limit for your account.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-imdsv2-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EC2_IMDSV2_CHECK">EC2_IMDSV2_CHECK</a></span></div>
+            <div class="rule-description">Checks if your Amazon Elastic Compute Cloud (Amazon EC2) instance metadata version is configured with Instance Metadata Service Version 2 (IMDSv2). The rule is NON_COMPLIANT if the HttpTokens is set to optional.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-instance-managed-by-systems-manager-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EC2_INSTANCE_MANAGED_BY_SSM">EC2_INSTANCE_MANAGED_BY_SSM</a></span></div>
+            <div class="rule-description">Checks if your Amazon EC2 instances are managed by AWS Systems Manager (SSM Agent). The rule is NON_COMPLIANT if the EC2 instance previously associated with an SSM Agent instance inventory becomes unreachable or is not managed by SSM Agent.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-instance-no-public-ip-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EC2_INSTANCE_NO_PUBLIC_IP">EC2_INSTANCE_NO_PUBLIC_IP</a></span></div>
+            <div class="rule-description">Detects whether an Amazon Elastic Compute Cloud (Amazon EC2) instance has an associated public IPv4 address. The rule is NON_COMPLIANT if the public IP field is present in the Amazon EC2 instance configuration item. This guardrail applies only to IPv4 addresses.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-instances-in-vpc-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#INSTANCES_IN_VPC">INSTANCES_IN_VPC</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-managedinstance-association-compliance-status-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK</a></span></div>
+            <div class="rule-description">Checks whether the compliance status of the AWS Systems Manager association compliance is COMPLIANT or NON_COMPLIANT after the association execution on the instance. The rule is compliant if the field status is COMPLIANT.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-managedinstance-patch-compliance-status-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></span></div>
+            <div class="rule-description">Checks if the compliance status of the AWS Systems Manager patch compliance is COMPLIANT or NON_COMPLIANT after the patch installation on the instance. The rule is compliant if the field status is COMPLIANT.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ec2-stopped-instance-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EC2_STOPPED_INSTANCE">EC2_STOPPED_INSTANCE</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ecs-task-definition-user-for-host-mode-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ECS_TASK_DEFINITION_USER_FOR_HOST_MODE_CHECK">ECS_TASK_DEFINITION_USER_FOR_HOST_MODE_CHECK</a></span></div>
+            <div class="rule-description">Checks if Amazon ECS task definitions with host network mode have privileged OR nonroot in the container definition. The rule is NON_COMPLIANT if the latest active revision of a task definition has privileged=false (or is null) AND user=root (or is null).</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elastic-beanstalk-managed-updates-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELASTIC_BEANSTALK_MANAGED_UPDATES_ENABLED">ELASTIC_BEANSTALK_MANAGED_UPDATES_ENABLED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elasticsearch-in-vpc-only-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELASTICSEARCH_IN_VPC_ONLY">ELASTICSEARCH_IN_VPC_ONLY</a></span></div>
+            <div class="rule-description">Detects whether Amazon OpenSearch Service domains are in Amazon Virtual Private Cloud (Amazon VPC). The rule is NON_COMPLIANT if the OpenSearch Service domain endpoint is public.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elasticsearch-logs-to-cloudwatch-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELASTICSEARCH_LOGS_TO_CLOUDWATCH">ELASTICSEARCH_LOGS_TO_CLOUDWATCH</a></span></div>
+            <div class="rule-description">Checks if Amazon OpenSearch Service domains are configured to send logs to Amazon CloudWatch Logs. The rule is COMPLIANT if a log is enabled for an OpenSearch Service domain. The rule is NON_COMPLIANT if logging is not configured.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elasticsearch-node-to-node-encryption-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a></span></div>
+            <div class="rule-description">Check that Amazon OpenSearch Service nodes are encrypted end to end. The rule is NON_COMPLIANT if the node-to-node encryption is not enabled on the domain.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elb-cross-zone-load-balancing-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELB_CROSS_ZONE_LOAD_BALANCING_ENABLED">ELB_CROSS_ZONE_LOAD_BALANCING_ENABLED</a></span></div>
+            <div class="rule-description">Checks if cross-zone load balancing is enabled for Classic Load Balancers. The rule is NON_COMPLIANT if cross-zone load balancing is not enabled for Classic Load Balancers.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elb-deletion-protection-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELB_DELETION_PROTECTION_ENABLED">ELB_DELETION_PROTECTION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if an Elastic Load Balancer has deletion protection enabled. The rule is NON_COMPLIANT if deletion_protection.enabled is false.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>elbv2-acm-certificate-required-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#ELBV2_ACM_CERTIFICATE_REQUIRED">ELBV2_ACM_CERTIFICATE_REQUIRED</a></span></div>
+            <div class="rule-description">Checks if Application Load Balancers and Network Load Balancers are configured to use certificates from Amazon Certificate Manager (ACM). This rule is NON_COMPLIANT if at least 1 load balancer is configured without a certificate from ACM.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>emr-kerberos-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EMR_KERBEROS_ENABLED">EMR_KERBEROS_ENABLED</a></span></div>
+            <div class="rule-description">The rule is NON_COMPLIANT if a security configuration is not attached to the cluster or the security configuration does not satisfy the specified rule parameters.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>emr-master-no-public-ip-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#EMR_MASTER_NO_PUBLIC_IP">EMR_MASTER_NO_PUBLIC_IP</a></span></div>
+            <div class="rule-description">Detects whether any Amazon Elastic MapReduce (EMR) cluster master nodes have public IP addresses. The rule is NON_COMPLIANT if a master node has a public IP. This guardrail checks clusters that are in RUNNING or WAITING state.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>iam-user-unused-credentials-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>internet-gateway-authorized-vpc-only-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</a></span></div>
+            <div class="rule-description">Checks if internet gateways are attached to an authorized virtual private cloud (Amazon VPC). The rule is NON_COMPLIANT if internet gateways are attached to an unauthorized VPC.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>kinesis-stream-encrypted-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#KINESIS_STREAM_ENCRYPTED">KINESIS_STREAM_ENCRYPTED</a></span></div>
+            <div class="rule-description">Checks if Amazon Kinesis streams are encrypted at rest with server-side encryption. The rule is NON_COMPLIANT for a Kinesis stream if &#x27;StreamEncryption&#x27; is not present.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>kms-cmk-not-scheduled-for-deletion-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#KMS_CMK_NOT_SCHEDULED_FOR_DELETION">KMS_CMK_NOT_SCHEDULED_FOR_DELETION</a></span></div>
+            <div class="rule-description">Checks if AWS Key Management Service (AWS KMS) keys are not scheduled for deletion in AWS KMS. The rule is NON_COMPLIANT if KMS keys are scheduled for deletion.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>lambda-function-public-access-prohibited-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED">LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED</a></span></div>
+            <div class="rule-description">Detects whether the AWS Lambda function policy attached to the Lambda resource prohibits public access. The rule is NON_COMPLIANT if the Lambda function policy allows public access.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>no-unrestricted-route-to-igw-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#NO_UNRESTRICTED_ROUTE_TO_IGW">NO_UNRESTRICTED_ROUTE_TO_IGW</a></span></div>
+            <div class="rule-description">Detects whether public routes exist in the route table associated with an Internet Gateway (IGW). The rule is NON_COMPLIANT if a route has a destination CIDR block of &#x27;0.0.0.0/0&#x27; or &#x27;::/0&#x27; or if a destination CIDR block does not match the rule parameter.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>opensearch-https-required-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#OPENSEARCH_HTTPS_REQUIRED">OPENSEARCH_HTTPS_REQUIRED</a></span></div>
+            <div class="rule-description">Checks whether connections to OpenSearch domains are using HTTPS. The rule is NON_COMPLIANT if the Amazon OpenSearch domain &#x27;EnforceHTTPS&#x27; is not &#x27;true&#x27; or is &#x27;true&#x27; and &#x27;TLSSecurityPolicy&#x27; is not in &#x27;tlsPolicies&#x27;.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>opensearch-in-vpc-only-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#OPENSEARCH_IN_VPC_ONLY">OPENSEARCH_IN_VPC_ONLY</a></span></div>
+            <div class="rule-description">Checks if Amazon OpenSearch Service domains are in an Amazon Virtual Private Cloud (VPC). The rule is NON_COMPLIANT if an OpenSearch Service domain endpoint is public.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>opensearch-logs-to-cloudwatch-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#OPENSEARCH_LOGS_TO_CLOUDWATCH">OPENSEARCH_LOGS_TO_CLOUDWATCH</a></span></div>
+            <div class="rule-description">Checks if Amazon OpenSearch Service domains are configured to send logs to Amazon CloudWatch Logs. The rule is NON_COMPLIANT if logging is not configured.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>opensearch-node-to-node-encryption-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a></span></div>
+            <div class="rule-description">Check that Amazon OpenSearch Service nodes are encrypted end to end. The rule is NON_COMPLIANT if the node-to-node encryption is not enabled on the domain</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-automatic-minor-version-upgrade-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_AUTOMATIC_MINOR_VERSION_UPGRADE_ENABLED">RDS_AUTOMATIC_MINOR_VERSION_UPGRADE_ENABLED</a></span></div>
+            <div class="rule-description">Checks if Amazon Relational Database Service (Amazon RDS) database instances are configured for automatic minor version upgrades. The rule is NON_COMPLIANT if the value of &#x27;autoMinorVersionUpgrade&#x27; is false.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-cluster-deletion-protection-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_CLUSTER_DELETION_PROTECTION_ENABLED">RDS_CLUSTER_DELETION_PROTECTION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if an Amazon Relational Database Service (Amazon RDS) cluster has deletion protection enabled. The rule is NON_COMPLIANT if an Amazon RDS cluster does not have deletion protection enabled.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-cluster-multi-az-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_CLUSTER_MULTI_AZ_ENABLED">RDS_CLUSTER_MULTI_AZ_ENABLED</a></span></div>
+            <div class="rule-description">Checks if Multi-Availability Zone (Multi-AZ) replication is enabled on Amazon Aurora and Multi-AZ DB clusters managed by Amazon Relational Database Service (Amazon RDS). The rule is NON_COMPLIANT if an Amazon RDS instance is not configured with Multi-AZ.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-enhanced-monitoring-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_ENHANCED_MONITORING_ENABLED">RDS_ENHANCED_MONITORING_ENABLED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-instance-public-access-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_INSTANCE_PUBLIC_ACCESS_CHECK">RDS_INSTANCE_PUBLIC_ACCESS_CHECK</a></span></div>
+            <div class="rule-description">Secure your Amazon RDS database instances by disallowing public access.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-multi-az-support-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_MULTI_AZ_SUPPORT">RDS_MULTI_AZ_SUPPORT</a></span></div>
+            <div class="rule-description">Checks whether high availability is enabled for your RDS DB instances.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>rds-snapshots-public-prohibited-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RDS_SNAPSHOTS_PUBLIC_PROHIBITED">RDS_SNAPSHOTS_PUBLIC_PROHIBITED</a></span></div>
+            <div class="rule-description">Secure your Amazon RDS database snapshots by disallowing public access.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>redshift-cluster-maintenancesettings-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#REDSHIFT_CLUSTER_MAINTENANCESETTINGS_CHECK">REDSHIFT_CLUSTER_MAINTENANCESETTINGS_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>redshift-cluster-public-access-check-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK">REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK</a></span></div>
+            <div class="rule-description">Detects whether Amazon Redshift clusters are blocked from public access. The rule is NON_COMPLIANT if the publiclyAccessible field is true in the cluster configuration item.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>restricted-common-ports-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#RESTRICTED_INCOMING_TRAFFIC">RESTRICTED_INCOMING_TRAFFIC</a></span></div>
+            <div class="rule-description">Reduces a server&#x27;s exposure to risk by removing unfettered connectivity to remote console services such as RDP.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>s3-bucket-replication-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#S3_BUCKET_REPLICATION_ENABLED">S3_BUCKET_REPLICATION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if S3 buckets have replication rules enabled. The rule is NON_COMPLIANT if an S3 bucket does not have a replication rule or has a replication rule that is not enabled.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>s3-bucket-server-side-encryption-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if S3 buckets have default encryption enabled or have bucket policies that explicitly deny put-object requests without server side encryption using AES-256 or AWS KMS. The rule is NON_COMPLIANT if an S3 bucket is not encrypted by default.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>s3-event-notifications-enabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#S3_EVENT_NOTIFICATIONS_ENABLED">S3_EVENT_NOTIFICATIONS_ENABLED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>sagemaker-notebook-no-direct-internet-access-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS">SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS</a></span></div>
+            <div class="rule-description">Detects whether direct internet access is allowed for an Amazon SageMaker notebook instance. The rule is NON_COMPLIANT if Amazon SageMaker notebook instances allow direct internet access.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>secretsmanager-using-cmk-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#SECRETSMANAGER_USING_CMK">SECRETSMANAGER_USING_CMK</a></span></div>
+            <div class="rule-description">Checks if all secrets in AWS Secrets Manager are encrypted using an AWS Key Management Service (AWS KMS) customer master key (CMK). This rule is NON_COMPLIANT if a secret is encrypted using the default AWS KMS key</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>sns-encrypted-kms-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#SNS_ENCRYPTED_KMS">SNS_ENCRYPTED_KMS</a></span></div>
+            <div class="rule-description">Checks if SNS topics are encrypted with AWS Key Management Service (AWS KMS). The rule is NON_COMPLIANT if an SNS topic is not encrypted with AWS KMS. Optionally, specify the key ARNs, the alias ARNs, the alias name, or the key IDs for the rule to check.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>ssm-document-not-public-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#SSM_DOCUMENT_NOT_PUBLIC">SSM_DOCUMENT_NOT_PUBLIC</a></span></div>
+            <div class="rule-description">Detects whether AWS Systems Manager (SSM) documents owned by the account are public. This rule is NON_COMPLIANT if any documents with owner &#x27;Self&#x27; are public.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>subnet-auto-assign-public-ip-disabled-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#SUBNET_AUTO_ASSIGN_PUBLIC_IP_DISABLED">SUBNET_AUTO_ASSIGN_PUBLIC_IP_DISABLED</a></span></div>
+            <div class="rule-description">Detects whether Amazon Virtual Private Cloud (Amazon VPC) subnets are assigned a public IP address. The rule is COMPLIANT if Amazon VPC does not have subnets that are assigned a public IP address. The rule is NON_COMPLIANT if Amazon VPC has subnets that are assigned a public IP address.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>vpc-default-security-group-closed-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#VPC_DEFAULT_SECURITY_GROUP_CLOSED">VPC_DEFAULT_SECURITY_GROUP_CLOSED</a></span></div>
+            <div class="rule-description">Checks if the default security group of any Amazon Virtual Private Cloud (Amazon VPC) does not allow inbound or outbound traffic. The rule is NON_COMPLIANT if the default security group has one or more inbound or outbound traffic rules.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>vpc-sg-open-only-to-authorized-ports-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+        <div class="rule-entry">
+            <h3>vpc-vpn-2-tunnels-up-conformance-pack-nnnc374ig</h3>
+            <div><span class="rule-identifier"><a href="compliance_report_hipaa-best-practice_control_catalog.html#VPC_VPN_2_TUNNELS_UP">VPC_VPN_2_TUNNELS_UP</a></span></div>
+            <div class="rule-description">Checks if both virtual private network (VPN) tunnels provided by AWS Site-to-Site VPN are in UP status. The rule is NON_COMPLIANT if one or both tunnels are in DOWN status.</div>
+            <div class="rule-meta">
+                <span><strong>Owner:</strong> AWS</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

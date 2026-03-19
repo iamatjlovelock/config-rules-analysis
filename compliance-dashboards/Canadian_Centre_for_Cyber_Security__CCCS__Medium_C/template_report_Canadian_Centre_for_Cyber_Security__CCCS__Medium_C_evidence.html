@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Sources - Canadian Centre for Cyber Security (CCCS) Medium Cloud Control</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+        .evidence-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .evidence-entry:last-child {
+            border-bottom: none;
+        }
+        .evidence-header {
+            margin-bottom: 15px;
+        }
+        .evidence-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .evidence-rule {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #718096;
+        }
+        .evidence-stats {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .evidence-stat {
+            padding: 10px 15px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+        .evidence-stat .label {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+        }
+        .evidence-stat .value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .evidence-stat.compliant .value {
+            color: #22543d;
+        }
+        .evidence-stat.non-compliant .value {
+            color: #c53030;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_summary.html" class="">Summary Report</a> <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_evidence.html" class=" active">Evidence Sources</a> <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>Canadian Centre for Cyber Security (CCCS) Medium Cloud Control</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: No Template Available</div>
+            <div>Generated: 2026-03-18T15:46:28.341484+00:00</div>
+        </div>
+    </div>
+    
+
+    <div class="section">
+        <h2>Evidence Sources (AWS Config Rules)</h2>
+        <p style="color: #718096; margin-bottom: 20px;">
+            119 Config rules mapped from the conformance pack template. This is a template analysis - no deployed conformance pack evaluations are available.
+        </p>
+
+        <div class="evidence-entry" id="ACCESS_KEYS_ROTATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ACCESS_KEYS_ROTATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ACCESS_KEYS_ROTATED">ACCESS_KEYS_ROTATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="API_GW_CACHE_ENABLED_AND_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: API_GW_CACHE_ENABLED_AND_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#API_GW_CACHE_ENABLED_AND_ENCRYPTED">API_GW_CACHE_ENABLED_AND_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="API_GW_SSL_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: API_GW_SSL_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#API_GW_SSL_ENABLED">API_GW_SSL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ATHENA_WORKGROUP_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ATHENA_WORKGROUP_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ATHENA_WORKGROUP_ENCRYPTED_AT_REST">ATHENA_WORKGROUP_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AURORA_MEETS_RESTORE_TIME_TARGET">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AURORA_MEETS_RESTORE_TIME_TARGET</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#AURORA_MEETS_RESTORE_TIME_TARGET">AURORA_MEETS_RESTORE_TIME_TARGET</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="BACKUP_RECOVERY_POINT_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: BACKUP_RECOVERY_POINT_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED">CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_VIEWER_POLICY_HTTPS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_VIEWER_POLICY_HTTPS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDFRONT_VIEWER_POLICY_HTTPS">CLOUDFRONT_VIEWER_POLICY_HTTPS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDTRAIL_SECURITY_TRAIL_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDTRAIL_SECURITY_TRAIL_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDWATCH_ALARM_ACTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDWATCH_ALARM_ACTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDWATCH_ALARM_SETTINGS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDWATCH_ALARM_SETTINGS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDWATCH_LOG_GROUP_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDWATCH_LOG_GROUP_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUDWATCH_LOG_GROUP_ENCRYPTED">CLOUDWATCH_LOG_GROUP_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUD_TRAIL_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUD_TRAIL_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUD_TRAIL_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUD_TRAIL_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CLOUD_TRAIL_ENCRYPTION_ENABLED">CLOUD_TRAIL_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CMK_BACKING_KEY_ROTATION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CMK_BACKING_KEY_ROTATION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CMK_BACKING_KEY_ROTATION_ENABLED">CMK_BACKING_KEY_ROTATION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION">CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED">CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DAX_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DAX_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DAX_ENCRYPTION_ENABLED">DAX_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DAX_TLS_ENDPOINT_ENCRYPTION">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DAX_TLS_ENDPOINT_ENCRYPTION</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DAX_TLS_ENDPOINT_ENCRYPTION">DAX_TLS_ENDPOINT_ENCRYPTION</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DB_INSTANCE_BACKUP_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DB_INSTANCE_BACKUP_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DB_INSTANCE_BACKUP_ENABLED">DB_INSTANCE_BACKUP_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DMS_ENDPOINT_SSL_CONFIGURED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DMS_ENDPOINT_SSL_CONFIGURED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DMS_ENDPOINT_SSL_CONFIGURED">DMS_ENDPOINT_SSL_CONFIGURED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DMS_REDIS_TLS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DMS_REDIS_TLS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DMS_REDIS_TLS_ENABLED">DMS_REDIS_TLS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DMS_REPLICATION_NOT_PUBLIC">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DMS_REPLICATION_NOT_PUBLIC</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DMS_REPLICATION_NOT_PUBLIC">DMS_REPLICATION_NOT_PUBLIC</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DOCDB_CLUSTER_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DOCDB_CLUSTER_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DOCDB_CLUSTER_ENCRYPTED">DOCDB_CLUSTER_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DOCDB_CLUSTER_SNAPSHOT_PUBLIC_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DOCDB_CLUSTER_SNAPSHOT_PUBLIC_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DOCDB_CLUSTER_SNAPSHOT_PUBLIC_PROHIBITED">DOCDB_CLUSTER_SNAPSHOT_PUBLIC_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_IN_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_IN_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DYNAMODB_IN_BACKUP_PLAN">DYNAMODB_IN_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN">DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_TABLE_ENCRYPTED_KMS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_TABLE_ENCRYPTED_KMS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DYNAMODB_TABLE_ENCRYPTED_KMS">DYNAMODB_TABLE_ENCRYPTED_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_TABLE_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_TABLE_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#DYNAMODB_TABLE_ENCRYPTION_ENABLED">DYNAMODB_TABLE_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EBS_MEETS_RESTORE_TIME_TARGET">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EBS_MEETS_RESTORE_TIME_TARGET</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EBS_MEETS_RESTORE_TIME_TARGET">EBS_MEETS_RESTORE_TIME_TARGET</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_EBS_ENCRYPTION_BY_DEFAULT">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_EBS_ENCRYPTION_BY_DEFAULT</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EC2_EBS_ENCRYPTION_BY_DEFAULT">EC2_EBS_ENCRYPTION_BY_DEFAULT</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_MEETS_RESTORE_TIME_TARGET">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_MEETS_RESTORE_TIME_TARGET</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EC2_MEETS_RESTORE_TIME_TARGET">EC2_MEETS_RESTORE_TIME_TARGET</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EFS_ENCRYPTED_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EFS_ENCRYPTED_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EFS_ENCRYPTED_CHECK">EFS_ENCRYPTED_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EKS_CLUSTER_SECRETS_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EKS_CLUSTER_SECRETS_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EKS_CLUSTER_SECRETS_ENCRYPTED">EKS_CLUSTER_SECRETS_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EKS_ENDPOINT_NO_PUBLIC_ACCESS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EKS_ENDPOINT_NO_PUBLIC_ACCESS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EKS_ENDPOINT_NO_PUBLIC_ACCESS">EKS_ENDPOINT_NO_PUBLIC_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EKS_SECRETS_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EKS_SECRETS_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#EKS_SECRETS_ENCRYPTED">EKS_SECRETS_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST">ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT">ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICSEARCH_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICSEARCH_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELASTICSEARCH_ENCRYPTED_AT_REST">ELASTICSEARCH_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELBV2_ACM_CERTIFICATE_REQUIRED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELBV2_ACM_CERTIFICATE_REQUIRED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELBV2_ACM_CERTIFICATE_REQUIRED">ELBV2_ACM_CERTIFICATE_REQUIRED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELB_ACM_CERTIFICATE_REQUIRED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELB_ACM_CERTIFICATE_REQUIRED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELB_ACM_CERTIFICATE_REQUIRED">ELB_ACM_CERTIFICATE_REQUIRED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELB_TLS_HTTPS_LISTENERS_ONLY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELB_TLS_HTTPS_LISTENERS_ONLY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ELB_TLS_HTTPS_LISTENERS_ONLY">ELB_TLS_HTTPS_LISTENERS_ONLY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ENCRYPTED_VOLUMES">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ENCRYPTED_VOLUMES</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ENCRYPTED_VOLUMES">ENCRYPTED_VOLUMES</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FMS_SHIELD_RESOURCE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FMS_SHIELD_RESOURCE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#FMS_SHIELD_RESOURCE_POLICY_CHECK">FMS_SHIELD_RESOURCE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK">FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FSX_MEETS_RESTORE_TIME_TARGET">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FSX_MEETS_RESTORE_TIME_TARGET</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#FSX_MEETS_RESTORE_TIME_TARGET">FSX_MEETS_RESTORE_TIME_TARGET</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="GUARDDUTY_ENABLED_CENTRALIZED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: GUARDDUTY_ENABLED_CENTRALIZED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_CUSTOMER_POLICY_BLOCKED_KMS_ACTIONS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_CUSTOMER_POLICY_BLOCKED_KMS_ACTIONS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_CUSTOMER_POLICY_BLOCKED_KMS_ACTIONS">IAM_CUSTOMER_POLICY_BLOCKED_KMS_ACTIONS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS">IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_PASSWORD_POLICY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_PASSWORD_POLICY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_PASSWORD_POLICY">IAM_PASSWORD_POLICY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_POLICY_BLACKLISTED_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_POLICY_BLACKLISTED_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_ROLE_MANAGED_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_ROLE_MANAGED_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_USER_MFA_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_USER_MFA_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_USER_NO_POLICIES_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_USER_NO_POLICIES_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_USER_UNUSED_CREDENTIALS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_USER_UNUSED_CREDENTIALS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="INCOMING_SSH_DISABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: INCOMING_SSH_DISABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="KINESIS_STREAM_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: KINESIS_STREAM_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#KINESIS_STREAM_ENCRYPTED">KINESIS_STREAM_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="KMS_CMK_NOT_SCHEDULED_FOR_DELETION">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: KMS_CMK_NOT_SCHEDULED_FOR_DELETION</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#KMS_CMK_NOT_SCHEDULED_FOR_DELETION">KMS_CMK_NOT_SCHEDULED_FOR_DELETION</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED">LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MACIE_AUTO_SENSITIVE_DATA_DISCOVERY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MACIE_AUTO_SENSITIVE_DATA_DISCOVERY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#MACIE_AUTO_SENSITIVE_DATA_DISCOVERY_CHECK">MACIE_AUTO_SENSITIVE_DATA_DISCOVERY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MACIE_STATUS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MACIE_STATUS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#MACIE_STATUS_CHECK">MACIE_STATUS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MSK_IN_CLUSTER_NODE_REQUIRE_TLS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MSK_IN_CLUSTER_NODE_REQUIRE_TLS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#MSK_IN_CLUSTER_NODE_REQUIRE_TLS">MSK_IN_CLUSTER_NODE_REQUIRE_TLS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MULTI_REGION_CLOUD_TRAIL_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MULTI_REGION_CLOUD_TRAIL_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NACL_NO_UNRESTRICTED_SSH_RDP">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NACL_NO_UNRESTRICTED_SSH_RDP</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NEPTUNE_CLUSTER_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NEPTUNE_CLUSTER_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#NEPTUNE_CLUSTER_ENCRYPTED">NEPTUNE_CLUSTER_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED">NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_POLICY_RULE_GROUP_ASSOCIATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_POLICY_RULE_GROUP_ASSOCIATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OPENSEARCH_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OPENSEARCH_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#OPENSEARCH_ENCRYPTED_AT_REST">OPENSEARCH_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OPENSEARCH_HTTPS_REQUIRED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OPENSEARCH_HTTPS_REQUIRED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#OPENSEARCH_HTTPS_REQUIRED">OPENSEARCH_HTTPS_REQUIRED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_CLUSTER_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_CLUSTER_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_CLUSTER_ENCRYPTED_AT_REST">RDS_CLUSTER_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_CLUSTER_MULTI_AZ_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_CLUSTER_MULTI_AZ_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_CLUSTER_MULTI_AZ_ENABLED">RDS_CLUSTER_MULTI_AZ_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_INSTANCE_PUBLIC_ACCESS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_INSTANCE_PUBLIC_ACCESS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_INSTANCE_PUBLIC_ACCESS_CHECK">RDS_INSTANCE_PUBLIC_ACCESS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_IN_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_IN_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_IN_BACKUP_PLAN">RDS_IN_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_MEETS_RESTORE_TIME_TARGET">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_MEETS_RESTORE_TIME_TARGET</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_MEETS_RESTORE_TIME_TARGET">RDS_MEETS_RESTORE_TIME_TARGET</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_MULTI_AZ_SUPPORT">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_MULTI_AZ_SUPPORT</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_MULTI_AZ_SUPPORT">RDS_MULTI_AZ_SUPPORT</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_SNAPSHOT_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_SNAPSHOT_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_SNAPSHOT_ENCRYPTED">RDS_SNAPSHOT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_STORAGE_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_STORAGE_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#RDS_STORAGE_ENCRYPTED">RDS_STORAGE_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REDSHIFT_BACKUP_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REDSHIFT_BACKUP_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#REDSHIFT_BACKUP_ENABLED">REDSHIFT_BACKUP_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REDSHIFT_CLUSTER_CONFIGURATION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REDSHIFT_CLUSTER_CONFIGURATION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#REDSHIFT_CLUSTER_CONFIGURATION_CHECK">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REDSHIFT_CLUSTER_KMS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REDSHIFT_CLUSTER_KMS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#REDSHIFT_CLUSTER_KMS_ENABLED">REDSHIFT_CLUSTER_KMS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK">REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REDSHIFT_REQUIRE_TLS_SSL">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REDSHIFT_REQUIRE_TLS_SSL</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#REDSHIFT_REQUIRE_TLS_SSL">REDSHIFT_REQUIRE_TLS_SSL</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REQUIRED_TAGS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REQUIRED_TAGS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#REQUIRED_TAGS">REQUIRED_TAGS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ROOT_ACCOUNT_MFA_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ROOT_ACCOUNT_MFA_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_ACCESS_POINT_PUBLIC_ACCESS_BLOCKS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_ACCESS_POINT_PUBLIC_ACCESS_BLOCKS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_ACCESS_POINT_PUBLIC_ACCESS_BLOCKS">S3_ACCESS_POINT_PUBLIC_ACCESS_BLOCKS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS">S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC">S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED">S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_PUBLIC_READ_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_PUBLIC_READ_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_BUCKET_PUBLIC_READ_PROHIBITED">S3_BUCKET_PUBLIC_READ_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_PUBLIC_WRITE_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_PUBLIC_WRITE_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_BUCKET_PUBLIC_WRITE_PROHIBITED">S3_BUCKET_PUBLIC_WRITE_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_DEFAULT_ENCRYPTION_KMS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_DEFAULT_ENCRYPTION_KMS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_LIFECYCLE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_LIFECYCLE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_LIFECYCLE_POLICY_CHECK">S3_LIFECYCLE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_MEETS_RESTORE_TIME_TARGET">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_MEETS_RESTORE_TIME_TARGET</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_MEETS_RESTORE_TIME_TARGET">S3_MEETS_RESTORE_TIME_TARGET</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_VERSION_LIFECYCLE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_VERSION_LIFECYCLE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#S3_VERSION_LIFECYCLE_POLICY_CHECK">S3_VERSION_LIFECYCLE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED">SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED">SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SECRETSMANAGER_USING_CMK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SECRETSMANAGER_USING_CMK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#SECRETSMANAGER_USING_CMK">SECRETSMANAGER_USING_CMK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SECURITYHUB_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SECURITYHUB_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#SECURITYHUB_ENABLED">SECURITYHUB_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SHIELD_DRT_ACCESS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SHIELD_DRT_ACCESS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#SHIELD_DRT_ACCESS">SHIELD_DRT_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SNS_ENCRYPTED_KMS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SNS_ENCRYPTED_KMS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#SNS_ENCRYPTED_KMS">SNS_ENCRYPTED_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VPC_FLOW_LOGS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VPC_FLOW_LOGS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#VPC_FLOW_LOGS_ENABLED">VPC_FLOW_LOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Canadian_Centre_for_Cyber_Security__CCCS__Medium_C_control_catalog.html#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

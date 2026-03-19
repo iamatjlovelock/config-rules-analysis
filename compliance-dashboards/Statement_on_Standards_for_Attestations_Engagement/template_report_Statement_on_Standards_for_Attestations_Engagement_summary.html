@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Summary - Statement on Standards for Attestations Engagement (SSAE) No. 18, Service Organizations Controls (SOC) Report 2</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Statement_on_Standards_for_Attestations_Engagement_summary.html" class=" active">Summary Report</a> <a href="template_report_Statement_on_Standards_for_Attestations_Engagement_evidence.html" class="">Evidence Sources</a> <a href="template_report_Statement_on_Standards_for_Attestations_Engagement_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>Statement on Standards for Attestations Engagement (SSAE) No. 18, Service Organizations Controls (SOC) Report 2</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: None</div><div>Generated: 2026-03-18T15:50:55.815509+00:00</div>
+        </div>
+    </div>
+    
+
+    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+        <strong style="color: #b45309;">No Conformance Pack Template Available</strong>
+        <p style="color: #92400e; margin: 5px 0 0 0; font-size: 14px;">
+            There is no conformance pack template associated with the <strong>Statement on Standards for Attestations Engagement (SSAE) No. 18, Service Organizations Controls (SOC) Report 2</strong> framework.
+            This report shows the Config rules referenced in the framework. Use the Control Catalog report to see detailed
+            information about each rule. To deploy a conformance pack, you will need to create a custom template or use
+            a related framework's template.
+        </p>
+    </div>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Control Sets</h3>
+            <div class="value">20</div>
+        </div>
+        <div class="card">
+            <h3>Framework Controls</h3>
+            <div class="value">61</div>
+        </div>
+    </div>
+
+    <div class="section" style="padding: 15px 20px; margin-bottom: 20px;">
+        <p style="color: #4a5568; font-size: 14px; margin: 0; line-height: 1.6;">
+            <strong>Config Rules Coverage:</strong> The cards below show the overlap between Config rules in the
+            Audit Manager framework, the Conformance Pack template, and the Security Hub standard.
+            "Intersection" shows framework rules that appear in the template or standard.
+            "Not Covered" shows framework rules that do not appear in either the template or standard.
+        </p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Config Rules in Framework</h3>
+            <div class="value">65</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Template</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Standard</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Not Covered</h3>
+            <div class="value">N/A</div>
+        </div>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="margin: 0 0 10px 0; color: white;">Rules Manifest</h3>
+        <p style="margin: 0 0 15px 0; opacity: 0.9; font-size: 14px;">
+            View the complete inventory of all Config rules, filtered to show rules referenced by this framework,
+            its associated security standard, or conformance pack template.
+        </p>
+        <a href="../../rule-manifest/rule_manifest.html?framework=Statement%20on%20Standards%20for%20Attestations%20Engagement%20%28SSAE%29%20No.%2018%2C%20Service%20Organizations%20Controls%20%28SOC%29%20Report%202" style="display: inline-block; background: white; color: #667eea; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            Open Rules Manifest
+        </a>
+    </div>
+
+    <div class="section">
+        <h2>Framework Controls by Control Set</h2>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Additional Criteria for Processing Integrity</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 7 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PI1.1: The entity obtains or generates, uses, and communicates relevant, quality information regarding the objectives related to processing, including definitions of data processed and product and service specifications, to support the use of products and services. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PI1.2: The entity implements policies and procedures over system inputs, including controls over completeness and accuracy, to result in products, services, and reporting to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PI1.3: The entity implements policies and procedures over system processing to result in products, services, and reporting to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PI1.4: The entity implements policies and procedures to make available or deliver output completely, accurately, and timely in accordance with specifications to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PI1.5: The entity implements policies and procedures to store inputs, items in processing, and outputs completely, accurately, and timely in accordance with system specifications to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_MFA_DELETE_ENABLED">S3_BUCKET_MFA_DELETE_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_LIFECYCLE_POLICY_CHECK">S3_LIFECYCLE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_VERSION_LIFECYCLE_POLICY_CHECK">S3_VERSION_LIFECYCLE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Additional Criterial for Availability</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 2 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>A1.1: The entity maintains, monitors, and evaluates current processing capacity and use of system components (infrastructure, data, and software) to manage capacity demand and to enable the implementation of additional capacity to help meet its objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>A1.2: The entity authorizes, designs, develops or acquires, implements, operates, approves, maintains, and monitors environmental protections, software, data back-up processes, and recovery infrastructure to meet its objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>A1.3: The entity tests recovery plan procedures supporting system recovery to meet its objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Additional Criterial for Confidentiality</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 3 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>C1.1: The entity identifies and maintains confidential information to meet the entity&#x27;s objectives related to confidentiality. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REQUIRED_TAGS">REQUIRED_TAGS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_LIFECYCLE_POLICY_CHECK">S3_LIFECYCLE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_VERSION_LIFECYCLE_POLICY_CHECK">S3_VERSION_LIFECYCLE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>C1.2: The entity disposes of confidential information to meet the entity&#x27;s objectives related to confidentiality. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Change Management</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC8.1: The entity authorizes, designs, develops or acquires, configures, documents, tests, approves, and implements changes to infrastructure, data, software, and procedures to meet its objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Control Activities</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC5.1: COSO Principle 10: The entity selects and develops control activities that contribute to the mitigation of risks to the achievement of objectives to acceptable levels. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC5.2: COSO Principle 11: The entity also selects and develops general control activities over technology to support the achievement of objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC5.3: COSO Principle 12: The entity deploys control activities through policies that establish what is expected and in procedures that put policies into action. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Control Environment</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC1.1: COSO Principle 1: The entity demonstrates a commitment to integrity and ethical values. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC1.2: COSO Principle 2: The board of directors demonstrates independence from management and exercises oversight of the development and performance of internal control. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC1.3: COSO Principle 3: Management establishes, with board oversight, structures, reporting lines, and appropriate authorities and responsibilities in the pursuit of objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC1.4: COSO Principle 4: The entity demonstrates a commitment to attract, develop, and retain competent individuals in alignment with objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC1.5: COSO Principle 5: The entity holds individuals accountable for their internal control responsibilities in the pursuit of objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Information and Communication</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC2.1: COSO Principle 13: The entity obtains or generates and uses relevant, quality information to support the functioning of internal control. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC2.2: COSO Principle 14: The entity internally communicates information, including objectives and responsibilities for internal control, necessary to support the functioning of internal control. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC2.3: COSO Principle 15: The entity communicates with external parties regarding matters affecting the functioning of internal control. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Logical and Physical Access Controls</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 52 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC6.1: The entity implements logical access security software, infrastructure, and architectures over protected information assets to protect them from security events to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CMK_BACKING_KEY_ROTATION_ENABLED">CMK_BACKING_KEY_ROTATION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED">SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED">SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SNS_ENCRYPTED_KMS">SNS_ENCRYPTED_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ECS_CONTAINERS_READONLY_ACCESS">ECS_CONTAINERS_READONLY_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#KMS_CMK_NOT_SCHEDULED_FOR_DELETION">KMS_CMK_NOT_SCHEDULED_FOR_DELETION</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EFS_ENCRYPTED_CHECK">EFS_ENCRYPTED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DYNAMODB_TABLE_ENCRYPTED_KMS">DYNAMODB_TABLE_ENCRYPTED_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DYNAMODB_TABLE_ENCRYPTION_ENABLED">DYNAMODB_TABLE_ENCRYPTION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#RDS_CLUSTER_ENCRYPTED_AT_REST">RDS_CLUSTER_ENCRYPTED_AT_REST</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ECS_CONTAINERS_NONPRIVILEGED">ECS_CONTAINERS_NONPRIVILEGED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_IN_USE">IAM_POLICY_IN_USE</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NEPTUNE_CLUSTER_ENCRYPTED">NEPTUNE_CLUSTER_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#OPENSEARCH_ACCESS_CONTROL_ENABLED">OPENSEARCH_ACCESS_CONTROL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.2: Prior to issuing system credentials and granting system access, the entity registers and authorizes new internal and external users whose access is administered by the entity. For those users whose access is administered by the entity, user system credentials are removed when user access is no longer authorized. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.3: The entity authorizes, modifies, or removes access to data, software, functions, and other protected information assets based on roles, responsibilities, or the system design and changes, giving consideration to the concepts of least privilege and segregation of duties, to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.4: The entity restricts physical access to facilities and protected information assets (for example, data center facilities, back-up media storage, and other sensitive locations) to authorized personnel to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.5: The entity discontinues logical and physical protections over physical assets only after the ability to read or recover data and software from those assets has been diminished and is no longer required to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.6: The entity implements logical access security measures to protect against threats from sources outside its system boundaries. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#API_GW_ASSOCIATED_WITH_WAF">API_GW_ASSOCIATED_WITH_WAF</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#WAFV2_RULEGROUP_LOGGING_ENABLED">WAFV2_RULEGROUP_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#FMS_WEBACL_RESOURCE_POLICY_CHECK">FMS_WEBACL_RESOURCE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#WAF_GLOBAL_RULEGROUP_NOT_EMPTY">WAF_GLOBAL_RULEGROUP_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_MULTI_AZ_ENABLED">NETFW_MULTI_AZ_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#WAFV2_WEBACL_NOT_EMPTY">WAFV2_WEBACL_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK">FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.7: The entity restricts the transmission, movement, and removal of information to authorized internal and external users and processes, and protects it during transmission, movement, or removal to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_ACM_CERTIFICATE_REQUIRED">ELB_ACM_CERTIFICATE_REQUIRED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_VIEWER_POLICY_HTTPS">CLOUDFRONT_VIEWER_POLICY_HTTPS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MSK_IN_CLUSTER_NODE_REQUIRE_TLS">MSK_IN_CLUSTER_NODE_REQUIRE_TLS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK">ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED">CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DAX_TLS_ENDPOINT_ENCRYPTION">DAX_TLS_ENDPOINT_ENCRYPTION</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DMS_ENDPOINT_SSL_CONFIGURED">DMS_ENDPOINT_SSL_CONFIGURED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DMS_REDIS_TLS_ENABLED">DMS_REDIS_TLS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT">ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_TLS_HTTPS_LISTENERS_ONLY">ELB_TLS_HTTPS_LISTENERS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#OPENSEARCH_HTTPS_REQUIRED">OPENSEARCH_HTTPS_REQUIRED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REDSHIFT_REQUIRE_TLS_SSL">REDSHIFT_REQUIRE_TLS_SSL</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC6.8: The entity implements controls to prevent or detect and act upon the introduction of unauthorized or malicious software to meet the entity&#x27;s objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Monitoring Activities</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC4.1: COSO Principle 16: The entity selects, develops, and performs ongoing and/or separate evaluations to ascertain whether the components of internal control are present and functioning. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC4.2: COSO Principle 17: The entity evaluates and communicates internal control deficiencies in a timely manner to those parties responsible for taking corrective action, including senior management and the board of directors, as appropriate. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Access</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P5.1: The entity grants identified and authenticated data subjects the ability to access their stored personal information for review and, upon request, provides physical or electronic copies of that information to data subjects to meet the entity&#x27;s objectives related to privacy. If access is denied, data subjects are informed of the denial and reason for such denial, as required, to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P5.2: The entity corrects, amends, or appends personal information based on information provided by data subjects and communicates such information to third parties, as committed or required, to meet the entity&#x27;s objectives related to privacy. If a request for correction is denied, data subjects are informed of the denial and reason for such denial to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Choice and Consent</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P2.1: The entity communicates choices available regarding the collection, use, retention, disclosure, and disposal of personal information to the data subjects and the consequences, if any, of each choice. Explicit consent for the collection, use, retention, disclosure, and disposal of personal information is obtained from data subjects or other authorized persons, if required. Such consent is obtained only for the intended purpose of the information to meet the entity&#x27;s objectives related to privacy. The entity&#x27;s basis for determining implicit consent for the collection, use, retention, disclosure, and disposal of personal information is documented. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Collection</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P3.1: Personal information is collected consistent with the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P3.2: For information requiring explicit consent, the entity communicates the need for such consent, as well as the consequences of a failure to provide consent for the request for personal information, and obtains the consent prior to the collection of the information to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Disclosure and Notification</h3>
+                <div class="stats">
+                    7 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P6.1: The entity discloses personal information to third parties with the explicit consent of data subjects, and such consent is obtained prior to disclosure to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P6.2: The entity creates and retains a complete, accurate, and timely record of authorized disclosures of personal information to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P6.3: The entity creates and retains a complete, accurate, and timely record of detected or reported unauthorized disclosures (including breaches) of personal information to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P6.4: The entity obtains privacy commitments from vendors and other third parties who have access to personal information to meet the entity&#x27;s objectives related to privacy. The entity assesses those parties compliance on a periodic and as-needed basis and takes corrective action, if necessary. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P6.5: The entity obtains commitments from vendors and other third parties with access to personal information to notify the entity in the event of actual or suspected unauthorized disclosures of personal information. Such notifications are reported to appropriate personnel and acted on in accordance with established incident response procedures to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P6.6: The entity provides notification of breaches and incidents to affected data subjects, regulators, and others to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P6.7: The entity provides data subjects with an accounting of the personal information held and disclosure of the data subjects personal information, upon the data subjects request, to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Monitoring and Enforcement</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P8.1: The entity implements a process for receiving, addressing, resolving, and communicating the resolution of inquiries, complaints, and disputes from data subjects and others and periodically monitors compliance to meet the entity&#x27;s objectives related to privacy. Corrections and other necessary actions related to identified deficiencies are made or taken in a timely manner. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Notice and Communication of Objectives Related to Privacy</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P1.1: The entity provides notice to data subjects about its privacy practices to meet the entity&#x27;s objectives related to privacy. The notice is updated and communicated to data subjects in a timely manner for changes to the entity&#x27;s privacy practices, including changes in the use of personal information, to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Quality</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P7.1: The entity collects and maintains accurate, up-to-date, complete, and relevant personal information to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Privacy Criteria Related to Use, Retention, and Disposal</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 3 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>P4.1: The entity limits the use of personal information to the purposes identified in the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P4.2: The entity retains personal information consistent with the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_LIFECYCLE_POLICY_CHECK">S3_LIFECYCLE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_VERSION_LIFECYCLE_POLICY_CHECK">S3_VERSION_LIFECYCLE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>P4.3: The entity securely disposes of personal information to meet the entity&#x27;s objectives related to privacy. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Risk Assessment</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC3.1: COSO Principle 6: The entity specifies objectives with sufficient clarity to enable the identification and assessment of risks relating to objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC3.2: COSO Principle 7: The entity identifies risks to the achievement of its objectives across the entity and analyzes risks as a basis for determining how the risks should be managed. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC3.3: COSO Principle 8: The entity considers the potential for fraud in assessing risks to the achievement of objectives. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC3.4: COSO Principle 9: The entity identifies and assesses changes that could significantly impact the system of internal control. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Risk Mitigation</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC9.1: The entity identifies, selects, and develops risk mitigation activities for risks arising from potential business disruptions. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC9.2: The entity assesses and manages risks associated with vendors and business partners. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>System Operations</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 5 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>CC7.1: To meet its objectives, the entity uses detection and monitoring procedures to identify (1) changes to configurations that result in the introduction of new vulnerabilities, and (2) susceptibilities to newly discovered vulnerabilities. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ECR_PRIVATE_IMAGE_SCANNING_ENABLED">ECR_PRIVATE_IMAGE_SCANNING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC7.2: The entity monitors system components and the operation of those components for anomalies that are indicative of malicious acts, natural disasters, and errors affecting the entity&#x27;s ability to meet its objectives; anomalies are analyzed to determine whether they represent security events. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SECURITYHUB_ENABLED">SECURITYHUB_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#WAFV2_RULEGROUP_LOGGING_ENABLED">WAFV2_RULEGROUP_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC7.3: The entity evaluates security events to determine whether they could or have resulted in a failure of the entity to meet its objectives (security incidents) and, if so, takes actions to prevent or address such failures. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC7.4: The entity responds to identified security incidents by executing a defined incident response program to understand, contain, remediate, and communicate security incidents, as appropriate. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>CC7.5: The entity identifies, develops, and implements activities to recover from identified security incidents. (SSAE-18-SOC-2-Oct-2023)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

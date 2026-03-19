@@ -1,0 +1,2295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Summary - AWS Foundational Security Best Practices</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_AWS_Foundational_Security_Best_Practices_summary.html" class=" active">Summary Report</a> <a href="template_report_AWS_Foundational_Security_Best_Practices_evidence.html" class="">Evidence Sources</a> <a href="template_report_AWS_Foundational_Security_Best_Practices_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>AWS Foundational Security Best Practices</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: None</div><div>Security Standard: aws-foundational-security-best-practices-v100</div><div>Generated: 2026-03-18T15:50:38.731937+00:00</div>
+        </div>
+    </div>
+    
+
+    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+        <strong style="color: #b45309;">No Conformance Pack Template Available</strong>
+        <p style="color: #92400e; margin: 5px 0 0 0; font-size: 14px;">
+            There is no conformance pack template associated with the <strong>AWS Foundational Security Best Practices</strong> framework.
+            This report shows the Config rules referenced in the framework. Use the Control Catalog report to see detailed
+            information about each rule. To deploy a conformance pack, you will need to create a custom template or use
+            a related framework's template.
+        </p>
+    </div>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Control Sets</h3>
+            <div class="value">31</div>
+        </div>
+        <div class="card">
+            <h3>Framework Controls</h3>
+            <div class="value">146</div>
+        </div>
+    </div>
+
+    <div class="section" style="padding: 15px 20px; margin-bottom: 20px;">
+        <p style="color: #4a5568; font-size: 14px; margin: 0; line-height: 1.6;">
+            <strong>Config Rules Coverage:</strong> The cards below show the overlap between Config rules in the
+            Audit Manager framework, the Conformance Pack template, and the Security Hub standard.
+            "Intersection" shows framework rules that appear in the template or standard.
+            "Not Covered" shows framework rules that do not appear in either the template or standard.
+        </p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Config Rules in Framework</h3>
+            <div class="value">0</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Template</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Standard</h3>
+            <div class="value">0</div>
+        </div>
+        <div class="card">
+            <h3>Not Covered</h3>
+            <div class="value">0</div>
+        </div>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="margin: 0 0 10px 0; color: white;">Rules Manifest</h3>
+        <p style="margin: 0 0 15px 0; opacity: 0.9; font-size: 14px;">
+            View the complete inventory of all Config rules, filtered to show rules referenced by this framework,
+            its associated security standard, or conformance pack template.
+        </p>
+        <a href="../../rule-manifest/rule_manifest.html?framework=AWS%20Foundational%20Security%20Best%20Practices&standard=aws-foundational-security-best-practices-v100" style="display: inline-block; background: white; color: #667eea; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            Open Rules Manifest
+        </a>
+    </div>
+
+    <div class="section" style="text-align: center;">
+        <h3 style="margin-bottom: 10px;">Config Rules Coverage Venn Diagram</h3>
+        <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">
+            Visualization of rule overlap between Framework, Template, and Security Standard.
+            Numbers show unique rules in each region. Click a number to view those rules in the manifest.
+        </p>
+        
+    <svg viewBox="0 0 400 340" style="max-width: 500px; width: 100%;">
+        <defs>
+            <style>
+                .venn-circle { fill-opacity: 0.3; stroke-width: 2; }
+                .venn-framework { fill: #4299e1; stroke: #2b6cb0; }
+                .venn-template { fill: #48bb78; stroke: #276749; }
+                .venn-standard { fill: #9f7aea; stroke: #6b46c1; }
+                .venn-label { font-size: 12px; font-weight: bold; fill: #2d3748; }
+                .venn-count { font-size: 14px; font-weight: bold; fill: #1a202c; }
+                .venn-link { cursor: pointer; }
+                .venn-link:hover { fill: #4c51bf; text-decoration: underline; }
+                .venn-title { font-size: 11px; fill: #4a5568; }
+            </style>
+        </defs>
+
+        <!-- Framework circle (top-left, blue) -->
+        <circle cx="150" cy="130" r="90" class="venn-circle venn-framework"/>
+
+        <!-- Template circle (top-right, green) -->
+        <circle cx="250" cy="130" r="90" class="venn-circle venn-template"/>
+
+        <!-- Standard circle (bottom, purple) -->
+        <circle cx="200" cy="210" r="90" class="venn-circle venn-standard"/>
+
+        <!-- Labels for each region -->
+        <!-- Framework only -->
+        <text x="95" y="110" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Template only -->
+        <text x="305" y="110" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Standard only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=AWS%20Foundational%20Security%20Best%20Practices&standard=aws-foundational-security-best-practices-v100&venn=s" style="text-decoration: none;"><text x="200" y="280" class="venn-count venn-link" text-anchor="middle">209</text></a>
+
+        <!-- Framework & Template (not Standard) -->
+        <text x="200" y="95" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Framework & Standard (not Template) -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=AWS%20Foundational%20Security%20Best%20Practices&standard=aws-foundational-security-best-practices-v100&venn=fs" style="text-decoration: none;"><text x="140" y="195" class="venn-count venn-link" text-anchor="middle">143</text></a>
+
+        <!-- Template & Standard (not Framework) -->
+        <text x="260" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- All three -->
+        <text x="200" y="160" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Circle labels -->
+        <text x="70" y="50" class="venn-label">Framework</text>
+        <text x="70" y="65" class="venn-title">(143 rules)</text>
+
+        <text x="280" y="50" class="venn-label">Template</text>
+        <text x="280" y="65" class="venn-title">(0 rules)</text>
+
+        <text x="200" y="320" class="venn-label" text-anchor="middle">Standard</text>
+        <text x="200" y="335" class="venn-title" text-anchor="middle">(352 rules)</text>
+    </svg>
+    
+    </div>
+
+    <div class="section">
+        <h2>Framework Controls by Control Set</h2>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ACM</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-001: Imported ACM certificates should be renewed after a specified time period (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>APIGateway</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-002: API Gateway REST and HTTP API logging should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-002a: API Gateway REST API stages should be configured to use SSL certificates for backend authentication (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-002b: API Gateway REST API stages should have AWS X-Ray tracing enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-002c: API Gateway should be associated with an AWS WAF web ACL (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-002d: API Gateway REST API cache data should be encrypted at rest (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>AutoScaling</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-003: Auto Scaling groups associated with a load balancer should use load balancer health checks (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-003a: Amazon EC2 instances launched using Auto Scaling group launch configurations should not have Public IP addresses (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-003b: Amazon EC2 Auto Scaling group should cover multiple Availability Zones (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>CloudFront</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-004: CloudFront distributions should have a default root object configured (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-006: CloudFront distributions should require encryption in transit (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-007: CloudFront distributions should have origin failover configured (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-007a: CloudFront distributions should have logging enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-007b: CloudFront distributions should have AWS WAF enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-007c: CloudFront distributions should use custom SSL/TLS certificates (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-007d: CloudFront distributions should use SNI to serve HTTPS requests (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-007e: CloudFront distributions should encrypt traffic to custom origins (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>CloudTrail</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-008: CloudTrail should be enabled and configured with at least one multi-Region trail (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-009: CloudTrail should have encryption at-rest enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-009a: Ensure CloudTrail log file validation is enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-009b: Ensure CloudTrail trails are integrated with Amazon CloudWatch Logs (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>CodeBuild</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-010: CodeBuild GitHub or Bitbucket source repository URLs should use OAuth (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-011: CodeBuild project environment variables should not contain clear text credentials (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-011b: CodeBuild project environments should have a logging configuration (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Config</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-012: AWS Config should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>DMS</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-013: Database Migration Service replication instances should not be public (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Dynamo</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-014: DynamoDB tables should automatically scale capacity with demand (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-015: DynamoDB tables should have point-in-time recovery enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-016: DynamoDB Accelerator (DAX) clusters should be encrypted at rest (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>EC2</h3>
+                <div class="stats">
+                    16 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-017: Amazon EBS snapshots should not be public, determined by the ability to be restorable by anyone (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-018: The VPC default security group should not allow inbound and outbound traffic (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-019: Attached EBS volumes should be encrypted at-rest (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-020: Stopped EC2 instances should be removed after a specified time period (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-021: VPC flow logging should be enabled in all VPCs (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-022: EBS default encryption should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-023: EC2 instances should use IMDSv2 (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-024: EC2 instances should not have a public IP address (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025: Amazon EC2 should be configured to use VPC endpoints (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025a: EC2 subnets should not automatically assign public IP addresses (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025b: Unused network access control lists should be removed (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025c: EC2 instances should not use multiple ENIs (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025d: Security groups should only allow unrestricted incoming traffic for authorized ports (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025e: Security groups should not allow unrestricted access to ports with high risk (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025f: Both VPN tunnels for an AWS Site-to-Site VPN connection should be up (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025g: Network ACLs should not allow ingress from 0.0.0.0/0 to port 22 or port 3389 (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ECR</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-ECR.3: ECR repositories should have at least one lifecycle policy configured (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ECS</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-025.ECS.1: Amazon ECS task definitions should have secure networking modes and user definitions (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-025.ECS.2: Amazon ECS services should not have public IP addresses assigned to them automatically (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>EFS</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-026: Amazon EFS should be configured to encrypt file data at-rest using AWS KMS (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-027: Amazon EFS volumes should be in backup plans (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Elastic Beanstalk</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-027a: Elastic Beanstalk environments should have enhanced health reporting enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-027b: Elastic Beanstalk managed platform updates should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ELB</h3>
+                <div class="stats">
+                    10 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-028: Classic Load Balancer listeners should be configured with HTTPS or TLS termination (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-029: Application load balancers should be configured to drop HTTP headers (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-030: Application and Classic Load Balancers logging should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-031: Application Load Balancer deletion protection should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-031a: Classic Load Balancers should have connection draining enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-032: Application Load Balancer should be configured to redirect all HTTP requests to HTTPS (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-ELB.2: Classic Load Balancers with SSL/HTTPS listeners should use a certificate provided by AWS Certificate Manager (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-ELB.8: Classic Load Balancers with HTTPS/SSL listeners should use a predefined security policy that has strong configuration (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-ELB.9: Classic Load Balancers should have cross-zone load balancing enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-ELB.10: Classic Load Balancers should span multiple Availability Zones (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>EMR</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-033: Amazon EMR cluster master nodes should not have public IP addresses (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ES</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-034: ES domains should have encryption at-rest enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-035: ES Service domains should be in a VPC (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-036: ES domains should encrypt data sent between nodes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-036a: ES domain error logging to CloudWatch Logs should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-036b: ES domains should have audit logging enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-036c: ES domains should have at least three data nodes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-036d: ES domains should be configured with at least three dedicated master nodes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-036e: Connections to ES domains should be encrypted using TLS 1.2 (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>GuardDuty</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-037: GuardDuty should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>IAM</h3>
+                <div class="stats">
+                    9 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-038: IAM policies should not allow full &quot;*&quot; administrative privileges (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-039: IAM users should not have IAM policies attached (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-040: IAM users&#x27; access keys should be rotated every 90 days or less (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-041: IAM root user access key should not exist (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-042: MFA should be enabled for all IAM users that have a console password (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-043: Hardware MFA should be enabled for the root user (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-044: Password policies for IAM users should have strong configurations (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-045.21: IAM customer managed policies that you create should not allow wildcard actions for services (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-045: Unused IAM user credentials should be removed (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>KMS</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-046: IAM customer managed policies should not allow decryption actions on all KMS keys (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-047: IAM principals should not have IAM inline policies that allow decryption actions on all KMS keys (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-048: AWS KMS keys should not be unintentionally deleted (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Lambda</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-049: Lambda functions should prohibit public access by other accounts (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-050: Lambda functions should use latest runtimes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-Lambda.5: VPC Lambda functions should operate in more than one Availability Zone (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Network Firewall</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-NetworkFirewall.6: Stateless network firewall rule group should not be empty (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>OpenSearch</h3>
+                <div class="stats">
+                    7 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-01: OpenSearch domains should have encryption at rest enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-02: OpenSearch should be in a VPC (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-03: [OpenSearch.3] OpenSearch domains should encrypt data sent between nodes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-04: [OpenSearch.4] OpenSearch domains should encrypt data sent between nodes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-05: OpenSearch domains should have audit logging enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-06: OpenSearch domains should have at least three data nodes (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-OpenSearch-08: Connections to OpenSearch domains should be encrypted using TLS 1.2 (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>RDS</h3>
+                <div class="stats">
+                    25 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-051: RDS snapshots should be private (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-052: RDS DB instances should prohibit public access, determined by the Publicly Accessible configuration (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-053: RDS DB instances should have encryption at-rest enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-054: RDS cluster snapshots and database snapshots should be encrypted at rest (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-055: RDS DB instances should be configured with multiple Availability Zones (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-056: Enhanced monitoring should be configured for RDS DB instances and clusters (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-057: RDS clusters should have deletion protection enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-058: RDS DB instances should have deletion protection enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-059: Database logging should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.01a: Amazon RDS instances should have automatic backups enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.15: RDS DB clusters should be configured for multiple Availability Zones (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.16: RDS DB clusters should be configured to copy tags to snapshots (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.17: RDS DB instances should be configured to copy tags to snapshots (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.18: RDS instances should be deployed in a VPC (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.19: An RDS event notifications subscription should be configured for critical cluster events (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.20: An RDS event notifications subscription should be configured for critical database instance events (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.21: An RDS event notifications subscription should be configured for critical database parameter group events (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.22: An RDS event notifications subscription should be configured for critical database security group events (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.23: RDS databases and clusters should not use a database engine default port (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.24: RDS database clusters should use a custom administrator username (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060.RDS.25: RDS database instances should use a custom administrator username (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060: IAM authentication should be configured for RDS instances (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060a: IAM authentication should be configured for RDS clusters (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060b: RDS automatic minor version upgrades should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-060c: Amazon Aurora clusters should have backtracking enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Redshift</h3>
+                <div class="stats">
+                    7 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-061: Amazon Redshift clusters should prohibit public access (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-062: Connections to Amazon Redshift clusters should be encrypted in transit (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-063.4: Amazon Redshift clusters should have audit logging enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-063: Amazon Redshift clusters should have automatic snapshots enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-064: Amazon Redshift should have automatic upgrades to major versions enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-064a: Amazon Redshift clusters should use enhanced VPC routing (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-Redshift.8: Amazon Redshift clusters should not use the default Admin username (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>S3</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-065: S3 Block Public Access setting should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-066: S3 buckets should prohibit public read access (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-067: S3 buckets should prohibit public write access (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-069: S3 buckets should require requests to use Secure Socket Layer (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-070.s3.8: S3 Block Public Access setting should be enabled at the bucket level (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-070.s3.9: S3 bucket server access logging should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-070.s3.12: S3 access control lists (ACLs) should not be used to manage user access to buckets (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-070: Amazon S3 permissions granted to other AWS accounts in bucket policies should be restricted (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SageMaker</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-071: SageMaker notebook instances should not have direct internet access (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SecretsManager</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-075: Secrets Manager secrets should have automatic rotation enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-076: Secrets Manager secrets configured with automatic rotation should rotate successfully (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-076a: Remove unused Secrets Manager secrets (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-076b: Secrets Manager secrets should be rotated within a specified number of days (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SQS</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-077.sqs.1: Amazon SQS queues should be encrypted at rest (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SSM</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-072: All EC2 instances managed by Systems Manager should be compliant with patching requirements (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-073: EC2 instances should be managed by AWS Systems Manager (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-074: Instances managed by Systems Manager should have an association compliance status of COMPLIANT (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>FSBP1-SSM.4: SSM documents should not be public (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>WAF</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>FSBP1-094: AWS WAF Classic global web ACL logging should be enabled (AWS-Foundational-Security-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

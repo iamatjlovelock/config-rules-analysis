@@ -1,0 +1,719 @@
+################################################################################
+#
+#   Conformance Pack:
+#     Payment Card Industry Data Security Standard (PCI DSS) v4.0 - Part 1
+#
+#   This conformance pack was generated from an AWS Audit Manager framework.
+#   Generated at: 2026-03-18 23:49:06 UTC
+#   Total Config rules: 101 (Part 1 of 2)
+#
+################################################################################
+
+Resources:
+  AccessKeysRotated:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: access-keys-rotated
+      Source:
+        Owner: AWS
+        SourceIdentifier: ACCESS_KEYS_ROTATED
+  AcmCertificateExpirationCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: acm-certificate-expiration-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ACM_CERTIFICATE_EXPIRATION_CHECK
+  AcmCertificateRsaCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: acm-certificate-rsa-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ACM_CERTIFICATE_RSA_CHECK
+  AlbWafEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: alb-waf-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ALB_WAF_ENABLED
+  ApiGwv2AccessLogsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: api-gwv2-access-logs-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: API_GWV2_ACCESS_LOGS_ENABLED
+  ApiGwAssociatedWithWaf:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: api-gw-associated-with-waf
+      Source:
+        Owner: AWS
+        SourceIdentifier: API_GW_ASSOCIATED_WITH_WAF
+  ApiGwCacheEnabledAndEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: api-gw-cache-enabled-and-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: API_GW_CACHE_ENABLED_AND_ENCRYPTED
+  ApiGwSslEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: api-gw-ssl-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: API_GW_SSL_ENABLED
+  ApprovedAmisById:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: approved-amis-by-id
+      Source:
+        Owner: AWS
+        SourceIdentifier: APPROVED_AMIS_BY_ID
+  ApprovedAmisByTag:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: approved-amis-by-tag
+      Source:
+        Owner: AWS
+        SourceIdentifier: APPROVED_AMIS_BY_TAG
+  AppsyncAssociatedWithWaf:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: appsync-associated-with-waf
+      Source:
+        Owner: AWS
+        SourceIdentifier: APPSYNC_ASSOCIATED_WITH_WAF
+  AppsyncLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: appsync-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: APPSYNC_LOGGING_ENABLED
+  AthenaWorkgroupEncryptedAtRest:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: athena-workgroup-encrypted-at-rest
+      Source:
+        Owner: AWS
+        SourceIdentifier: ATHENA_WORKGROUP_ENCRYPTED_AT_REST
+  AutoscalingLaunchconfigRequiresImdsv2:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: autoscaling-launchconfig-requires-imdsv2
+      Source:
+        Owner: AWS
+        SourceIdentifier: AUTOSCALING_LAUNCHCONFIG_REQUIRES_IMDSV2
+  BackupRecoveryPointEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: backup-recovery-point-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: BACKUP_RECOVERY_POINT_ENCRYPTED
+  ClbDesyncModeCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: clb-desync-mode-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLB_DESYNC_MODE_CHECK
+  CloudfrontAccesslogsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-accesslogs-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_ACCESSLOGS_ENABLED
+  CloudfrontAssociatedWithWaf:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-associated-with-waf
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_ASSOCIATED_WITH_WAF
+  CloudfrontCustomSslCertificate:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-custom-ssl-certificate
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_CUSTOM_SSL_CERTIFICATE
+  CloudfrontNoDeprecatedSslProtocols:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-no-deprecated-ssl-protocols
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS
+  CloudfrontOriginAccessIdentityEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-origin-access-identity-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_ORIGIN_ACCESS_IDENTITY_ENABLED
+  CloudfrontS3OriginAccessControlEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-s3-origin-access-control-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_S3_ORIGIN_ACCESS_CONTROL_ENABLED
+  CloudfrontSecurityPolicyCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-security-policy-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_SECURITY_POLICY_CHECK
+  CloudfrontTrafficToOriginEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-traffic-to-origin-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED
+  CloudfrontViewerPolicyHttps:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudfront-viewer-policy-https
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDFRONT_VIEWER_POLICY_HTTPS
+  CloudtrailS3DataeventsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudtrail-s3-dataevents-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDTRAIL_S3_DATAEVENTS_ENABLED
+  CloudtrailSecurityTrailEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudtrail-security-trail-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDTRAIL_SECURITY_TRAIL_ENABLED
+  CloudwatchAlarmActionCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudwatch-alarm-action-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDWATCH_ALARM_ACTION_CHECK
+  CloudwatchLogGroupEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloudwatch-log-group-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUDWATCH_LOG_GROUP_ENCRYPTED
+  CloudTrailEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloud-trail-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUD_TRAIL_ENABLED
+  CloudTrailEncryptionEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloud-trail-encryption-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUD_TRAIL_ENCRYPTION_ENABLED
+  CloudTrailLogFileValidationEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cloud-trail-log-file-validation-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED
+  CmkBackingKeyRotationEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: cmk-backing-key-rotation-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CMK_BACKING_KEY_ROTATION_ENABLED
+  CodebuildProjectArtifactEncryption:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: codebuild-project-artifact-encryption
+      Source:
+        Owner: AWS
+        SourceIdentifier: CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION
+  CodebuildProjectEnvironmentPrivilegedCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: codebuild-project-environment-privileged-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: CODEBUILD_PROJECT_ENVIRONMENT_PRIVILEGED_CHECK
+  CodebuildProjectEnvvarAwscredCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: codebuild-project-envvar-awscred-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK
+  CodebuildProjectLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: codebuild-project-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: CODEBUILD_PROJECT_LOGGING_ENABLED
+  CodebuildProjectS3LogsEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: codebuild-project-s3-logs-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED
+  CodebuildProjectSourceRepoUrlCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: codebuild-project-source-repo-url-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: CODEBUILD_PROJECT_SOURCE_REPO_URL_CHECK
+  CustomEventbusPolicyAttached:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: custom-eventbus-policy-attached
+      Source:
+        Owner: AWS
+        SourceIdentifier: CUSTOM_EVENTBUS_POLICY_ATTACHED
+  CustomSchemaRegistryPolicyAttached:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: custom-schema-registry-policy-attached
+      Source:
+        Owner: AWS
+        SourceIdentifier: CUSTOM_SCHEMA_REGISTRY_POLICY_ATTACHED
+  DaxEncryptionEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dax-encryption-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: DAX_ENCRYPTION_ENABLED
+  DaxTlsEndpointEncryption:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dax-tls-endpoint-encryption
+      Source:
+        Owner: AWS
+        SourceIdentifier: DAX_TLS_ENDPOINT_ENCRYPTION
+  DesiredInstanceType:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: desired-instance-type
+      Source:
+        Owner: AWS
+        SourceIdentifier: DESIRED_INSTANCE_TYPE
+  DmsAutoMinorVersionUpgradeCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dms-auto-minor-version-upgrade-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: DMS_AUTO_MINOR_VERSION_UPGRADE_CHECK
+  DmsEndpointSslConfigured:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dms-endpoint-ssl-configured
+      Source:
+        Owner: AWS
+        SourceIdentifier: DMS_ENDPOINT_SSL_CONFIGURED
+  DmsRedisTlsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dms-redis-tls-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: DMS_REDIS_TLS_ENABLED
+  DmsReplicationNotPublic:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dms-replication-not-public
+      Source:
+        Owner: AWS
+        SourceIdentifier: DMS_REPLICATION_NOT_PUBLIC
+  DmsReplicationTaskTargetdbLogging:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dms-replication-task-targetdb-logging
+      Source:
+        Owner: AWS
+        SourceIdentifier: DMS_REPLICATION_TASK_TARGETDB_LOGGING
+  DocdbClusterAuditLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: docdb-cluster-audit-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: DOCDB_CLUSTER_AUDIT_LOGGING_ENABLED
+  DocdbClusterEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: docdb-cluster-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: DOCDB_CLUSTER_ENCRYPTED
+  DocdbClusterSnapshotPublicProhibited:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: docdb-cluster-snapshot-public-prohibited
+      Source:
+        Owner: AWS
+        SourceIdentifier: DOCDB_CLUSTER_SNAPSHOT_PUBLIC_PROHIBITED
+  DynamodbTableEncryptedKms:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dynamodb-table-encrypted-kms
+      Source:
+        Owner: AWS
+        SourceIdentifier: DYNAMODB_TABLE_ENCRYPTED_KMS
+  DynamodbTableEncryptionEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: dynamodb-table-encryption-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: DYNAMODB_TABLE_ENCRYPTION_ENABLED
+  Ec2ClientVpnConnectionLogEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-client-vpn-connection-log-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED
+  Ec2ClientVpnNotAuthorizeAll:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-client-vpn-not-authorize-all
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_CLIENT_VPN_NOT_AUTHORIZE_ALL
+  Ec2EbsEncryptionByDefault:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-ebs-encryption-by-default
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_EBS_ENCRYPTION_BY_DEFAULT
+  Ec2Imdsv2Check:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-imdsv2-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_IMDSV2_CHECK
+  Ec2InstanceDetailedMonitoringEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-instance-detailed-monitoring-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_INSTANCE_DETAILED_MONITORING_ENABLED
+  Ec2LaunchTemplatePublicIpDisabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-launch-template-public-ip-disabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_LAUNCH_TEMPLATE_PUBLIC_IP_DISABLED
+  Ec2ManagedinstanceApplicationsBlacklisted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-managedinstance-applications-blacklisted
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_MANAGEDINSTANCE_APPLICATIONS_BLACKLISTED
+  Ec2ManagedinstanceApplicationsRequired:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-managedinstance-applications-required
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_MANAGEDINSTANCE_APPLICATIONS_REQUIRED
+  Ec2ManagedinstanceAssociationComplianceStatusCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-managedinstance-association-compliance-status-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK
+  Ec2ManagedinstanceInventoryBlacklisted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-managedinstance-inventory-blacklisted
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_MANAGEDINSTANCE_INVENTORY_BLACKLISTED
+  Ec2ManagedinstancePatchComplianceStatusCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-managedinstance-patch-compliance-status-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK
+  Ec2ParavirtualInstanceCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-paravirtual-instance-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_PARAVIRTUAL_INSTANCE_CHECK
+  Ec2SecurityGroupAttachedToEni:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-security-group-attached-to-eni
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_SECURITY_GROUP_ATTACHED_TO_ENI
+  Ec2SecurityGroupAttachedToEniPeriodic:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-security-group-attached-to-eni-periodic
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC
+  Ec2TransitGatewayAutoVpcAttachDisabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ec2-transit-gateway-auto-vpc-attach-disabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED
+  EcrPrivateImageScanningEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecr-private-image-scanning-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECR_PRIVATE_IMAGE_SCANNING_ENABLED
+  EcsContainersNonprivileged:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-containers-nonprivileged
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_CONTAINERS_NONPRIVILEGED
+  EcsContainersReadonlyAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-containers-readonly-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_CONTAINERS_READONLY_ACCESS
+  EcsContainerInsightsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-container-insights-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_CONTAINER_INSIGHTS_ENABLED
+  EcsFargateLatestPlatformVersion:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-fargate-latest-platform-version
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_FARGATE_LATEST_PLATFORM_VERSION
+  EcsNoEnvironmentSecrets:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-no-environment-secrets
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_NO_ENVIRONMENT_SECRETS
+  EcsTaskDefinitionLogConfiguration:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-task-definition-log-configuration
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_TASK_DEFINITION_LOG_CONFIGURATION
+  EcsTaskDefinitionNonrootUser:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-task-definition-nonroot-user
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_TASK_DEFINITION_NONROOT_USER
+  EcsTaskDefinitionPidModeCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ecs-task-definition-pid-mode-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ECS_TASK_DEFINITION_PID_MODE_CHECK
+  EfsAccessPointEnforceRootDirectory:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: efs-access-point-enforce-root-directory
+      Source:
+        Owner: AWS
+        SourceIdentifier: EFS_ACCESS_POINT_ENFORCE_ROOT_DIRECTORY
+  EfsAccessPointEnforceUserIdentity:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: efs-access-point-enforce-user-identity
+      Source:
+        Owner: AWS
+        SourceIdentifier: EFS_ACCESS_POINT_ENFORCE_USER_IDENTITY
+  EfsEncryptedCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: efs-encrypted-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: EFS_ENCRYPTED_CHECK
+  EksClusterLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: eks-cluster-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_CLUSTER_LOGGING_ENABLED
+  EksClusterOldestSupportedVersion:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: eks-cluster-oldest-supported-version
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_CLUSTER_OLDEST_SUPPORTED_VERSION
+  EksClusterSecretsEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: eks-cluster-secrets-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_CLUSTER_SECRETS_ENCRYPTED
+  EksClusterSupportedVersion:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: eks-cluster-supported-version
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_CLUSTER_SUPPORTED_VERSION
+  EksEndpointNoPublicAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: eks-endpoint-no-public-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_ENDPOINT_NO_PUBLIC_ACCESS
+  EksSecretsEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: eks-secrets-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: EKS_SECRETS_ENCRYPTED
+  ElasticacheAutoMinorVersionUpgradeCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elasticache-auto-minor-version-upgrade-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTICACHE_AUTO_MINOR_VERSION_UPGRADE_CHECK
+  ElasticacheReplGrpEncryptedAtRest:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elasticache-repl-grp-encrypted-at-rest
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST
+  ElasticacheReplGrpEncryptedInTransit:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elasticache-repl-grp-encrypted-in-transit
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTICACHE_REPL_GRP_ENCRYPTED_IN_TRANSIT
+  ElasticsearchEncryptedAtRest:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elasticsearch-encrypted-at-rest
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTICSEARCH_ENCRYPTED_AT_REST
+  ElasticsearchInVpcOnly:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elasticsearch-in-vpc-only
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTICSEARCH_IN_VPC_ONLY
+  ElasticsearchNodeToNodeEncryptionCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elasticsearch-node-to-node-encryption-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK
+  ElasticBeanstalkManagedUpdatesEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elastic-beanstalk-managed-updates-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELASTIC_BEANSTALK_MANAGED_UPDATES_ENABLED
+  Elbv2AcmCertificateRequired:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elbv2-acm-certificate-required
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELBV2_ACM_CERTIFICATE_REQUIRED
+  ElbAcmCertificateRequired:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elb-acm-certificate-required
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELB_ACM_CERTIFICATE_REQUIRED
+  ElbCustomSecurityPolicySslCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elb-custom-security-policy-ssl-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK
+  ElbLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elb-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELB_LOGGING_ENABLED
+  ElbPredefinedSecurityPolicySslCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elb-predefined-security-policy-ssl-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK
+  ElbTlsHttpsListenersOnly:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: elb-tls-https-listeners-only
+      Source:
+        Owner: AWS
+        SourceIdentifier: ELB_TLS_HTTPS_LISTENERS_ONLY
+  EmrBlockPublicAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: emr-block-public-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: EMR_BLOCK_PUBLIC_ACCESS

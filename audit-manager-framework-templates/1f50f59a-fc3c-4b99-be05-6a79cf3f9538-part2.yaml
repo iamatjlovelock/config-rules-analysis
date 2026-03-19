@@ -1,0 +1,719 @@
+################################################################################
+#
+#   Conformance Pack:
+#     Payment Card Industry Data Security Standard (PCI DSS) v4.0 - Part 2
+#
+#   This conformance pack was generated from an AWS Audit Manager framework.
+#   Generated at: 2026-03-18 23:49:06 UTC
+#   Total Config rules: 101 (Part 2 of 2)
+#
+################################################################################
+
+Resources:
+  EncryptedVolumes:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: encrypted-volumes
+      Source:
+        Owner: AWS
+        SourceIdentifier: ENCRYPTED_VOLUMES
+  FmsWebaclResourcePolicyCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: fms-webacl-resource-policy-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: FMS_WEBACL_RESOURCE_POLICY_CHECK
+  GuarddutyEnabledCentralized:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: guardduty-enabled-centralized
+      Source:
+        Owner: AWS
+        SourceIdentifier: GUARDDUTY_ENABLED_CENTRALIZED
+  IamCustomerPolicyBlockedKmsActions:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-customer-policy-blocked-kms-actions
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_CUSTOMER_POLICY_BLOCKED_KMS_ACTIONS
+  IamInlinePolicyBlockedKmsActions:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-inline-policy-blocked-kms-actions
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS
+  IamPasswordPolicy:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-password-policy
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_PASSWORD_POLICY
+  IamPolicyBlacklistedCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-policy-blacklisted-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_POLICY_BLACKLISTED_CHECK
+  IamPolicyNoStatementsWithAdminAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-policy-no-statements-with-admin-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS
+  IamPolicyNoStatementsWithFullAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-policy-no-statements-with-full-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS
+  IamRoleManagedPolicyCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-role-managed-policy-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_ROLE_MANAGED_POLICY_CHECK
+  IamUserMfaEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-user-mfa-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_USER_MFA_ENABLED
+  IamUserNoPoliciesCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-user-no-policies-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_USER_NO_POLICIES_CHECK
+  IamUserUnusedCredentialsCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: iam-user-unused-credentials-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: IAM_USER_UNUSED_CREDENTIALS_CHECK
+  IncomingSshDisabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: incoming-ssh-disabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: INCOMING_SSH_DISABLED
+  InternetGatewayAuthorizedVpcOnly:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: internet-gateway-authorized-vpc-only
+      Source:
+        Owner: AWS
+        SourceIdentifier: INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY
+  KinesisStreamEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: kinesis-stream-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: KINESIS_STREAM_ENCRYPTED
+  LambdaFunctionPublicAccessProhibited:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: lambda-function-public-access-prohibited
+      Source:
+        Owner: AWS
+        SourceIdentifier: LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED
+  LambdaFunctionSettingsCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: lambda-function-settings-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: LAMBDA_FUNCTION_SETTINGS_CHECK
+  MfaEnabledForIamConsoleAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: mfa-enabled-for-iam-console-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS
+  MqCloudwatchAuditLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: mq-cloudwatch-audit-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: MQ_CLOUDWATCH_AUDIT_LOGGING_ENABLED
+  MqCloudwatchAuditLogEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: mq-cloudwatch-audit-log-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: MQ_CLOUDWATCH_AUDIT_LOG_ENABLED
+  MskInClusterNodeRequireTls:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: msk-in-cluster-node-require-tls
+      Source:
+        Owner: AWS
+        SourceIdentifier: MSK_IN_CLUSTER_NODE_REQUIRE_TLS
+  NaclNoUnrestrictedSshRdp:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: nacl-no-unrestricted-ssh-rdp
+      Source:
+        Owner: AWS
+        SourceIdentifier: NACL_NO_UNRESTRICTED_SSH_RDP
+  NeptuneClusterEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: neptune-cluster-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: NEPTUNE_CLUSTER_ENCRYPTED
+  NeptuneClusterSnapshotEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: neptune-cluster-snapshot-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED
+  NetfwLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: netfw-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: NETFW_LOGGING_ENABLED
+  NetfwPolicyDefaultActionFragmentPackets:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: netfw-policy-default-action-fragment-packets
+      Source:
+        Owner: AWS
+        SourceIdentifier: NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS
+  NetfwPolicyDefaultActionFullPackets:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: netfw-policy-default-action-full-packets
+      Source:
+        Owner: AWS
+        SourceIdentifier: NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS
+  NetfwStatelessRuleGroupNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: netfw-stateless-rule-group-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: NETFW_STATELESS_RULE_GROUP_NOT_EMPTY
+  NoUnrestrictedRouteToIgw:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: no-unrestricted-route-to-igw
+      Source:
+        Owner: AWS
+        SourceIdentifier: NO_UNRESTRICTED_ROUTE_TO_IGW
+  OpensearchAccessControlEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-access-control-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_ACCESS_CONTROL_ENABLED
+  OpensearchAuditLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-audit-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_AUDIT_LOGGING_ENABLED
+  OpensearchEncryptedAtRest:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-encrypted-at-rest
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_ENCRYPTED_AT_REST
+  OpensearchHttpsRequired:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-https-required
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_HTTPS_REQUIRED
+  OpensearchInVpcOnly:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-in-vpc-only
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_IN_VPC_ONLY
+  OpensearchNodeToNodeEncryptionCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-node-to-node-encryption-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK
+  OpensearchUpdateCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: opensearch-update-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: OPENSEARCH_UPDATE_CHECK
+  RdsAuroraMysqlAuditLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-aurora-mysql-audit-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_AURORA_MYSQL_AUDIT_LOGGING_ENABLED
+  RdsAutomaticMinorVersionUpgradeEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-automatic-minor-version-upgrade-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_AUTOMATIC_MINOR_VERSION_UPGRADE_ENABLED
+  RdsClusterAutoMinorVersionUpgradeEnable:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-cluster-auto-minor-version-upgrade-enable
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_CLUSTER_AUTO_MINOR_VERSION_UPGRADE_ENABLE
+  RdsClusterEncryptedAtRest:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-cluster-encrypted-at-rest
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_CLUSTER_ENCRYPTED_AT_REST
+  RdsClusterIamAuthenticationEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-cluster-iam-authentication-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_CLUSTER_IAM_AUTHENTICATION_ENABLED
+  RdsDbSecurityGroupNotAllowed:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-db-security-group-not-allowed
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_DB_SECURITY_GROUP_NOT_ALLOWED
+  RdsInstanceIamAuthenticationEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-instance-iam-authentication-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_INSTANCE_IAM_AUTHENTICATION_ENABLED
+  RdsInstancePublicAccessCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-instance-public-access-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_INSTANCE_PUBLIC_ACCESS_CHECK
+  RdsLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_LOGGING_ENABLED
+  RdsSnapshotEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-snapshot-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_SNAPSHOT_ENCRYPTED
+  RdsStorageEncrypted:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: rds-storage-encrypted
+      Source:
+        Owner: AWS
+        SourceIdentifier: RDS_STORAGE_ENCRYPTED
+  RedshiftAuditLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: redshift-audit-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: REDSHIFT_AUDIT_LOGGING_ENABLED
+  RedshiftClusterConfigurationCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: redshift-cluster-configuration-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: REDSHIFT_CLUSTER_CONFIGURATION_CHECK
+  RedshiftClusterKmsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: redshift-cluster-kms-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: REDSHIFT_CLUSTER_KMS_ENABLED
+  RedshiftClusterMaintenancesettingsCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: redshift-cluster-maintenancesettings-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: REDSHIFT_CLUSTER_MAINTENANCESETTINGS_CHECK
+  RedshiftClusterPublicAccessCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: redshift-cluster-public-access-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK
+  RedshiftRequireTlsSsl:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: redshift-require-tls-ssl
+      Source:
+        Owner: AWS
+        SourceIdentifier: REDSHIFT_REQUIRE_TLS_SSL
+  RequiredTags:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: required-tags
+      Source:
+        Owner: AWS
+        SourceIdentifier: REQUIRED_TAGS
+  RootAccountHardwareMfaEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: root-account-hardware-mfa-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ROOT_ACCOUNT_HARDWARE_MFA_ENABLED
+  RootAccountMfaEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: root-account-mfa-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ROOT_ACCOUNT_MFA_ENABLED
+  Route53QueryLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: route53-query-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: ROUTE53_QUERY_LOGGING_ENABLED
+  S3AccessPointPublicAccessBlocks:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-access-point-public-access-blocks
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_ACCESS_POINT_PUBLIC_ACCESS_BLOCKS
+  S3AccountLevelPublicAccessBlocks:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-account-level-public-access-blocks
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS
+  S3AccountLevelPublicAccessBlocksPeriodic:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-account-level-public-access-blocks-periodic
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC
+  S3BucketBlacklistedActionsProhibited:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-blacklisted-actions-prohibited
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED
+  S3BucketDefaultLockEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-default-lock-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_DEFAULT_LOCK_ENABLED
+  S3BucketLevelPublicAccessProhibited:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-level-public-access-prohibited
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED
+  S3BucketLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_LOGGING_ENABLED
+  S3BucketPolicyGranteeCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-policy-grantee-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_POLICY_GRANTEE_CHECK
+  S3BucketPolicyNotMorePermissive:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-policy-not-more-permissive
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_POLICY_NOT_MORE_PERMISSIVE
+  S3BucketPublicReadProhibited:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-public-read-prohibited
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_PUBLIC_READ_PROHIBITED
+  S3BucketPublicWriteProhibited:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-public-write-prohibited
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_PUBLIC_WRITE_PROHIBITED
+  S3BucketServerSideEncryptionEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-server-side-encryption-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED
+  S3BucketSslRequestsOnly:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-bucket-ssl-requests-only
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_BUCKET_SSL_REQUESTS_ONLY
+  S3DefaultEncryptionKms:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-default-encryption-kms
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_DEFAULT_ENCRYPTION_KMS
+  S3LifecyclePolicyCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-lifecycle-policy-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_LIFECYCLE_POLICY_CHECK
+  S3VersionLifecyclePolicyCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: s3-version-lifecycle-policy-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: S3_VERSION_LIFECYCLE_POLICY_CHECK
+  SagemakerEndpointConfigurationKmsKeyConfigured:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-endpoint-configuration-kms-key-configured
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED
+  SagemakerNotebookInstanceInsideVpc:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-notebook-instance-inside-vpc
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_NOTEBOOK_INSTANCE_INSIDE_VPC
+  SagemakerNotebookInstanceKmsKeyConfigured:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-notebook-instance-kms-key-configured
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED
+  SagemakerNotebookInstanceRootAccessCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-notebook-instance-root-access-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_NOTEBOOK_INSTANCE_ROOT_ACCESS_CHECK
+  SagemakerNotebookNoDirectInternetAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sagemaker-notebook-no-direct-internet-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS
+  SecretsmanagerRotationEnabledCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: secretsmanager-rotation-enabled-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: SECRETSMANAGER_ROTATION_ENABLED_CHECK
+  SecretsmanagerScheduledRotationSuccessCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: secretsmanager-scheduled-rotation-success-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: SECRETSMANAGER_SCHEDULED_ROTATION_SUCCESS_CHECK
+  SecretsmanagerSecretPeriodicRotation:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: secretsmanager-secret-periodic-rotation
+      Source:
+        Owner: AWS
+        SourceIdentifier: SECRETSMANAGER_SECRET_PERIODIC_ROTATION
+  SecretsmanagerSecretUnused:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: secretsmanager-secret-unused
+      Source:
+        Owner: AWS
+        SourceIdentifier: SECRETSMANAGER_SECRET_UNUSED
+  SecretsmanagerUsingCmk:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: secretsmanager-using-cmk
+      Source:
+        Owner: AWS
+        SourceIdentifier: SECRETSMANAGER_USING_CMK
+  SecurityhubEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: securityhub-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: SECURITYHUB_ENABLED
+  ShieldDrtAccess:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: shield-drt-access
+      Source:
+        Owner: AWS
+        SourceIdentifier: SHIELD_DRT_ACCESS
+  SnsEncryptedKms:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: sns-encrypted-kms
+      Source:
+        Owner: AWS
+        SourceIdentifier: SNS_ENCRYPTED_KMS
+  SsmDocumentNotPublic:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: ssm-document-not-public
+      Source:
+        Owner: AWS
+        SourceIdentifier: SSM_DOCUMENT_NOT_PUBLIC
+  VpcFlowLogsEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: vpc-flow-logs-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: VPC_FLOW_LOGS_ENABLED
+  VpcNetworkAclUnusedCheck:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: vpc-network-acl-unused-check
+      Source:
+        Owner: AWS
+        SourceIdentifier: VPC_NETWORK_ACL_UNUSED_CHECK
+  VpcSgOpenOnlyToAuthorizedPorts:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: vpc-sg-open-only-to-authorized-ports
+      Source:
+        Owner: AWS
+        SourceIdentifier: VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS
+  Wafv2LoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: wafv2-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAFV2_LOGGING_ENABLED
+  Wafv2RulegroupNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: wafv2-rulegroup-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAFV2_RULEGROUP_NOT_EMPTY
+  Wafv2WebaclNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: wafv2-webacl-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAFV2_WEBACL_NOT_EMPTY
+  WafClassicLoggingEnabled:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-classic-logging-enabled
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_CLASSIC_LOGGING_ENABLED
+  WafGlobalRulegroupNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-global-rulegroup-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_GLOBAL_RULEGROUP_NOT_EMPTY
+  WafGlobalRuleNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-global-rule-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_GLOBAL_RULE_NOT_EMPTY
+  WafGlobalWebaclNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-global-webacl-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_GLOBAL_WEBACL_NOT_EMPTY
+  WafRegionalRulegroupNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-regional-rulegroup-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_REGIONAL_RULEGROUP_NOT_EMPTY
+  WafRegionalRuleNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-regional-rule-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_REGIONAL_RULE_NOT_EMPTY
+  WafRegionalWebaclNotEmpty:
+    Type: AWS::Config::ConfigRule
+    Properties:
+      ConfigRuleName: waf-regional-webacl-not-empty
+      Source:
+        Owner: AWS
+        SourceIdentifier: WAF_REGIONAL_WEBACL_NOT_EMPTY

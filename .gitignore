@@ -1,0 +1,21 @@
+# Output directories
+hipaa/
+PCI_DSS_v4/
+PCI_DSS_4/
+_archive/
+
+# Claude session data
+.claude/
+
+# Generated data files
+*.json
+!requirements.txt
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Other
+conformance_packs.json
+supported_frameworks.txt
+RunCommands.txt

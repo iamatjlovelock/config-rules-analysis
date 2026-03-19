@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gap Analysis - Center for Internet Security (CIS) Amazon Web Services (AWS) Benchmark v1.4.0, Level 1 and 2</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .report-header {
+            background: linear-gradient(135deg, #744210 0%, #975a16 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #744210;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #744210;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .rule-entry {
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #fffaf0;
+            border-radius: 0 8px 8px 0;
+        }
+        .rule-entry h3 {
+            margin: 0 0 10px 0;
+            color: #744210;
+            font-size: 16px;
+        }
+        .rule-keyword {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #666;
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .rule-description {
+            color: #4a5568;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .controls-list {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .controls-list h4 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .control-item {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .control-set {
+            font-size: 12px;
+            color: #718096;
+        }
+        .info-box {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            color: #2c5282;
+            font-size: 16px;
+        }
+        .info-box p {
+            margin: 0;
+            color: #2a4365;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_summary.html">← Back to Summary Report</a>
+    </nav>
+
+    <div class="report-header">
+        <h1>Gap Analysis Report</h1>
+        <div class="meta">
+            <div>Framework: Center for Internet Security (CIS) Amazon Web Services (AWS) Benchmark v1.4.0, Level 1 and 2</div>
+            <div>Conformance Pack: Template: Operational-Best-Practices-for-CIS</div>
+            <div>Generated: 2026-03-18T15:49:50.837363+00:00</div>
+        </div>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Unmapped Rules</h3>
+            <div class="value">34</div>
+        </div>
+        <div class="card">
+            <h3>Total References</h3>
+            <div class="value">35</div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h3>What does this report show?</h3>
+        <p>
+            This report lists AWS Config rules that are referenced by the Center for Internet Security (CIS) Amazon Web Services (AWS) Benchmark v1.4.0, Level 1 and 2 framework
+            but are not deployed as part of the <strong>Template: Operational-Best-Practices-for-CIS</strong> conformance pack.
+            These rules cannot be evaluated for compliance until they are added to the conformance pack
+            or deployed separately in your account.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Unmapped Config Rules (34)</h2>
+
+        <div class="rule-entry" id="ACCESS_KEYS_ROTATED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#ACCESS_KEYS_ROTATED">ACCESS_KEYS_ROTATED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.14: Ensure access keys are rotated every 90 days or less (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="ACM_CERTIFICATE_EXPIRATION_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#ACM_CERTIFICATE_EXPIRATION_CHECK">ACM_CERTIFICATE_EXPIRATION_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.19: Ensure that all the expired SSL/TLS certificates stored in AWS IAM are removed (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUDTRAIL_S3_BUCKET_PUBLIC_ACCESS_PROHIBITED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#CLOUDTRAIL_S3_BUCKET_PUBLIC_ACCESS_PROHIBITED">CLOUDTRAIL_S3_BUCKET_PUBLIC_ACCESS_PROHIBITED</a></span></div>
+            <div class="rule-description">Checks if the S3 bucket configurations for your AWS CloudTrail logs block public access. The rule is NON_COMPLIANT if at least one S3 bucket for a CloudTrail trail is publicly accessible.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.3: Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUDTRAIL_S3_DATAEVENTS_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#CLOUDTRAIL_S3_DATAEVENTS_ENABLED">CLOUDTRAIL_S3_DATAEVENTS_ENABLED</a></span></div>
+            <div class="rule-description">Checks if at least one AWS CloudTrail trail is logging Amazon Simple Storage Service (Amazon S3) data events for all S3 buckets. The rule is NON_COMPLIANT if there are trails or if no trails record S3 data events.</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.10: Ensure that Object-level logging for write events is enabled for S3 bucket (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.11: Ensure that Object-level logging for read events is enabled for S3 bucket (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS CloudTrail trails are configured to send logs to CloudWatch logs. The trail is NON_COMPLIANT if the CloudWatchLogsLogGroupArn property of the trail is empty.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.4: Ensure CloudTrail trails are integrated with CloudWatch Logs (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUD_TRAIL_ENCRYPTION_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#CLOUD_TRAIL_ENCRYPTION_ENABLED">CLOUD_TRAIL_ENCRYPTION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS CloudTrail is configured to use the server side encryption (SSE) AWS Key Management Service (AWS KMS) encryption. The rule is COMPLIANT if the KmsKeyId is defined.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.7: Ensure CloudTrail logs are encrypted at rest using KMS CMKs (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS CloudTrail creates a signed digest file with logs. AWS recommends that the file validation must be enabled on all trails. The rule is NON_COMPLIANT if the validation is not enabled.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.2: Ensure CloudTrail log file validation is enabled (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CMK_BACKING_KEY_ROTATION_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#CMK_BACKING_KEY_ROTATION_ENABLED">CMK_BACKING_KEY_ROTATION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if automatic key rotation is enabled for each key and matches to the key ID of the customer created AWS KMS key. The rule is NON_COMPLIANT if the AWS Config recorder role for a resource does not have the kms:DescribeKey permission.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.8: Ensure rotation for customer created CMKs is enabled (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="EC2_EBS_ENCRYPTION_BY_DEFAULT">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#EC2_EBS_ENCRYPTION_BY_DEFAULT">EC2_EBS_ENCRYPTION_BY_DEFAULT</a></span></div>
+            <div class="rule-description">Checks if Amazon Elastic Block Store (EBS) encryption is enabled by default. The rule is NON_COMPLIANT if the encryption is not enabled.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.2.1: Ensure EBS volume encryption is enabled (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="EC2_INSTANCE_PROFILE_ATTACHED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#EC2_INSTANCE_PROFILE_ATTACHED">EC2_INSTANCE_PROFILE_ATTACHED</a></span></div>
+            <div class="rule-description">Checks if an EC2 instance has an AWS Identity and Access Management (IAM) profile attached to it. The rule is NON_COMPLIANT if no IAM profile is attached to the EC2 instance.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.18: Ensure IAM instance roles are used for AWS resource access from instances (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="ENCRYPTED_VOLUMES">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#ENCRYPTED_VOLUMES">ENCRYPTED_VOLUMES</a></span></div>
+            <div class="rule-description">Secure EBS volumes attached to EC2 instances through encryption.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.2.1: Ensure EBS volume encryption is enabled (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_NO_INLINE_POLICY_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_NO_INLINE_POLICY_CHECK">IAM_NO_INLINE_POLICY_CHECK</a></span></div>
+            <div class="rule-description">Checks if the inline policy feature is not in use. The rule is NON_COMPLIANT if an AWS Identity and Access Management (IAM) user, IAM role or IAM group has any inline policy.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.15: Ensure IAM Users Receive Permissions Only Through Groups (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_POLICY_IN_USE">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_POLICY_IN_USE">IAM_POLICY_IN_USE</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.17: Ensure a support role has been created to manage incidents with AWS Support (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a></span></div>
+            <div class="rule-description">Checks whether the default version of AWS Identity and Access Management (IAM) policies do not have administrator access. If any statement has &quot;Effect&quot;: &quot;Allow&quot; with &quot;Action&quot;: &quot;*&quot; over &quot;Resource&quot;: &quot;*&quot;, the rule is non-compliant.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.16: Ensure IAM policies that allow full &quot;*:*&quot; administrative privileges are not attached (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_ROOT_ACCESS_KEY_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_ROOT_ACCESS_KEY_CHECK">IAM_ROOT_ACCESS_KEY_CHECK</a></span></div>
+            <div class="rule-description">Checks if the root user access key is available. The rule is COMPLIANT if the user access key does not exist. Otherwise, NON_COMPLIANT.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.4: Ensure no &#x27;root&#x27; user account access key exists (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_USER_GROUP_MEMBERSHIP_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_USER_GROUP_MEMBERSHIP_CHECK">IAM_USER_GROUP_MEMBERSHIP_CHECK</a></span></div>
+            <div class="rule-description">Checks whether IAM users are members of at least one IAM group.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.15: Ensure IAM Users Receive Permissions Only Through Groups (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_USER_NO_POLICIES_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></span></div>
+            <div class="rule-description">Checks if none of your AWS Identity and Access Management (IAM) users have policies attached. IAM users must inherit permissions from IAM groups or roles. The rule is NON_COMPLIANT if there is at least one policy that is attached to the IAM user.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.15: Ensure IAM Users Receive Permissions Only Through Groups (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_USER_UNUSED_CREDENTIALS_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.12: Ensure credentials unused for 45 days or greater are disabled (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="INCOMING_SSH_DISABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></span></div>
+            <div class="rule-description">Reduces a server&#x27;s exposure to risk by removing unfettered connectivity to remote console services such as SSH.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>5.2: Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">5 - Networking</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></span></div>
+            <div class="rule-description">Protect your account by requiring multi-factor authentication (MFA) for any AWS Identity and Access Management (IAM) user using the console. MFA adds an extra authentication code on top of a user name and password.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.10: Ensure multi-factor authentication (MFA) is enabled for all IAM users that have a console password (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="MULTI_REGION_CLOUD_TRAIL_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></span></div>
+            <div class="rule-description">Checks that there is at least one multi-region AWS CloudTrail. The rule is non-compliant if the trails do not match input parameters</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1: Ensure CloudTrail is enabled in all regions (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="RDS_SNAPSHOT_ENCRYPTED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#RDS_SNAPSHOT_ENCRYPTED">RDS_SNAPSHOT_ENCRYPTED</a></span></div>
+            <div class="rule-description">Checks if Amazon Relational Database Service (Amazon RDS) DB snapshots are encrypted. The rule is NON_COMPLIANT if the Amazon RDS DB snapshots are not encrypted.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.3.1: Ensure that encryption is enabled for RDS Instances (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="RDS_STORAGE_ENCRYPTED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#RDS_STORAGE_ENCRYPTED">RDS_STORAGE_ENCRYPTED</a></span></div>
+            <div class="rule-description">Secure your Amazon RDS database instances at rest by encrypting the underlying storage for database instances and their automated backups, Read Replicas, and snapshots.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.3.1: Ensure that encryption is enabled for RDS Instances (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="RESTRICTED_INCOMING_TRAFFIC">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#RESTRICTED_INCOMING_TRAFFIC">RESTRICTED_INCOMING_TRAFFIC</a></span></div>
+            <div class="rule-description">Reduces a server&#x27;s exposure to risk by removing unfettered connectivity to remote console services such as RDP.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>5.2: Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">5 - Networking</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></span></div>
+            <div class="rule-description">Checks if your AWS account is enabled to use multi-factor authentication (MFA) hardware device to sign in with root credentials. The rule is NON_COMPLIANT if any virtual MFA devices are permitted for signing in with root credentials.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.6: Ensure hardware MFA is enabled for the &#x27;root&#x27; user account (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="ROOT_ACCOUNT_MFA_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></span></div>
+            <div class="rule-description">Reduce vulnerability from weak authentication by using Multi-Factor Authentication (MFA), which adds an extra authentication code on top of a user name and password.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>1.5: Ensure MFA is enabled for the &#x27;root&#x27; user account (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">1 - Identity and Access Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC">S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC</a></span></div>
+            <div class="rule-description">Periodically detects whether the required Amazon S3 settings to block public access are configured as true for the account, rather than for a bucket or an access point.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.1.5: Ensure that S3 Buckets are configured with &#x27;Block public access (bucket settings)&#x27; (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED">S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED</a></span></div>
+            <div class="rule-description">Checks if S3 buckets are publicly accessible. The rule is NON_COMPLIANT if an S3 bucket is not listed in the excludedPublicBuckets parameter and bucket level settings are public.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.1.5: Ensure that S3 Buckets are configured with &#x27;Block public access (bucket settings)&#x27; (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_BUCKET_LOGGING_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#S3_BUCKET_LOGGING_ENABLED">S3_BUCKET_LOGGING_ENABLED</a></span></div>
+            <div class="rule-description">Checks if logging is enabled for your S3 buckets. The rule is NON_COMPLIANT if logging is not enabled.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.6: Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_BUCKET_MFA_DELETE_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#S3_BUCKET_MFA_DELETE_ENABLED">S3_BUCKET_MFA_DELETE_ENABLED</a></span></div>
+            <div class="rule-description">Checks if MFA Delete is enabled in the Amazon Simple Storage Service (Amazon S3) bucket versioning configuration. The rule is NON_COMPLIANT if MFA Delete is not enabled.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.1.3: Ensure MFA Delete is enable on S3 buckets (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a></span></div>
+            <div class="rule-description">Checks if S3 buckets have default encryption enabled or have bucket policies that explicitly deny put-object requests without server side encryption using AES-256 or AWS KMS. The rule is NON_COMPLIANT if an S3 bucket is not encrypted by default.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.1.1: Ensure all S3 buckets employ encryption-at-rest (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_BUCKET_SSL_REQUESTS_ONLY">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></span></div>
+            <div class="rule-description">Checks if S3 buckets have policies that require requests to use SSL/TLS. The rule is NON_COMPLIANT if any S3 bucket has policies allowing HTTP requests.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>2.1.2: Ensure S3 Bucket Policy is set to deny HTTP requests (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">2 - Storage</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="VPC_DEFAULT_SECURITY_GROUP_CLOSED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#VPC_DEFAULT_SECURITY_GROUP_CLOSED">VPC_DEFAULT_SECURITY_GROUP_CLOSED</a></span></div>
+            <div class="rule-description">Checks if the default security group of any Amazon Virtual Private Cloud (Amazon VPC) does not allow inbound or outbound traffic. The rule is NON_COMPLIANT if the default security group has one or more inbound or outbound traffic rules.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>5.3: Ensure the default security group of every VPC restricts all traffic (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">5 - Networking</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="VPC_FLOW_LOGS_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_Center_for_Internet_Security__CIS__Amazon_Web_Serv_control_catalog.html#VPC_FLOW_LOGS_ENABLED">VPC_FLOW_LOGS_ENABLED</a></span></div>
+            <div class="rule-description">Checks if Amazon Virtual Private Cloud (Amazon VPC) flow logs are found and enabled for all Amazon VPCs. The rule is NON_COMPLIANT if flow logs are not enabled for at least one Amazon VPC.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.9: Ensure VPC flow logging is enabled in all VPCs (Automated) (CIS-AWS-Benchmark-v1.4)</div>
+                    <div class="control-set">3 - Logging</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

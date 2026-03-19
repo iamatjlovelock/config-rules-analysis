@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Summary - NIST Cybersecurity Framework (CSF) v1.1</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_NIST_Cybersecurity_Framework__CSF__v1.1_summary.html" class=" active">Summary Report</a> <a href="template_report_NIST_Cybersecurity_Framework__CSF__v1.1_evidence.html" class="">Evidence Sources</a> <a href="template_report_NIST_Cybersecurity_Framework__CSF__v1.1_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>NIST Cybersecurity Framework (CSF) v1.1</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: Operational Best Practices for NIST CSF</div><div>Generated: 2026-03-18T15:46:48.543560+00:00</div>
+        </div>
+    </div>
+    
+
+    <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+        <strong style="color: #0369a1;">Template Analysis Mode</strong>
+        <p style="color: #0369a1; margin: 5px 0 0 0; font-size: 14px;">
+            This report analyzes the framework against a conformance pack template. No deployed conformance pack was evaluated,
+            so resource compliance data is not available. Deploy the conformance pack to see actual compliance results.
+        </p>
+    </div>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Control Sets</h3>
+            <div class="value">22</div>
+        </div>
+        <div class="card">
+            <h3>Framework Controls</h3>
+            <div class="value">108</div>
+        </div>
+    </div>
+
+    <div class="section" style="padding: 15px 20px; margin-bottom: 20px;">
+        <p style="color: #4a5568; font-size: 14px; margin: 0; line-height: 1.6;">
+            <strong>Config Rules Coverage:</strong> The cards below show the overlap between Config rules in the
+            Audit Manager framework, the Conformance Pack template, and the Security Hub standard.
+            "Intersection" shows framework rules that appear in the template or standard.
+            "Not Covered" shows framework rules that do not appear in either the template or standard.
+        </p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Config Rules in Framework</h3>
+            <div class="value">47</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Template</h3>
+            <div class="value">28</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Standard</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Not Covered</h3>
+            <div class="value">19</div>
+        </div>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="margin: 0 0 10px 0; color: white;">Rules Manifest</h3>
+        <p style="margin: 0 0 15px 0; opacity: 0.9; font-size: 14px;">
+            View the complete inventory of all Config rules, filtered to show rules referenced by this framework,
+            its associated security standard, or conformance pack template.
+        </p>
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20Cybersecurity%20Framework%20%28CSF%29%20v1.1&template=Operational-Best-Practices-for-NIST-CSF" style="display: inline-block; background: white; color: #667eea; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            Open Rules Manifest
+        </a>
+    </div>
+
+    <div class="section" style="text-align: center;">
+        <h3 style="margin-bottom: 10px;">Config Rules Coverage Venn Diagram</h3>
+        <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">
+            Visualization of rule overlap between Framework, Template, and Security Standard.
+            Numbers show unique rules in each region. Click a number to view those rules in the manifest.
+        </p>
+        
+    <svg viewBox="0 0 400 340" style="max-width: 500px; width: 100%;">
+        <defs>
+            <style>
+                .venn-circle { fill-opacity: 0.3; stroke-width: 2; }
+                .venn-framework { fill: #4299e1; stroke: #2b6cb0; }
+                .venn-template { fill: #48bb78; stroke: #276749; }
+                .venn-standard { fill: #9f7aea; stroke: #6b46c1; }
+                .venn-label { font-size: 12px; font-weight: bold; fill: #2d3748; }
+                .venn-count { font-size: 14px; font-weight: bold; fill: #1a202c; }
+                .venn-link { cursor: pointer; }
+                .venn-link:hover { fill: #4c51bf; text-decoration: underline; }
+                .venn-title { font-size: 11px; fill: #4a5568; }
+            </style>
+        </defs>
+
+        <!-- Framework circle (top-left, blue) -->
+        <circle cx="150" cy="130" r="90" class="venn-circle venn-framework"/>
+
+        <!-- Template circle (top-right, green) -->
+        <circle cx="250" cy="130" r="90" class="venn-circle venn-template"/>
+
+        <!-- Standard circle (bottom, purple) -->
+        <circle cx="200" cy="210" r="90" class="venn-circle venn-standard"/>
+
+        <!-- Labels for each region -->
+        <!-- Framework only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20Cybersecurity%20Framework%20%28CSF%29%20v1.1&template=Operational-Best-Practices-for-NIST-CSF&venn=f" style="text-decoration: none;"><text x="95" y="110" class="venn-count venn-link" text-anchor="middle">19</text></a>
+
+        <!-- Template only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20Cybersecurity%20Framework%20%28CSF%29%20v1.1&template=Operational-Best-Practices-for-NIST-CSF&venn=t" style="text-decoration: none;"><text x="305" y="110" class="venn-count venn-link" text-anchor="middle">100</text></a>
+
+        <!-- Standard only -->
+        <text x="200" y="280" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Framework & Template (not Standard) -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20Cybersecurity%20Framework%20%28CSF%29%20v1.1&template=Operational-Best-Practices-for-NIST-CSF&venn=ft" style="text-decoration: none;"><text x="200" y="95" class="venn-count venn-link" text-anchor="middle">28</text></a>
+
+        <!-- Framework & Standard (not Template) -->
+        <text x="140" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Template & Standard (not Framework) -->
+        <text x="260" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- All three -->
+        <text x="200" y="160" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Circle labels -->
+        <text x="70" y="50" class="venn-label">Framework</text>
+        <text x="70" y="65" class="venn-title">(47 rules)</text>
+
+        <text x="280" y="50" class="venn-label">Template</text>
+        <text x="280" y="65" class="venn-title">(128 rules)</text>
+
+        <text x="200" y="320" class="venn-label" text-anchor="middle">Standard</text>
+        <text x="200" y="335" class="venn-title" text-anchor="middle">(0 rules)</text>
+    </svg>
+    
+    </div>
+
+    <div class="section">
+        <h3>Conformance Pack Template Cross-Check</h3>
+        <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+            <em>Note: The AWS Config API does not indicate which template was used when a conformance pack was deployed.
+            The following templates are associated with this framework and may have been used:</em>
+        </p>
+        <ul style="margin: 0; padding-left: 20px;">
+            <li><a href="..\..\conformance-packs\conformance-pack-yamls\Operational-Best-Practices-for-NIST-CSF.yaml"><strong>Operational-Best-Practices-for-NIST-CSF</strong></a> — 130 Config Rules</li>
+
+        </ul>
+        <div style="margin-top: 15px; padding: 12px; background: #f7fafc; border-radius: 6px; border-left: 3px solid #4299e1;">
+            <p style="color: #4a5568; font-size: 13px; margin: 0 0 8px 0;"><strong>Understanding the "In Template" column:</strong></p>
+            <ul style="color: #4a5568; font-size: 13px; margin: 0; padding-left: 20px;">
+                <li><span class="badge compliant" style="font-size: 11px;">Yes</span> — Rule is in the conformance pack template</li>
+                <li><span class="badge warning" style="font-size: 11px;">No</span> — Rule is not in the conformance pack template (check Gap Report for details)</li>
+                <li><span class="badge not-applicable" style="font-size: 11px;">-</span> — No Config rule referenced for this control</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Framework Controls by Control Set</h2>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(DE.AE) Anomalies and Events</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 1 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>DE.AE-1: Anomalous activity is detected and the potential impact of events is understood. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.AE-2: Anomalous activity is detected and the potential impact of events is understood. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.AE-3: Anomalous activity is detected and the potential impact of events is understood. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SECURITYHUB_ENABLED">SECURITYHUB_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.AE-4: Anomalous activity is detected and the potential impact of events is understood. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.AE-5: Anomalous activity is detected and the potential impact of events is understood. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(DE.CM) Security Continuous Monitoring</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 2 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>DE.CM-1: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-2: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-3: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-4: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-5: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-6: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-7: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.CM-8: The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ECR_PRIVATE_IMAGE_SCANNING_ENABLED">ECR_PRIVATE_IMAGE_SCANNING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(DE.DP) Detection Processes</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>DE.DP-1: Detection processes and procedures are maintained and tested to ensure awareness of anomalous events. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.DP-2: Detection processes and procedures are maintained and tested to ensure awareness of anomalous events. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.DP-3: Detection processes and procedures are maintained and tested to ensure awareness of anomalous events. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.DP-4: Detection processes and procedures are maintained and tested to ensure awareness of anomalous events. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>DE.DP-5: Detection processes and procedures are maintained and tested to ensure awareness of anomalous events. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(ID.AM) Asset Management</h3>
+                <div class="stats">
+                    6 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ID.AM-1: The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organizations risk strategy. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.AM-2: The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organizations risk strategy. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.AM-3: The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organizations risk strategy. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.AM-4: The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organizations risk strategy. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.AM-5: The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organizations risk strategy. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.AM-6: The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organizations risk strategy. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(ID.BE) Business Environment</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ID.BE-1: The organizations mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.BE-2: The organizations mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.BE-3: The organizations mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.BE-4: The organizations mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.BE-5: The organizations mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(ID.GV) Governance</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ID.GV-1: The policies, procedures, and processes to manage and monitor the organizations regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.GV-2: The policies, procedures, and processes to manage and monitor the organizations regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.GV-3: The policies, procedures, and processes to manage and monitor the organizations regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.GV-4: The policies, procedures, and processes to manage and monitor the organizations regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(ID.RA) Risk Assessment</h3>
+                <div class="stats">
+                    6 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ID.RA-1: The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RA-2: The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RA-3: The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RA-4: The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RA-5: The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RA-6: The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(ID.RM) Risk Management Strategy</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ID.RM-1: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support operational risk decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RM-2: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support operational risk decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.RM-3: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support operational risk decisions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(ID.SC) Supply Chain Risk Management</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ID.SC-1: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.SC-2: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.SC-3: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.SC-4: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ID.SC-5: The organizations priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(PR.AC) Identity Management, Authentication and Access Control</h3>
+                <div class="stats">
+                    7 Framework Controls mapped to 9 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PR.AC-1: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AC-2: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AC-3: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AC-4: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AC-5: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AC-6: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AC-7: Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_PASSWORD_POLICY">IAM_PASSWORD_POLICY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(PR.AT) Awareness and Training</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PR.AT-1: The organizations personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AT-2: The organizations personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AT-3: The organizations personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AT-4: The organizations personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.AT-5: The organizations personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(PR.DS) Data Security</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 29 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PR.DS-1: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_EBS_ENCRYPTION_BY_DEFAULT">EC2_EBS_ENCRYPTION_BY_DEFAULT</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#RDS_STORAGE_ENCRYPTED">RDS_STORAGE_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REDSHIFT_CLUSTER_KMS_ENABLED">REDSHIFT_CLUSTER_KMS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REDSHIFT_CLUSTER_CONFIGURATION_CHECK">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ENCRYPTED_VOLUMES">ENCRYPTED_VOLUMES</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DYNAMODB_TABLE_ENCRYPTION_ENABLED">DYNAMODB_TABLE_ENCRYPTION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DAX_ENCRYPTION_ENABLED">DAX_ENCRYPTION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DYNAMODB_TABLE_ENCRYPTED_KMS">DYNAMODB_TABLE_ENCRYPTED_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#RDS_CLUSTER_ENCRYPTED_AT_REST">RDS_CLUSTER_ENCRYPTED_AT_REST</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DOCDB_CLUSTER_ENCRYPTED">DOCDB_CLUSTER_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-2: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK">ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REDSHIFT_REQUIRE_TLS_SSL">REDSHIFT_REQUIRE_TLS_SSL</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_TLS_HTTPS_LISTENERS_ONLY">ELB_TLS_HTTPS_LISTENERS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_VIEWER_POLICY_HTTPS">CLOUDFRONT_VIEWER_POLICY_HTTPS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED">CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DAX_TLS_ENDPOINT_ENCRYPTION">DAX_TLS_ENDPOINT_ENCRYPTION</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DMS_REDIS_TLS_ENABLED">DMS_REDIS_TLS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#DMS_ENDPOINT_SSL_CONFIGURED">DMS_ENDPOINT_SSL_CONFIGURED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-3: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-4: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-5: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MACIE_AUTO_SENSITIVE_DATA_DISCOVERY_CHECK">MACIE_AUTO_SENSITIVE_DATA_DISCOVERY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MACIE_STATUS_CHECK">MACIE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-6: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-7: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.DS-8: Information and records (data) are managed consistent with the organizations risk strategy to protect the confidentiality, integrity, and availability of information. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(PR.IP) Information Protection Processes and Procedures</h3>
+                <div class="stats">
+                    12 Framework Controls mapped to 1 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PR.IP-1: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-2: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-3: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-4: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-5: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-6: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-7: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-8: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-9: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-10: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-11: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.IP-12: Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(PR.MA) Maintenance</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PR.MA-1: Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.MA-2: Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(PR.PT) Protective Technology</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 6 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>PR.PT-1: Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REDSHIFT_CLUSTER_CONFIGURATION_CHECK">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_LOGGING_ENABLED">S3_BUCKET_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#RDS_LOGGING_ENABLED">RDS_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_LOGGING_ENABLED">S3_BUCKET_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_S3_DATAEVENTS_ENABLED">CLOUDTRAIL_S3_DATAEVENTS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#REDSHIFT_AUDIT_LOGGING_ENABLED">REDSHIFT_AUDIT_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.PT-2: Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.PT-3: Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.PT-4: Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>PR.PT-5: Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RC.CO) Communications</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RC.CO-1: Restoration activities are coordinated with internal and external parties (e.g. coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RC.CO-2: Restoration activities are coordinated with internal and external parties (e.g. coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RC.CO-3: Restoration activities are coordinated with internal and external parties (e.g. coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RC.IM) Improvements</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RC.IM-1: Recovery planning and processes are improved by incorporating lessons learned into future activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RC.IM-2: Recovery planning and processes are improved by incorporating lessons learned into future activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.IM-1: Organizational response activities are improved by incorporating lessons learned from current and previous detection/response activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.IM-2: Organizational response activities are improved by incorporating lessons learned from current and previous detection/response activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RC.RP) Recovery Planning</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RC.RP-1: Recovery processes and procedures are executed and maintained to ensure restoration of systems or assets affected by cybersecurity incidents. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RS.AN) Analysis</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RS.AN-1: Analysis is conducted to ensure effective response and support recovery activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.AN-2: Analysis is conducted to ensure effective response and support recovery activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.AN-3: Analysis is conducted to ensure effective response and support recovery activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.AN-4: Analysis is conducted to ensure effective response and support recovery activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.AN-5: Analysis is conducted to ensure effective response and support recovery activities. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RS.CO) Communications</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RS.CO-1: Response activities are coordinated with internal and external stakeholders (e.g. external support from law enforcement agencies). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.CO-2: Response activities are coordinated with internal and external stakeholders (e.g. external support from law enforcement agencies). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.CO-3: Response activities are coordinated with internal and external stakeholders (e.g. external support from law enforcement agencies). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.CO-4: Response activities are coordinated with internal and external stakeholders (e.g. external support from law enforcement agencies). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.CO-5: Response activities are coordinated with internal and external stakeholders (e.g. external support from law enforcement agencies). (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RS.MI) Mitigation</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RS.MI-1: Activities are performed to prevent expansion of an event, mitigate its effects, and resolve the incident. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.MI-2: Activities are performed to prevent expansion of an event, mitigate its effects, and resolve the incident. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>RS.MI-3: Activities are performed to prevent expansion of an event, mitigate its effects, and resolve the incident. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>(RS.RP) Response Planning</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>RS.RP-1: Response processes and procedures are executed and maintained, to ensure response to detected cybersecurity incidents. (NIST-CSF-v1.1)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

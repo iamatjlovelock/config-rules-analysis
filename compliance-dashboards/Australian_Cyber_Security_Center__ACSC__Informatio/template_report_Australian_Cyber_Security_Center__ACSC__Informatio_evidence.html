@@ -1,0 +1,2724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Sources - Australian Cyber Security Center (ACSC) Information Security Manual (ISM) 02 March 2023</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+        .evidence-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .evidence-entry:last-child {
+            border-bottom: none;
+        }
+        .evidence-header {
+            margin-bottom: 15px;
+        }
+        .evidence-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .evidence-rule {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #718096;
+        }
+        .evidence-stats {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .evidence-stat {
+            padding: 10px 15px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+        .evidence-stat .label {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+        }
+        .evidence-stat .value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .evidence-stat.compliant .value {
+            color: #22543d;
+        }
+        .evidence-stat.non-compliant .value {
+            color: #c53030;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_summary.html" class="">Summary Report</a> <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_evidence.html" class=" active">Evidence Sources</a> <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>Australian Cyber Security Center (ACSC) Information Security Manual (ISM) 02 March 2023</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: Template: Operational-Best-Practices-for-ACSC-ISM-Part1</div>
+            <div>Generated: 2026-03-18T15:48:24.365538+00:00</div>
+        </div>
+    </div>
+    
+
+    <div class="section">
+        <h2>Evidence Sources (AWS Config Rules)</h2>
+        <p style="color: #718096; margin-bottom: 20px;">
+            149 Config rules mapped from the conformance pack template. This is a template analysis - no deployed conformance pack evaluations are available.
+        </p>
+
+        <div class="evidence-entry" id="ACM_CERTIFICATE_RSA_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ACM_CERTIFICATE_RSA_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ACM_CERTIFICATE_RSA_CHECK">ACM_CERTIFICATE_RSA_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ACM_PCA_ROOT_CA_DISABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ACM_PCA_ROOT_CA_DISABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ACM_PCA_ROOT_CA_DISABLED">ACM_PCA_ROOT_CA_DISABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="API_GWV2_ACCESS_LOGS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: API_GWV2_ACCESS_LOGS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#API_GWV2_ACCESS_LOGS_ENABLED">API_GWV2_ACCESS_LOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="APPROVED_AMIS_BY_ID">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: APPROVED_AMIS_BY_ID</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#APPROVED_AMIS_BY_ID">APPROVED_AMIS_BY_ID</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ATHENA_WORKGROUP_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ATHENA_WORKGROUP_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ATHENA_WORKGROUP_ENCRYPTED_AT_REST">ATHENA_WORKGROUP_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AURORA_LAST_BACKUP_RECOVERY_POINT_CREATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AURORA_LAST_BACKUP_RECOVERY_POINT_CREATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#AURORA_LAST_BACKUP_RECOVERY_POINT_CREATED">AURORA_LAST_BACKUP_RECOVERY_POINT_CREATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AUTOSCALING_GROUP_ELB_HEALTHCHECK_REQUIRED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AUTOSCALING_GROUP_ELB_HEALTHCHECK_REQUIRED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#AUTOSCALING_GROUP_ELB_HEALTHCHECK_REQUIRED">AUTOSCALING_GROUP_ELB_HEALTHCHECK_REQUIRED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AUTOSCALING_MULTIPLE_AZ">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AUTOSCALING_MULTIPLE_AZ</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#AUTOSCALING_MULTIPLE_AZ">AUTOSCALING_MULTIPLE_AZ</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AlbHttpToHttpsRedirectionCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AlbHttpToHttpsRedirectionCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK">ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AlbWafEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AlbWafEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ALB_WAF_ENABLED">ALB_WAF_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ApiGwAssociatedWithWaf">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ApiGwAssociatedWithWaf</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#API_GW_ASSOCIATED_WITH_WAF">API_GW_ASSOCIATED_WITH_WAF</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ApiGwCacheEnabledAndEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ApiGwCacheEnabledAndEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#API_GW_CACHE_ENABLED_AND_ENCRYPTED">API_GW_CACHE_ENABLED_AND_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ApiGwExecutionLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ApiGwExecutionLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#API_GW_EXECUTION_LOGGING_ENABLED">API_GW_EXECUTION_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="AuroraResourcesProtectedByBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AuroraResourcesProtectedByBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#AURORA_RESOURCES_PROTECTED_BY_BACKUP_PLAN">AURORA_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="BackupPlanMinFrequencyAndMinRetentionCheck2">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: BackupPlanMinFrequencyAndMinRetentionCheck2</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="BackupPlanMinFrequencyAndMinRetentionCheckParamRequiredFrequencyUnit">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: BackupPlanMinFrequencyAndMinRetentionCheckParamRequiredFrequencyUnit</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ACM_CERTIFICATE_EXPIRATION_CHECK">ACM_CERTIFICATE_EXPIRATION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="BackupRecoveryPointEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: BackupRecoveryPointEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLB_DESYNC_MODE_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLB_DESYNC_MODE_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLB_DESYNC_MODE_CHECK">CLB_DESYNC_MODE_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLB_MULTIPLE_AZ">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLB_MULTIPLE_AZ</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLB_MULTIPLE_AZ">CLB_MULTIPLE_AZ</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_ACCESSLOGS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_ACCESSLOGS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUDFRONT_ACCESSLOGS_ENABLED">CLOUDFRONT_ACCESSLOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDWATCH_ALARM_ACTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDWATCH_ALARM_ACTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK">CODEBUILD_PROJECT_ENVVAR_AWSCRED_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudTrailCloudWatchLogsEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudTrailCloudWatchLogsEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudTrailEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudTrailEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudtrailS3DataeventsEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudtrailS3DataeventsEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUDTRAIL_S3_DATAEVENTS_ENABLED">CLOUDTRAIL_S3_DATAEVENTS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudtrailSecurityTrailEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudtrailSecurityTrailEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CodebuildProjectLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CodebuildProjectLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#CODEBUILD_PROJECT_LOGGING_ENABLED">CODEBUILD_PROJECT_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DAX_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DAX_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DAX_ENCRYPTION_ENABLED">DAX_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DMS_AUTO_MINOR_VERSION_UPGRADE_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DMS_AUTO_MINOR_VERSION_UPGRADE_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DMS_AUTO_MINOR_VERSION_UPGRADE_CHECK">DMS_AUTO_MINOR_VERSION_UPGRADE_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DOCDB_CLUSTER_AUDIT_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DOCDB_CLUSTER_AUDIT_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DOCDB_CLUSTER_AUDIT_LOGGING_ENABLED">DOCDB_CLUSTER_AUDIT_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DOCDB_CLUSTER_BACKUP_RETENTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DOCDB_CLUSTER_BACKUP_RETENTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DOCDB_CLUSTER_BACKUP_RETENTION_CHECK">DOCDB_CLUSTER_BACKUP_RETENTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DOCDB_CLUSTER_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DOCDB_CLUSTER_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DOCDB_CLUSTER_ENCRYPTED">DOCDB_CLUSTER_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_LAST_BACKUP_RECOVERY_POINT_CREATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_LAST_BACKUP_RECOVERY_POINT_CREATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_LAST_BACKUP_RECOVERY_POINT_CREATED">DYNAMODB_LAST_BACKUP_RECOVERY_POINT_CREATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN">DYNAMODB_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_TABLE_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_TABLE_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_TABLE_ENCRYPTION_ENABLED">DYNAMODB_TABLE_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DbInstanceBackupEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DbInstanceBackupEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DB_INSTANCE_BACKUP_ENABLED">DB_INSTANCE_BACKUP_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DynamodbAutoscalingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DynamodbAutoscalingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_AUTOSCALING_ENABLED">DYNAMODB_AUTOSCALING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DynamodbInBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DynamodbInBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_IN_BACKUP_PLAN">DYNAMODB_IN_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DynamodbPitrEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DynamodbPitrEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_PITR_ENABLED">DYNAMODB_PITR_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DynamodbTableEncryptedKms">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DynamodbTableEncryptedKms</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#DYNAMODB_TABLE_ENCRYPTED_KMS">DYNAMODB_TABLE_ENCRYPTED_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EBS_LAST_BACKUP_RECOVERY_POINT_CREATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EBS_LAST_BACKUP_RECOVERY_POINT_CREATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EBS_LAST_BACKUP_RECOVERY_POINT_CREATED">EBS_LAST_BACKUP_RECOVERY_POINT_CREATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EBS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EBS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EBS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">EBS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED">EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_LAST_BACKUP_RECOVERY_POINT_CREATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_LAST_BACKUP_RECOVERY_POINT_CREATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_LAST_BACKUP_RECOVERY_POINT_CREATED">EC2_LAST_BACKUP_RECOVERY_POINT_CREATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED">EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ECS_NO_ENVIRONMENT_SECRETS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ECS_NO_ENVIRONMENT_SECRETS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ECS_NO_ENVIRONMENT_SECRETS">ECS_NO_ENVIRONMENT_SECRETS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EFS_LAST_BACKUP_RECOVERY_POINT_CREATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EFS_LAST_BACKUP_RECOVERY_POINT_CREATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EFS_LAST_BACKUP_RECOVERY_POINT_CREATED">EFS_LAST_BACKUP_RECOVERY_POINT_CREATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EFS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EFS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EFS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">EFS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EKS_CLUSTER_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EKS_CLUSTER_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EKS_CLUSTER_LOGGING_ENABLED">EKS_CLUSTER_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EKS_SECRETS_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EKS_SECRETS_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EKS_SECRETS_ENCRYPTED">EKS_SECRETS_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICACHE_AUTO_MINOR_VERSION_UPGRADE_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICACHE_AUTO_MINOR_VERSION_UPGRADE_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELASTICACHE_AUTO_MINOR_VERSION_UPGRADE_CHECK">ELASTICACHE_AUTO_MINOR_VERSION_UPGRADE_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST">ELASTICACHE_REPL_GRP_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTIC_BEANSTALK_LOGS_TO_CLOUDWATCH">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTIC_BEANSTALK_LOGS_TO_CLOUDWATCH</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELASTIC_BEANSTALK_LOGS_TO_CLOUDWATCH">ELASTIC_BEANSTALK_LOGS_TO_CLOUDWATCH</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELBV2_MULTIPLE_AZ">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELBV2_MULTIPLE_AZ</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELBV2_MULTIPLE_AZ">ELBV2_MULTIPLE_AZ</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EbsInBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EbsInBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EBS_IN_BACKUP_PLAN">EBS_IN_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2EbsEncryptionByDefault">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2EbsEncryptionByDefault</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_EBS_ENCRYPTION_BY_DEFAULT">EC2_EBS_ENCRYPTION_BY_DEFAULT</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2ManagedinstanceAssociationComplianceStatusCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2ManagedinstanceAssociationComplianceStatusCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2ManagedinstancePatchComplianceStatusCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2ManagedinstancePatchComplianceStatusCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2ResourcesProtectedByBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2ResourcesProtectedByBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EC2_RESOURCES_PROTECTED_BY_BACKUP_PLAN">EC2_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EcsContainersReadonlyAccess">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EcsContainersReadonlyAccess</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ECS_CONTAINERS_READONLY_ACCESS">ECS_CONTAINERS_READONLY_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EfsEncryptedCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EfsEncryptedCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EFS_ENCRYPTED_CHECK">EFS_ENCRYPTED_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EfsInBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EfsInBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#EFS_IN_BACKUP_PLAN">EFS_IN_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ElasticBeanstalkManagedUpdatesEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ElasticBeanstalkManagedUpdatesEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELASTIC_BEANSTALK_MANAGED_UPDATES_ENABLED">ELASTIC_BEANSTALK_MANAGED_UPDATES_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ElasticsearchEncryptedAtRest">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ElasticsearchEncryptedAtRest</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELASTICSEARCH_ENCRYPTED_AT_REST">ELASTICSEARCH_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ElasticsearchLogsToCloudwatch">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ElasticsearchLogsToCloudwatch</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELASTICSEARCH_LOGS_TO_CLOUDWATCH">ELASTICSEARCH_LOGS_TO_CLOUDWATCH</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ElbCrossZoneLoadBalancingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ElbCrossZoneLoadBalancingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELB_CROSS_ZONE_LOAD_BALANCING_ENABLED">ELB_CROSS_ZONE_LOAD_BALANCING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ElbLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ElbLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ELB_LOGGING_ENABLED">ELB_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EncryptedVolumes">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EncryptedVolumes</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ENCRYPTED_VOLUMES">ENCRYPTED_VOLUMES</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FMS_SHIELD_RESOURCE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FMS_SHIELD_RESOURCE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#FMS_SHIELD_RESOURCE_POLICY_CHECK">FMS_SHIELD_RESOURCE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FsxResourcesProtectedByBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FsxResourcesProtectedByBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#FSX_RESOURCES_PROTECTED_BY_BACKUP_PLAN">FSX_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="GuarddutyEnabledCentralized">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: GuarddutyEnabledCentralized</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_POLICY_BLACKLISTED_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_POLICY_BLACKLISTED_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_ROLE_MANAGED_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_ROLE_MANAGED_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_USER_NO_POLICIES_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_USER_NO_POLICIES_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamGroupHasUsersCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamGroupHasUsersCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_GROUP_HAS_USERS_CHECK">IAM_GROUP_HAS_USERS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamInlinePolicyBlockedKmsActions">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamInlinePolicyBlockedKmsActions</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS">IAM_INLINE_POLICY_BLOCKED_KMS_ACTIONS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamNoInlinePolicyCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamNoInlinePolicyCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_NO_INLINE_POLICY_CHECK">IAM_NO_INLINE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamPolicyNoStatementsWithFullAccess">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamPolicyNoStatementsWithFullAccess</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamUserMfaEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamUserMfaEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamUserUnusedCredentialsCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamUserUnusedCredentialsCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="KMS_CMK_NOT_SCHEDULED_FOR_DELETION">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: KMS_CMK_NOT_SCHEDULED_FOR_DELETION</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#KMS_CMK_NOT_SCHEDULED_FOR_DELETION">KMS_CMK_NOT_SCHEDULED_FOR_DELETION</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="KinesisStreamEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: KinesisStreamEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#KINESIS_STREAM_ENCRYPTED">KINESIS_STREAM_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="LAMBDA_VPC_MULTI_AZ_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: LAMBDA_VPC_MULTI_AZ_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#LAMBDA_VPC_MULTI_AZ_CHECK">LAMBDA_VPC_MULTI_AZ_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MQ_CLOUDWATCH_AUDIT_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MQ_CLOUDWATCH_AUDIT_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#MQ_CLOUDWATCH_AUDIT_LOGGING_ENABLED">MQ_CLOUDWATCH_AUDIT_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MQ_CLOUDWATCH_AUDIT_LOG_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MQ_CLOUDWATCH_AUDIT_LOG_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#MQ_CLOUDWATCH_AUDIT_LOG_ENABLED">MQ_CLOUDWATCH_AUDIT_LOG_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MultiRegionCloudTrailEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MultiRegionCloudTrailEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NACL_NO_UNRESTRICTED_SSH_RDP">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NACL_NO_UNRESTRICTED_SSH_RDP</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NEPTUNE_CLUSTER_BACKUP_RETENTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NEPTUNE_CLUSTER_BACKUP_RETENTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NEPTUNE_CLUSTER_BACKUP_RETENTION_CHECK">NEPTUNE_CLUSTER_BACKUP_RETENTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NEPTUNE_CLUSTER_CLOUDWATCH_LOG_EXPORT_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NEPTUNE_CLUSTER_CLOUDWATCH_LOG_EXPORT_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NEPTUNE_CLUSTER_CLOUDWATCH_LOG_EXPORT_ENABLED">NEPTUNE_CLUSTER_CLOUDWATCH_LOG_EXPORT_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NEPTUNE_CLUSTER_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NEPTUNE_CLUSTER_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NEPTUNE_CLUSTER_ENCRYPTED">NEPTUNE_CLUSTER_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED">NEPTUNE_CLUSTER_SNAPSHOT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NETFW_LOGGING_ENABLED">NETFW_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_MULTI_AZ_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_MULTI_AZ_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NETFW_MULTI_AZ_ENABLED">NETFW_MULTI_AZ_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_POLICY_RULE_GROUP_ASSOCIATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_POLICY_RULE_GROUP_ASSOCIATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NLB_CROSS_ZONE_LOAD_BALANCING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NLB_CROSS_ZONE_LOAD_BALANCING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#NLB_CROSS_ZONE_LOAD_BALANCING_ENABLED">NLB_CROSS_ZONE_LOAD_BALANCING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OPENSEARCH_DATA_NODE_FAULT_TOLERANCE">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OPENSEARCH_DATA_NODE_FAULT_TOLERANCE</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#OPENSEARCH_DATA_NODE_FAULT_TOLERANCE">OPENSEARCH_DATA_NODE_FAULT_TOLERANCE</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OpensearchAuditLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OpensearchAuditLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#OPENSEARCH_AUDIT_LOGGING_ENABLED">OPENSEARCH_AUDIT_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OpensearchEncryptedAtRest">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OpensearchEncryptedAtRest</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#OPENSEARCH_ENCRYPTED_AT_REST">OPENSEARCH_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="OpensearchLogsToCloudwatch">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: OpensearchLogsToCloudwatch</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#OPENSEARCH_LOGS_TO_CLOUDWATCH">OPENSEARCH_LOGS_TO_CLOUDWATCH</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_CLUSTER_AUTO_MINOR_VERSION_UPGRADE_ENABLE">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_CLUSTER_AUTO_MINOR_VERSION_UPGRADE_ENABLE</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_CLUSTER_AUTO_MINOR_VERSION_UPGRADE_ENABLE">RDS_CLUSTER_AUTO_MINOR_VERSION_UPGRADE_ENABLE</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_CLUSTER_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_CLUSTER_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_CLUSTER_ENCRYPTED_AT_REST">RDS_CLUSTER_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_CLUSTER_IAM_AUTHENTICATION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_CLUSTER_IAM_AUTHENTICATION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_CLUSTER_IAM_AUTHENTICATION_ENABLED">RDS_CLUSTER_IAM_AUTHENTICATION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_LAST_BACKUP_RECOVERY_POINT_CREATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_LAST_BACKUP_RECOVERY_POINT_CREATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_LAST_BACKUP_RECOVERY_POINT_CREATED">RDS_LAST_BACKUP_RECOVERY_POINT_CREATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN">RDS_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="REQUIRED_TAGS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: REQUIRED_TAGS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#REQUIRED_TAGS">REQUIRED_TAGS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ROUTE53_QUERY_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ROUTE53_QUERY_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ROUTE53_QUERY_LOGGING_ENABLED">ROUTE53_QUERY_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsAutomaticMinorVersionUpgradeEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsAutomaticMinorVersionUpgradeEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_AUTOMATIC_MINOR_VERSION_UPGRADE_ENABLED">RDS_AUTOMATIC_MINOR_VERSION_UPGRADE_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsClusterMultiAzEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsClusterMultiAzEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_CLUSTER_MULTI_AZ_ENABLED">RDS_CLUSTER_MULTI_AZ_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsInBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsInBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_IN_BACKUP_PLAN">RDS_IN_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsInstanceIamAuthenticationEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsInstanceIamAuthenticationEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_INSTANCE_IAM_AUTHENTICATION_ENABLED">RDS_INSTANCE_IAM_AUTHENTICATION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsInstancePublicAccessCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsInstancePublicAccessCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_INSTANCE_PUBLIC_ACCESS_CHECK">RDS_INSTANCE_PUBLIC_ACCESS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_LOGGING_ENABLED">RDS_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsMultiAzSupport">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsMultiAzSupport</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_MULTI_AZ_SUPPORT">RDS_MULTI_AZ_SUPPORT</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsSnapshotEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsSnapshotEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_SNAPSHOT_ENCRYPTED">RDS_SNAPSHOT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsStorageEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsStorageEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#RDS_STORAGE_ENCRYPTED">RDS_STORAGE_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftAuditLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftAuditLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#REDSHIFT_AUDIT_LOGGING_ENABLED">REDSHIFT_AUDIT_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftClusterConfigurationCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftClusterConfigurationCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#REDSHIFT_CLUSTER_CONFIGURATION_CHECK">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftClusterKmsEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftClusterKmsEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#REDSHIFT_CLUSTER_KMS_ENABLED">REDSHIFT_CLUSTER_KMS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftEnhancedVpcRoutingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftEnhancedVpcRoutingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#REDSHIFT_ENHANCED_VPC_ROUTING_ENABLED">REDSHIFT_ENHANCED_VPC_ROUTING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftRequireTlsSsl">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftRequireTlsSsl</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#REDSHIFT_REQUIRE_TLS_SSL">REDSHIFT_REQUIRE_TLS_SSL</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RootAccountHardwareMfaEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RootAccountHardwareMfaEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RootAccountMfaEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RootAccountMfaEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_BUCKET_LOGGING_ENABLED">S3_BUCKET_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketSslRequestsOnly">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketSslRequestsOnly</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketVersioningEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketVersioningEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_BUCKET_VERSIONING_ENABLED">S3_BUCKET_VERSIONING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3DefaultEncryptionKms">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3DefaultEncryptionKms</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_ACL_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_ACL_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_BUCKET_ACL_PROHIBITED">S3_BUCKET_ACL_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_MFA_DELETE_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_MFA_DELETE_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_BUCKET_MFA_DELETE_ENABLED">S3_BUCKET_MFA_DELETE_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#S3_RESOURCES_PROTECTED_BY_BACKUP_PLAN">S3_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SERVICE_VPC_ENDPOINT_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SERVICE_VPC_ENDPOINT_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#SERVICE_VPC_ENDPOINT_ENABLED">SERVICE_VPC_ENDPOINT_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="STEP_FUNCTIONS_STATE_MACHINE_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: STEP_FUNCTIONS_STATE_MACHINE_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#STEP_FUNCTIONS_STATE_MACHINE_LOGGING_ENABLED">STEP_FUNCTIONS_STATE_MACHINE_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="STORAGEGATEWAY_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: STORAGEGATEWAY_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#STORAGEGATEWAY_RESOURCES_PROTECTED_BY_BACKUP_PLAN">STORAGEGATEWAY_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SagemakerEndpointConfigurationKmsKeyConfigured">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SagemakerEndpointConfigurationKmsKeyConfigured</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED">SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SagemakerNotebookInstanceKmsKeyConfigured">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SagemakerNotebookInstanceKmsKeyConfigured</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED">SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SnsEncryptedKms">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SnsEncryptedKms</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#SNS_ENCRYPTED_KMS">SNS_ENCRYPTED_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VIRTUALMACHINE_RESOURCES_PROTECTED_BY_BACKUP_PLAN">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VIRTUALMACHINE_RESOURCES_PROTECTED_BY_BACKUP_PLAN</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#VIRTUALMACHINE_RESOURCES_PROTECTED_BY_BACKUP_PLAN">VIRTUALMACHINE_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VPC_VPN_2_TUNNELS_UP">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VPC_VPN_2_TUNNELS_UP</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#VPC_VPN_2_TUNNELS_UP">VPC_VPN_2_TUNNELS_UP</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VpcFlowLogsEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VpcFlowLogsEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#VPC_FLOW_LOGS_ENABLED">VPC_FLOW_LOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WAF_CLASSIC_LOGGING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WAF_CLASSIC_LOGGING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_CLASSIC_LOGGING_ENABLED">WAF_CLASSIC_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WAF_GLOBAL_RULEGROUP_NOT_EMPTY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WAF_GLOBAL_RULEGROUP_NOT_EMPTY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_GLOBAL_RULEGROUP_NOT_EMPTY">WAF_GLOBAL_RULEGROUP_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WAF_GLOBAL_RULE_NOT_EMPTY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WAF_GLOBAL_RULE_NOT_EMPTY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_GLOBAL_RULE_NOT_EMPTY">WAF_GLOBAL_RULE_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WAF_GLOBAL_WEBACL_NOT_EMPTY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WAF_GLOBAL_WEBACL_NOT_EMPTY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_GLOBAL_WEBACL_NOT_EMPTY">WAF_GLOBAL_WEBACL_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WafRegionalRuleNotEmpty">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WafRegionalRuleNotEmpty</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_REGIONAL_RULE_NOT_EMPTY">WAF_REGIONAL_RULE_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WafRegionalRulegroupNotEmpty">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WafRegionalRulegroupNotEmpty</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_REGIONAL_RULEGROUP_NOT_EMPTY">WAF_REGIONAL_RULEGROUP_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="WafRegionalWebaclNotEmpty">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: WafRegionalWebaclNotEmpty</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAF_REGIONAL_WEBACL_NOT_EMPTY">WAF_REGIONAL_WEBACL_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Wafv2LoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Wafv2LoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Australian_Cyber_Security_Center__ACSC__Informatio_control_catalog.html#WAFV2_LOGGING_ENABLED">WAFV2_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

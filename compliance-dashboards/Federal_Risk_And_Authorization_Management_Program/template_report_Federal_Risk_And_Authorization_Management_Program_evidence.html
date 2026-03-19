@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Sources - Federal Risk And Authorization Management Program (FedRAMP) Security Baseline Controls r4, Moderate</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+        .evidence-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .evidence-entry:last-child {
+            border-bottom: none;
+        }
+        .evidence-header {
+            margin-bottom: 15px;
+        }
+        .evidence-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        .evidence-rule {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #718096;
+        }
+        .evidence-stats {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .evidence-stat {
+            padding: 10px 15px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+        .evidence-stat .label {
+            font-size: 12px;
+            color: #718096;
+            text-transform: uppercase;
+        }
+        .evidence-stat .value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .evidence-stat.compliant .value {
+            color: #22543d;
+        }
+        .evidence-stat.non-compliant .value {
+            color: #c53030;
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Federal_Risk_And_Authorization_Management_Program_summary.html" class="">Summary Report</a> <a href="template_report_Federal_Risk_And_Authorization_Management_Program_evidence.html" class=" active">Evidence Sources</a> <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>Federal Risk And Authorization Management Program (FedRAMP) Security Baseline Controls r4, Moderate</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: Template: Operational-Best-Practices-for-FedRAMP-Moderate</div>
+            <div>Generated: 2026-03-18T15:45:47.394715+00:00</div>
+        </div>
+    </div>
+    
+
+    <div class="section">
+        <h2>Evidence Sources (AWS Config Rules)</h2>
+        <p style="color: #718096; margin-bottom: 20px;">
+            76 Config rules mapped from the conformance pack template. This is a template analysis - no deployed conformance pack evaluations are available.
+        </p>
+
+        <div class="evidence-entry" id="AlbHttpToHttpsRedirectionCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: AlbHttpToHttpsRedirectionCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK">ALB_HTTP_TO_HTTPS_REDIRECTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="BACKUP_RECOVERY_POINT_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: BACKUP_RECOVERY_POINT_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED">CLOUDFRONT_TRAFFIC_TO_ORIGIN_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDFRONT_VIEWER_POLICY_HTTPS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDFRONT_VIEWER_POLICY_HTTPS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDFRONT_VIEWER_POLICY_HTTPS">CLOUDFRONT_VIEWER_POLICY_HTTPS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDTRAIL_SECURITY_TRAIL_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDTRAIL_SECURITY_TRAIL_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CLOUDWATCH_ALARM_SETTINGS_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CLOUDWATCH_ALARM_SETTINGS_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudTrailCloudWatchLogsEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudTrailCloudWatchLogsEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED">CLOUD_TRAIL_CLOUD_WATCH_LOGS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudTrailEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudTrailEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudTrailLogFileValidationEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudTrailLogFileValidationEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudwatchAlarmActionCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudwatchAlarmActionCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CloudwatchLogGroupEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CloudwatchLogGroupEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CLOUDWATCH_LOG_GROUP_ENCRYPTED">CLOUDWATCH_LOG_GROUP_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="CwLoggroupRetentionPeriodCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: CwLoggroupRetentionPeriodCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#CW_LOGGROUP_RETENTION_PERIOD_CHECK">CW_LOGGROUP_RETENTION_PERIOD_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DAX_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DAX_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DAX_ENCRYPTION_ENABLED">DAX_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DAX_TLS_ENDPOINT_ENCRYPTION">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DAX_TLS_ENDPOINT_ENCRYPTION</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DAX_TLS_ENDPOINT_ENCRYPTION">DAX_TLS_ENDPOINT_ENCRYPTION</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DMS_ENDPOINT_SSL_CONFIGURED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DMS_ENDPOINT_SSL_CONFIGURED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DMS_ENDPOINT_SSL_CONFIGURED">DMS_ENDPOINT_SSL_CONFIGURED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DMS_REDIS_TLS_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DMS_REDIS_TLS_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DMS_REDIS_TLS_ENABLED">DMS_REDIS_TLS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DOCDB_CLUSTER_ENCRYPTED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DOCDB_CLUSTER_ENCRYPTED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DOCDB_CLUSTER_ENCRYPTED">DOCDB_CLUSTER_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_TABLE_ENCRYPTED_KMS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_TABLE_ENCRYPTED_KMS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DYNAMODB_TABLE_ENCRYPTED_KMS">DYNAMODB_TABLE_ENCRYPTED_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="DYNAMODB_TABLE_ENCRYPTION_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: DYNAMODB_TABLE_ENCRYPTION_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#DYNAMODB_TABLE_ENCRYPTION_ENABLED">DYNAMODB_TABLE_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_CLIENT_VPN_NOT_AUTHORIZE_ALL">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_CLIENT_VPN_NOT_AUTHORIZE_ALL</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_CLIENT_VPN_NOT_AUTHORIZE_ALL">EC2_CLIENT_VPN_NOT_AUTHORIZE_ALL</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_SECURITY_GROUP_ATTACHED_TO_ENI">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_SECURITY_GROUP_ATTACHED_TO_ENI</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_SECURITY_GROUP_ATTACHED_TO_ENI">EC2_SECURITY_GROUP_ATTACHED_TO_ENI</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC">EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED">EC2_TRANSIT_GATEWAY_AUTO_VPC_ATTACH_DISABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ECR_PRIVATE_IMAGE_SCANNING_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ECR_PRIVATE_IMAGE_SCANNING_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ECR_PRIVATE_IMAGE_SCANNING_ENABLED">ECR_PRIVATE_IMAGE_SCANNING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELASTICACHE_SUBNET_GROUP_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELASTICACHE_SUBNET_GROUP_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ELASTICACHE_SUBNET_GROUP_CHECK">ELASTICACHE_SUBNET_GROUP_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2EbsEncryptionByDefault">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2EbsEncryptionByDefault</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_EBS_ENCRYPTION_BY_DEFAULT">EC2_EBS_ENCRYPTION_BY_DEFAULT</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2ManagedinstanceAssociationComplianceStatusCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2ManagedinstanceAssociationComplianceStatusCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_ASSOCIATION_COMPLIANCE_STATUS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="Ec2ResourcesProtectedByBackupPlan">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: Ec2ResourcesProtectedByBackupPlan</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#EC2_RESOURCES_PROTECTED_BY_BACKUP_PLAN">EC2_RESOURCES_PROTECTED_BY_BACKUP_PLAN</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="ElbTlsHttpsListenersOnly">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: ElbTlsHttpsListenersOnly</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ELB_TLS_HTTPS_LISTENERS_ONLY">ELB_TLS_HTTPS_LISTENERS_ONLY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="EncryptedVolumes">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: EncryptedVolumes</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ENCRYPTED_VOLUMES">ENCRYPTED_VOLUMES</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FMS_SHIELD_RESOURCE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FMS_SHIELD_RESOURCE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#FMS_SHIELD_RESOURCE_POLICY_CHECK">FMS_SHIELD_RESOURCE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK">FMS_WEBACL_RULEGROUP_ASSOCIATION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="GuarddutyEnabledCentralized">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: GuarddutyEnabledCentralized</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_POLICY_BLACKLISTED_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_POLICY_BLACKLISTED_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_POLICY_IN_USE">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_POLICY_IN_USE</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_POLICY_IN_USE">IAM_POLICY_IN_USE</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IAM_ROLE_MANAGED_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IAM_ROLE_MANAGED_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamPasswordPolicy">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamPasswordPolicy</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_PASSWORD_POLICY">IAM_PASSWORD_POLICY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamPolicyNoStatementsWithAdminAccess">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamPolicyNoStatementsWithAdminAccess</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamPolicyNoStatementsWithFullAccess">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamPolicyNoStatementsWithFullAccess</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamUserMfaEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamUserMfaEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamUserNoPoliciesCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamUserNoPoliciesCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IamUserUnusedCredentialsCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IamUserUnusedCredentialsCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="IncomingSshDisabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: IncomingSshDisabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="MfaEnabledForIamConsoleAccess">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: MfaEnabledForIamConsoleAccess</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NACL_NO_UNRESTRICTED_SSH_RDP">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NACL_NO_UNRESTRICTED_SSH_RDP</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FULL_PACKETS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_POLICY_RULE_GROUP_ASSOCIATED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_POLICY_RULE_GROUP_ASSOCIATED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="NoUnrestrictedRouteToIgw">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: NoUnrestrictedRouteToIgw</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#NO_UNRESTRICTED_ROUTE_TO_IGW">NO_UNRESTRICTED_ROUTE_TO_IGW</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_CLUSTER_ENCRYPTED_AT_REST">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_CLUSTER_ENCRYPTED_AT_REST</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#RDS_CLUSTER_ENCRYPTED_AT_REST">RDS_CLUSTER_ENCRYPTED_AT_REST</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RDS_DB_SECURITY_GROUP_NOT_ALLOWED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RDS_DB_SECURITY_GROUP_NOT_ALLOWED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#RDS_DB_SECURITY_GROUP_NOT_ALLOWED">RDS_DB_SECURITY_GROUP_NOT_ALLOWED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RdsStorageEncrypted">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RdsStorageEncrypted</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#RDS_STORAGE_ENCRYPTED">RDS_STORAGE_ENCRYPTED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftClusterConfigurationCheck">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftClusterConfigurationCheck</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#REDSHIFT_CLUSTER_CONFIGURATION_CHECK">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftClusterKmsEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftClusterKmsEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#REDSHIFT_CLUSTER_KMS_ENABLED">REDSHIFT_CLUSTER_KMS_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RedshiftRequireTlsSsl">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RedshiftRequireTlsSsl</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#REDSHIFT_REQUIRE_TLS_SSL">REDSHIFT_REQUIRE_TLS_SSL</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="RootAccountMfaEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: RootAccountMfaEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketDefaultLockEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketDefaultLockEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_DEFAULT_LOCK_ENABLED">S3_BUCKET_DEFAULT_LOCK_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketLoggingEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketLoggingEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_LOGGING_ENABLED">S3_BUCKET_LOGGING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketServerSideEncryptionEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketServerSideEncryptionEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketSslRequestsOnly">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketSslRequestsOnly</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3BucketVersioningEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3BucketVersioningEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_VERSIONING_ENABLED">S3_BUCKET_VERSIONING_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3DefaultEncryptionKms">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3DefaultEncryptionKms</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_ACL_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_ACL_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_ACL_PROHIBITED">S3_BUCKET_ACL_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED">S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_LIFECYCLE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_LIFECYCLE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_LIFECYCLE_POLICY_CHECK">S3_LIFECYCLE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="S3_VERSION_LIFECYCLE_POLICY_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: S3_VERSION_LIFECYCLE_POLICY_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#S3_VERSION_LIFECYCLE_POLICY_CHECK">S3_VERSION_LIFECYCLE_POLICY_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SERVICE_VPC_ENDPOINT_ENABLED">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SERVICE_VPC_ENDPOINT_ENABLED</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#SERVICE_VPC_ENDPOINT_ENABLED">SERVICE_VPC_ENDPOINT_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="SecurityhubEnabled">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: SecurityhubEnabled</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#SECURITYHUB_ENABLED">SECURITYHUB_ENABLED</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VPC_PEERING_DNS_RESOLUTION_CHECK">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VPC_PEERING_DNS_RESOLUTION_CHECK</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#VPC_PEERING_DNS_RESOLUTION_CHECK">VPC_PEERING_DNS_RESOLUTION_CHECK</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+        <div class="evidence-entry" id="VpcSgOpenOnlyToAuthorizedPorts">
+            <div class="evidence-header">
+                <div class="evidence-title"></div>
+                
+                <div class="evidence-rule" style="margin-top: 10px;">Rule: VpcSgOpenOnlyToAuthorizedPorts</div>
+                <div class="evidence-rule">Keyword: <a href="template_report_Federal_Risk_And_Authorization_Management_Program_control_catalog.html#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a></div>
+            </div>
+
+            
+            <div style="background: #f7fafc; border-radius: 6px; padding: 15px; margin: 15px 0; color: #718096; font-style: italic;">
+                Template mode: No resource evaluations available. Deploy this conformance pack to see compliance results.
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

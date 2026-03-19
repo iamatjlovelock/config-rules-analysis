@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Summary - AWS Operational Best Practices</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_AWS_Operational_Best_Practices_summary.html" class=" active">Summary Report</a> <a href="template_report_AWS_Operational_Best_Practices_evidence.html" class="">Evidence Sources</a> <a href="template_report_AWS_Operational_Best_Practices_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>AWS Operational Best Practices</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: None</div><div>Generated: 2026-03-18T15:46:08.424160+00:00</div>
+        </div>
+    </div>
+    
+
+    <div style="background: #fef3c7; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+        <strong style="color: #b45309;">No Conformance Pack Template Available</strong>
+        <p style="color: #92400e; margin: 5px 0 0 0; font-size: 14px;">
+            There is no conformance pack template associated with the <strong>AWS Operational Best Practices</strong> framework.
+            This report shows the Config rules referenced in the framework. Use the Control Catalog report to see detailed
+            information about each rule. To deploy a conformance pack, you will need to create a custom template or use
+            a related framework's template.
+        </p>
+    </div>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Control Sets</h3>
+            <div class="value">20</div>
+        </div>
+        <div class="card">
+            <h3>Framework Controls</h3>
+            <div class="value">51</div>
+        </div>
+    </div>
+
+    <div class="section" style="padding: 15px 20px; margin-bottom: 20px;">
+        <p style="color: #4a5568; font-size: 14px; margin: 0; line-height: 1.6;">
+            <strong>Config Rules Coverage:</strong> The cards below show the overlap between Config rules in the
+            Audit Manager framework, the Conformance Pack template, and the Security Hub standard.
+            "Intersection" shows framework rules that appear in the template or standard.
+            "Not Covered" shows framework rules that do not appear in either the template or standard.
+        </p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Config Rules in Framework</h3>
+            <div class="value">0</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Template</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Standard</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Not Covered</h3>
+            <div class="value">N/A</div>
+        </div>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="margin: 0 0 10px 0; color: white;">Rules Manifest</h3>
+        <p style="margin: 0 0 15px 0; opacity: 0.9; font-size: 14px;">
+            View the complete inventory of all Config rules, filtered to show rules referenced by this framework,
+            its associated security standard, or conformance pack template.
+        </p>
+        <a href="../../rule-manifest/rule_manifest.html?framework=AWS%20Operational%20Best%20Practices" style="display: inline-block; background: white; color: #667eea; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            Open Rules Manifest
+        </a>
+    </div>
+
+    <div class="section">
+        <h2>Framework Controls by Control Set</h2>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ACM</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.1: Imported ACM certificates should be renewed after a specified time period (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>AutoScaling</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.2: Auto Scaling groups associated with a load balancer should use load balancer health checks (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>CloudTrail</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.3: CloudTrail should be enabled and configured with at least one multi-Region trail (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.4: CloudTrail should have encryption at-rest enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>CodeBuild</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.5: CodeBuild GitHub or Bitbucket source repository URLs should use OAuth (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.6: CodeBuild project environment variables should not contain clear text credentials (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Config</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.7: AWS Config should be enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>DMS</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.8: Database Migration Service replication instances should not be public (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>EC2</h3>
+                <div class="stats">
+                    7 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.9: Amazon EBS snapshots should not be public, determined by the ability to be restorable by anyone (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.10: The VPC default security group should not allow inbound and outbound traffic (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.11: Attached EBS volumes should be encrypted at-rest (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.12: Stopped EC2 instances should be removed after a specified time period (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.13.1: VPC flow logging should be enabled in all VPCs (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.13.2: EBS default encryption should be enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.13.3: EC2 instances should use IMDSv2 (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>EFS</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.14: Amazon EFS should be configured to encrypt file data at-rest using AWS KMS (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ELB</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.15: Application Load Balancer should be configured to redirect all HTTP requests to HTTPS (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>EMR</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.41: Amazon EMR cluster master nodes should not have public IP addresses (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>ES</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.16: Amazon OpenSearch Service domains should have encryption at-rest enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>GuardDuty</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.17: GuardDuty should be enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>IAM</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.18: IAM policies should not allow full &quot;*&quot; administrative privileges (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.19: IAM users should not have IAM policies attached (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.20: IAM users&#x27; access keys should be rotated every 90 days or less (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.21: IAM root user access key should not exist (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.22: MFA should be enabled for all IAM users that have a console password (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.23: Hardware MFA should be enabled for the root user (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.42: Unused IAM user credentials should be removed (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.51: Password policies for IAM users should have strong configurations (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>KMS</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.37: IAM customer managed policies should not allow decryption actions on all KMS keys (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.38: IAM principals should not have IAM inline policies that allow decryption actions on all KMS keys (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Lambda</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.24: Lambda functions should prohibit public access by other accounts (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.25: Lambda functions should use latest runtimes (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>RDS</h3>
+                <div class="stats">
+                    8 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.26: RDS snapshots should be private (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.27: RDS DB instances should prohibit public access, determined by the Publicly Accessible configuration (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.28: RDS DB instances should have encryption at-rest enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.46: RDS cluster snapshots and database snapshots should be encrypted at rest (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.47: RDS DB instances should be configured with multiple Availability Zones (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.48: Enhanced monitoring should be configured for RDS DB instances and clusters (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.49: RDS clusters should have deletion protection enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.50: RDS DB instances should have deletion protection enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>S3</h3>
+                <div class="stats">
+                    5 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.29: S3 Block Public Access setting should be enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.30: S3 buckets should prohibit public read access (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.31: S3 buckets should prohibit public write access (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.33: S3 buckets should require requests to use Secure Socket Layer (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.43: Amazon S3 permissions granted to other AWS accounts in bucket policies should be restricted (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SageMaker</h3>
+                <div class="stats">
+                    1 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.34: SageMaker notebook instances should not have direct internet access (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SecretsManager</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.44: Secrets Manager secrets should have automatic rotation enabled (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.45: Secrets Manager secrets configured with automatic rotation should rotate successfully (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>SSM</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>OBP2-1.35: All EC2 instances managed by Systems Manager should be compliant with patching requirements (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.36: Instances managed by Systems Manager should have an association compliance status of COMPLIANT (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>OBP2-1.52: EC2 instances should be managed by AWS Systems Manager (AWS-Operational-Best-Practices)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

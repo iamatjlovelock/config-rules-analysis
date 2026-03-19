@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Summary - NIST 800-171 Revision 2: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_summary.html" class=" active">Summary Report</a> <a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_evidence.html" class="">Evidence Sources</a> <a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>NIST 800-171 Revision 2: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: Operational Best Practices for NIST 800 171</div><div>Generated: 2026-03-18T15:47:48.049734+00:00</div>
+        </div>
+    </div>
+    
+
+    <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+        <strong style="color: #0369a1;">Template Analysis Mode</strong>
+        <p style="color: #0369a1; margin: 5px 0 0 0; font-size: 14px;">
+            This report analyzes the framework against a conformance pack template. No deployed conformance pack was evaluated,
+            so resource compliance data is not available. Deploy the conformance pack to see actual compliance results.
+        </p>
+    </div>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Control Sets</h3>
+            <div class="value">14</div>
+        </div>
+        <div class="card">
+            <h3>Framework Controls</h3>
+            <div class="value">110</div>
+        </div>
+    </div>
+
+    <div class="section" style="padding: 15px 20px; margin-bottom: 20px;">
+        <p style="color: #4a5568; font-size: 14px; margin: 0; line-height: 1.6;">
+            <strong>Config Rules Coverage:</strong> The cards below show the overlap between Config rules in the
+            Audit Manager framework, the Conformance Pack template, and the Security Hub standard.
+            "Intersection" shows framework rules that appear in the template or standard.
+            "Not Covered" shows framework rules that do not appear in either the template or standard.
+        </p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Config Rules in Framework</h3>
+            <div class="value">51</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Template</h3>
+            <div class="value">28</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Standard</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Not Covered</h3>
+            <div class="value">23</div>
+        </div>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="margin: 0 0 10px 0; color: white;">Rules Manifest</h3>
+        <p style="margin: 0 0 15px 0; opacity: 0.9; font-size: 14px;">
+            View the complete inventory of all Config rules, filtered to show rules referenced by this framework,
+            its associated security standard, or conformance pack template.
+        </p>
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20800-171%20Revision%202%3A%20Protecting%20Controlled%20Unclassified%20Information%20in%20Nonfederal%20Systems%20and%20Organizations&template=Operational-Best-Practices-for-NIST-800-171" style="display: inline-block; background: white; color: #667eea; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            Open Rules Manifest
+        </a>
+    </div>
+
+    <div class="section" style="text-align: center;">
+        <h3 style="margin-bottom: 10px;">Config Rules Coverage Venn Diagram</h3>
+        <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">
+            Visualization of rule overlap between Framework, Template, and Security Standard.
+            Numbers show unique rules in each region. Click a number to view those rules in the manifest.
+        </p>
+        
+    <svg viewBox="0 0 400 340" style="max-width: 500px; width: 100%;">
+        <defs>
+            <style>
+                .venn-circle { fill-opacity: 0.3; stroke-width: 2; }
+                .venn-framework { fill: #4299e1; stroke: #2b6cb0; }
+                .venn-template { fill: #48bb78; stroke: #276749; }
+                .venn-standard { fill: #9f7aea; stroke: #6b46c1; }
+                .venn-label { font-size: 12px; font-weight: bold; fill: #2d3748; }
+                .venn-count { font-size: 14px; font-weight: bold; fill: #1a202c; }
+                .venn-link { cursor: pointer; }
+                .venn-link:hover { fill: #4c51bf; text-decoration: underline; }
+                .venn-title { font-size: 11px; fill: #4a5568; }
+            </style>
+        </defs>
+
+        <!-- Framework circle (top-left, blue) -->
+        <circle cx="150" cy="130" r="90" class="venn-circle venn-framework"/>
+
+        <!-- Template circle (top-right, green) -->
+        <circle cx="250" cy="130" r="90" class="venn-circle venn-template"/>
+
+        <!-- Standard circle (bottom, purple) -->
+        <circle cx="200" cy="210" r="90" class="venn-circle venn-standard"/>
+
+        <!-- Labels for each region -->
+        <!-- Framework only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20800-171%20Revision%202%3A%20Protecting%20Controlled%20Unclassified%20Information%20in%20Nonfederal%20Systems%20and%20Organizations&template=Operational-Best-Practices-for-NIST-800-171&venn=f" style="text-decoration: none;"><text x="95" y="110" class="venn-count venn-link" text-anchor="middle">23</text></a>
+
+        <!-- Template only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20800-171%20Revision%202%3A%20Protecting%20Controlled%20Unclassified%20Information%20in%20Nonfederal%20Systems%20and%20Organizations&template=Operational-Best-Practices-for-NIST-800-171&venn=t" style="text-decoration: none;"><text x="305" y="110" class="venn-count venn-link" text-anchor="middle">102</text></a>
+
+        <!-- Standard only -->
+        <text x="200" y="280" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Framework & Template (not Standard) -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=NIST%20800-171%20Revision%202%3A%20Protecting%20Controlled%20Unclassified%20Information%20in%20Nonfederal%20Systems%20and%20Organizations&template=Operational-Best-Practices-for-NIST-800-171&venn=ft" style="text-decoration: none;"><text x="200" y="95" class="venn-count venn-link" text-anchor="middle">28</text></a>
+
+        <!-- Framework & Standard (not Template) -->
+        <text x="140" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Template & Standard (not Framework) -->
+        <text x="260" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- All three -->
+        <text x="200" y="160" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Circle labels -->
+        <text x="70" y="50" class="venn-label">Framework</text>
+        <text x="70" y="65" class="venn-title">(51 rules)</text>
+
+        <text x="280" y="50" class="venn-label">Template</text>
+        <text x="280" y="65" class="venn-title">(130 rules)</text>
+
+        <text x="200" y="320" class="venn-label" text-anchor="middle">Standard</text>
+        <text x="200" y="335" class="venn-title" text-anchor="middle">(0 rules)</text>
+    </svg>
+    
+    </div>
+
+    <div class="section">
+        <h3>Conformance Pack Template Cross-Check</h3>
+        <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+            <em>Note: The AWS Config API does not indicate which template was used when a conformance pack was deployed.
+            The following templates are associated with this framework and may have been used:</em>
+        </p>
+        <ul style="margin: 0; padding-left: 20px;">
+            <li><a href="..\..\conformance-packs\conformance-pack-yamls\Operational-Best-Practices-for-NIST-800-171.yaml"><strong>Operational-Best-Practices-for-NIST-800-171</strong></a> — 130 Config Rules</li>
+
+        </ul>
+        <div style="margin-top: 15px; padding: 12px; background: #f7fafc; border-radius: 6px; border-left: 3px solid #4299e1;">
+            <p style="color: #4a5568; font-size: 13px; margin: 0 0 8px 0;"><strong>Understanding the "In Template" column:</strong></p>
+            <ul style="color: #4a5568; font-size: 13px; margin: 0; padding-left: 20px;">
+                <li><span class="badge compliant" style="font-size: 11px;">Yes</span> — Rule is in the conformance pack template</li>
+                <li><span class="badge warning" style="font-size: 11px;">No</span> — Rule is not in the conformance pack template (check Gap Report for details)</li>
+                <li><span class="badge not-applicable" style="font-size: 11px;">-</span> — No Config rule referenced for this control</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Framework Controls by Control Set</h2>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.1 - Access Controls</h3>
+                <div class="stats">
+                    22 Framework Controls mapped to 18 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.1.1: Limit system access to authorized users, processes acting on behalf of authorized users, and devices (including other systems). (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.2: Limit system access to the types of transactions and functions that authorized users are permitted to execute. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_IN_USE">IAM_POLICY_IN_USE</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.3: Control the flow of CUI in accordance with approved authorizations. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NO_UNRESTRICTED_ROUTE_TO_IGW">NO_UNRESTRICTED_ROUTE_TO_IGW</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SERVICE_VPC_ENDPOINT_ENABLED">SERVICE_VPC_ENDPOINT_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.4: Separate the duties of individuals to reduce the risk of malevolent activity without collusion. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.5: Employ the principle of least privilege, including for specific security functions and privileged accounts. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.6: Use non-privileged accounts or roles when accessing nonsecurity functions (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.7: Prevent non-privileged users from executing privileged functions and capture the execution of such functions in audit logs. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.8: Limit unsuccessful logon attempts. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.9: Provide privacy and security notices consistent with applicable CUI rules. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.10: Use session lock with pattern-hiding displays to prevent access and viewing of data after a period of inactivity (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.11: Terminate (automatically) a user session after a defined condition. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.12: Monitor and control remote access sessions. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED">EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.13: Employ cryptographic mechanisms to protect the confidentiality of remote access sessions. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_VPN_2_TUNNELS_UP">VPC_VPN_2_TUNNELS_UP</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.14: Route remote access via managed access control points. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.15: Authorize remote execution of privileged commands and remote access to security-relevant information. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.16: Authorize wireless access prior to allowing such connections (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.17: Protect wireless access using authentication and encryption (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.18: Control connection of mobile devices. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.19: Encrypt CUI on mobile devices and mobile computing platforms. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.20: Verify and control/limit connections to and use of external systems. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NO_UNRESTRICTED_ROUTE_TO_IGW">NO_UNRESTRICTED_ROUTE_TO_IGW</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_VPN_2_TUNNELS_UP">VPC_VPN_2_TUNNELS_UP</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED">EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.21: Limit use of portable storage devices on external systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.1.22: Control CUI posted or processed on publicly accessible systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.2 - Training and Awareness</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.2.1: Ensure that managers, systems administrators, and users of organizational systems are made aware of the security risks associated with their activities and of the applicable policies, standards, and procedures related to the security of those systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.2.2: Ensure that personnel are trained to carry out their assigned information security-related duties and responsibilities. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.2.3: Provide security awareness training on recognizing and reporting potential indicators of insider threat. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.3 - Audit and Accountability</h3>
+                <div class="stats">
+                    9 Framework Controls mapped to 14 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.3.1: Create and retain system audit logs and records to the extent needed to enable the monitoring, analysis, investigation, and reporting of unlawful or unauthorized system activity (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_FLOW_LOGS_ENABLED">VPC_FLOW_LOGS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.2: Ensure that the actions of individual system users can be uniquely traced to those users, so they can be held accountable for their actions. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.3: Review and update logged events. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.4: Alert in the event of an audit logging process failure. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.5: Correlate audit record review, analysis, and reporting processes for investigation and response to indications of unlawful, unauthorized, suspicious, or unusual activity. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.6: Provide audit record reduction and report generation to support on-demand analysis and reporting. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.7: Provide a system capability that compares and synchronizes internal system clocks with an authoritative source to generate time stamps for audit records (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.8: Protect audit information and audit logging tools from unauthorized access, modification, and deletion. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_VERSIONING_ENABLED">S3_BUCKET_VERSIONING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_LOGGING_ENABLED">S3_BUCKET_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_LOG_GROUP_ENCRYPTED">CLOUDWATCH_LOG_GROUP_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_EVENT_NOTIFICATIONS_ENABLED">S3_EVENT_NOTIFICATIONS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.3.9: Limit management of audit logging functionality to a subset of privileged users. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.4 - Configuration Management</h3>
+                <div class="stats">
+                    9 Framework Controls mapped to 3 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.4.1: Establish and maintain baseline configurations and inventories of organizational systems (including hardware, software, firmware, and documentation) throughout the respective system development life cycles. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.2: Establish and enforce security configuration settings for information technology products employed in organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.3: Track, review, approve or disapprove, and log changes to organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.4: Analyze the security impact of changes prior to implementation. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.5: Define, document, approve, and enforce physical and logical access restrictions associated with changes to organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.6: Employ the principle of least functionality by configuring organizational systems to provide only essential capabilities. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.7: Restrict, disable, or prevent the use of nonessential programs, functions, ports, protocols, and services. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC">EC2_SECURITY_GROUP_ATTACHED_TO_ENI_PERIODIC</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_SECURITY_GROUP_ATTACHED_TO_ENI">EC2_SECURITY_GROUP_ATTACHED_TO_ENI</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_NETWORK_ACL_UNUSED_CHECK">VPC_NETWORK_ACL_UNUSED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.8: Apply deny-by-exception (blacklisting) policy to prevent the use of unauthorized software or deny-all, permit-by-exception (whitelisting) policy to allow the execution of authorized software. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.4.9: Control and monitor user-installed software. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.5 - Identification and Authentication</h3>
+                <div class="stats">
+                    11 Framework Controls mapped to 2 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.5.1: Identify system users, processes acting on behalf of users, and devices. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.2: Authenticate (or verify) the identities of users, processes, or devices, as a prerequisite to allowing access to organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_PASSWORD_POLICY">IAM_PASSWORD_POLICY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.3: Use multifactor authentication for local and network access to privileged accounts and for network access to non-privileged accounts. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.4: Employ replay-resistant authentication mechanisms for network access to privileged and non-privileged accounts. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.5: Prevent reuse of identifiers for a defined period. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.6: Disable identifiers after a defined period of inactivity. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.7: Enforce a minimum password complexity and change of characters when new passwords are created. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_PASSWORD_POLICY">IAM_PASSWORD_POLICY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.8: Prohibit password reuse for a specified number of generations. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_PASSWORD_POLICY">IAM_PASSWORD_POLICY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.9: Allow temporary password use for system logons with an immediate change to a permanent password. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.10: Store and transmit only cryptographically-protected passwords. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.5.11: Obscure feedback of authentication information (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.6 - Incident Response</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.6.1: Establish an operational incident-handling capability for organizational systems that includes preparation, detection, analysis, containment, recovery, and user response activities. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.6.2: Track, document, and report incidents to designated officials and/or authorities both internal and external to the organization. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.6.3: Test the organizational incident response capability. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.7 - Maintenance</h3>
+                <div class="stats">
+                    6 Framework Controls mapped to 2 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.7.1: Perform maintenance on organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.7.2: Provide controls on the tools, techniques, mechanisms, and personnel used to conduct system maintenance. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.7.3: Ensure equipment removed for off-site maintenance is sanitized of any CUI. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.7.4: Check media containing diagnostic and test programs for malicious code before the media are used in organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.7.5: Require multifactor authentication to establish nonlocal maintenance sessions via external network connections and terminate such connections when nonlocal maintenance is complete. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_MFA_ENABLED">IAM_USER_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.7.6: Supervise the maintenance activities of maintenance personnel without required access authorization. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.8 - Media Protection</h3>
+                <div class="stats">
+                    9 Framework Controls mapped to 1 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.8.1: Protect (i.e., physically control and securely store) system media containing CUI, both paper and digital. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.2: Limit access to CUI on system media to authorized users (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.3: Sanitize or destroy system media containing CUI before disposal or release for reuse. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.4: Mark media with necessary CUI markings and distribution limitations.[27] (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.5: Control access to media containing CUI and maintain accountability for media during transport outside of controlled areas. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.6: Implement cryptographic mechanisms to protect the confidentiality of CUI stored on digital media during transport unless otherwise protected by alternative physical safeguards. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.7: Control the use of removable media on system components. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.8: Prohibit the use of portable storage devices when such devices have no identifiable owner. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.8.9: Protect the confidentiality of backup CUI at storage locations. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.9 - Personnel Security</h3>
+                <div class="stats">
+                    2 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.9.1: Screen individuals prior to authorizing access to organizational systems containing CUI. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.9.2: Ensure that organizational systems containing CUI are protected during and after personnel actions such as terminations and transfers (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.10 - Physical Protection</h3>
+                <div class="stats">
+                    6 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.10.1: Limit physical access to organizational systems, equipment, and the respective operating environments to authorized individuals. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.10.2: Protect and monitor the physical facility and support infrastructure for organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.10.3: Escort visitors and monitor visitor activity. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.10.4: Maintain audit logs of physical access. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.10.5: Control and manage physical access devices. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.10.6: Enforce safeguarding measures for CUI at alternate work sites. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.11 - Risk Assessment</h3>
+                <div class="stats">
+                    3 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.11.1: Periodically assess the risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals, resulting from the operation of organizational systems and the associated processing, storage, or transmission of CUI. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.11.2: Scan for vulnerabilities in organizational systems and applications periodically and when new vulnerabilities affecting those systems and applications are identified. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.11.3: Remediate vulnerabilities in accordance with risk assessments. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.12 - Security Assessment</h3>
+                <div class="stats">
+                    4 Framework Controls mapped to 0 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.12.1: Periodically assess the security controls in organizational systems to determine if the controls are effective in their application. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.12.2: Develop and implement plans of action designed to correct deficiencies and reduce or eliminate vulnerabilities in organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.12.3: Monitor security controls on an ongoing basis to ensure the continued effectiveness of the controls. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.12.4: Develop, document, and periodically update system security plans that describe system boundaries, system environments of operation, how security requirements are implemented, and the relationships with or connections to other systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.13 - System and Communications Protection</h3>
+                <div class="stats">
+                    16 Framework Controls mapped to 28 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_FLOW_LOGS_ENABLED">VPC_FLOW_LOGS_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NO_UNRESTRICTED_ROUTE_TO_IGW">NO_UNRESTRICTED_ROUTE_TO_IGW</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#INCOMING_SSH_DISABLED">INCOMING_SSH_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SERVICE_VPC_ENDPOINT_ENABLED">SERVICE_VPC_ENDPOINT_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_LOGGING_ENABLED">NETFW_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.2: Employ architectural designs, software development techniques, and systems engineering principles that promote effective information security within organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.3: Separate user functionality from system management functionality. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_NO_POLICIES_CHECK">IAM_USER_NO_POLICIES_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.4: Prevent unauthorized and unintended information transfer via shared system resources. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED">S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.5: Implement subnetworks for publicly accessible system components that are physically or logically separated from internal networks. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.6: Deny network communications traffic by default and allow network communications traffic by exception (i.e., deny all, permit by exception). (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.7: Prevent remote devices from simultaneously establishing non-remote connections with organizational systems and communicating via some other connection to resources in external networks (i.e., split tunneling). (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.8: Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission unless otherwise protected by alternative physical safeguards. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELBV2_ACM_CERTIFICATE_REQUIRED">ELBV2_ACM_CERTIFICATE_REQUIRED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_ACM_CERTIFICATE_REQUIRED">ELB_ACM_CERTIFICATE_REQUIRED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_TLS_HTTPS_LISTENERS_ONLY">ELB_TLS_HTTPS_LISTENERS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.9: Terminate network connections associated with communications sessions at the end of the sessions or after a defined period of inactivity. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.10: Establish and manage cryptographic keys for cryptography employed in organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.11: Employ FIPS-validated cryptography when used to protect the confidentiality of CUI. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SNS_ENCRYPTED_KMS">SNS_ENCRYPTED_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.12: Prohibit remote activation of collaborative computing devices and provide indication of devices in use to users present at the device. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.13: Control and monitor the use of mobile code. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.14: Control and monitor the use of Voice over Internet Protocol (VoIP) technologies. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.15: Protect the authenticity of communications sessions. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_SSL_REQUESTS_ONLY">S3_BUCKET_SSL_REQUESTS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELBV2_ACM_CERTIFICATE_REQUIRED">ELBV2_ACM_CERTIFICATE_REQUIRED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_TLS_HTTPS_LISTENERS_ONLY">ELB_TLS_HTTPS_LISTENERS_ONLY</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#API_GW_SSL_ENABLED">API_GW_SSL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ACM_CERTIFICATE_EXPIRATION_CHECK">ACM_CERTIFICATE_EXPIRATION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.13.16: Protect the confidentiality of CUI at rest. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#SNS_ENCRYPTED_KMS">SNS_ENCRYPTED_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>3.14 - System and Information Integrity</h3>
+                <div class="stats">
+                    7 Framework Controls mapped to 5 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>3.14.1: Identify, report, and correct system flaws in a timely manner. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_APPLICATIONS_REQUIRED">EC2_MANAGEDINSTANCE_APPLICATIONS_REQUIRED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.14.2: Provide protection from malicious code at designated locations within organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.14.3: Monitor system security alerts and advisories and take action in response. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.14.4: Update malicious code protection mechanisms when new releases are available. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.14.5: Perform periodic scans of organizational systems and real-time scans of files from external sources as files are downloaded, opened, or executed. (NIST-SP-800-171-r2)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.14.6: Monitor organizational systems, including inbound and outbound communications traffic, to detect attacks and indicators of potential attacks. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#WAFV2_RULEGROUP_LOGGING_ENABLED">WAFV2_RULEGROUP_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>3.14.7: Identify unauthorized use of organizational systems. (NIST-SP-800-171-r2)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#GUARDDUTY_ENABLED_CENTRALIZED">GUARDDUTY_ENABLED_CENTRALIZED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#WAFV2_RULEGROUP_LOGGING_ENABLED">WAFV2_RULEGROUP_LOGGING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

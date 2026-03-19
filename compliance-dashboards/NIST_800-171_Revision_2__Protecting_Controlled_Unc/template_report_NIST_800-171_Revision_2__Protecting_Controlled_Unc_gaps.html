@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gap Analysis - NIST 800-171 Revision 2: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .report-header {
+            background: linear-gradient(135deg, #744210 0%, #975a16 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #744210;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #744210;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .rule-entry {
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #fffaf0;
+            border-radius: 0 8px 8px 0;
+        }
+        .rule-entry h3 {
+            margin: 0 0 10px 0;
+            color: #744210;
+            font-size: 16px;
+        }
+        .rule-keyword {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+            color: #666;
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .rule-description {
+            color: #4a5568;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .controls-list {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .controls-list h4 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .control-item {
+            padding: 8px 12px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .control-set {
+            font-size: 12px;
+            color: #718096;
+        }
+        .info-box {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            color: #2c5282;
+            font-size: 16px;
+        }
+        .info-box p {
+            margin: 0;
+            color: #2a4365;
+            font-size: 14px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_summary.html">← Back to Summary Report</a>
+    </nav>
+
+    <div class="report-header">
+        <h1>Gap Analysis Report</h1>
+        <div class="meta">
+            <div>Framework: NIST 800-171 Revision 2: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</div>
+            <div>Conformance Pack: Template: Operational-Best-Practices-for-NIST-800-171</div>
+            <div>Generated: 2026-03-18T15:47:48.049734+00:00</div>
+        </div>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Unmapped Rules</h3>
+            <div class="value">23</div>
+        </div>
+        <div class="card">
+            <h3>Total References</h3>
+            <div class="value">49</div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h3>What does this report show?</h3>
+        <p>
+            This report lists AWS Config rules that are referenced by the NIST 800-171 Revision 2: Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations framework
+            but are not deployed as part of the <strong>Template: Operational-Best-Practices-for-NIST-800-171</strong> conformance pack.
+            These rules cannot be evaluated for compliance until they are added to the conformance pack
+            or deployed separately in your account.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Unmapped Config Rules (23)</h2>
+
+        <div class="rule-entry" id="CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#CLOUDFRONT_CUSTOM_SSL_CERTIFICATE">CLOUDFRONT_CUSTOM_SSL_CERTIFICATE</a></span></div>
+            <div class="rule-description">Checks if the certificate associated with an Amazon CloudFront distribution is the default SSL certificate. The rule is NON_COMPLIANT if a CloudFront distribution uses the default SSL certificate.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.13.15: Protect the authenticity of communications sessions. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS">CLOUDFRONT_NO_DEPRECATED_SSL_PROTOCOLS</a></span></div>
+            <div class="rule-description">Checks if CloudFront distributions are using deprecated SSL protocols for HTTPS communication between CloudFront edge locations and custom origins. This rule is NON_COMPLIANT for a CloudFront distribution if any &#x27;OriginSslProtocols&#x27; includes &#x27;SSLv3&#x27;.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.13.15: Protect the authenticity of communications sessions. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="CLOUDWATCH_ALARM_SETTINGS_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.3.4: Alert in the event of an audit logging process failure. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.3 - Audit and Accountability</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.3.8: Protect audit information and audit logging tools from unauthorized access, modification, and deletion. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.3 - Audit and Accountability</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED">EC2_CLIENT_VPN_CONNECTION_LOG_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS Client VPN endpoint has client connection logging enabled. The rule is NON_COMPLIANT if &#x27;Configuration.ConnectionLogOptions.Enabled&#x27; is set to false.</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.12: Monitor and control remote access sessions. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.20: Verify and control/limit connections to and use of external systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="EC2_MANAGEDINSTANCE_APPLICATIONS_REQUIRED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#EC2_MANAGEDINSTANCE_APPLICATIONS_REQUIRED">EC2_MANAGEDINSTANCE_APPLICATIONS_REQUIRED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.14.1: Identify, report, and correct system flaws in a timely manner. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.14 - System and Information Integrity</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="EC2_SECURITY_GROUP_ATTACHED_TO_ENI">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#EC2_SECURITY_GROUP_ATTACHED_TO_ENI">EC2_SECURITY_GROUP_ATTACHED_TO_ENI</a></span></div>
+            <div class="rule-description">Checks if non-default security groups are attached to elastic network interfaces. The rule is NON_COMPLIANT if the security group is not associated with a network interface.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.4.7: Restrict, disable, or prevent the use of nonessential programs, functions, ports, protocols, and services. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.4 - Configuration Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK">ELB_CUSTOM_SECURITY_POLICY_SSL_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.13.8: Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission unless otherwise protected by alternative physical safeguards. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.15: Protect the authenticity of communications sessions. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK">ELB_PREDEFINED_SECURITY_POLICY_SSL_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.13.8: Implement cryptographic mechanisms to prevent unauthorized disclosure of CUI during transmission unless otherwise protected by alternative physical safeguards. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.15: Protect the authenticity of communications sessions. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_POLICY_BLACKLISTED_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#IAM_POLICY_BLACKLISTED_CHECK">IAM_POLICY_BLACKLISTED_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 5 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.1: Limit system access to authorized users, processes acting on behalf of authorized users, and devices (including other systems). (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.2: Limit system access to the types of transactions and functions that authorized users are permitted to execute. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.7: Prevent non-privileged users from executing privileged functions and capture the execution of such functions in audit logs. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.3.9: Limit management of audit logging functionality to a subset of privileged users. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.3 - Audit and Accountability</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.3: Separate user functionality from system management functionality. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_POLICY_IN_USE">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#IAM_POLICY_IN_USE">IAM_POLICY_IN_USE</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.2: Limit system access to the types of transactions and functions that authorized users are permitted to execute. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="IAM_ROLE_MANAGED_POLICY_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#IAM_ROLE_MANAGED_POLICY_CHECK">IAM_ROLE_MANAGED_POLICY_CHECK</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 5 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.1: Limit system access to authorized users, processes acting on behalf of authorized users, and devices (including other systems). (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.2: Limit system access to the types of transactions and functions that authorized users are permitted to execute. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.7: Prevent non-privileged users from executing privileged functions and capture the execution of such functions in audit logs. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.3.9: Limit management of audit logging functionality to a subset of privileged users. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.3 - Audit and Accountability</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.3: Separate user functionality from system management functionality. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="NACL_NO_UNRESTRICTED_SSH_RDP">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#NACL_NO_UNRESTRICTED_SSH_RDP">NACL_NO_UNRESTRICTED_SSH_RDP</a></span></div>
+            <div class="rule-description">Checks if default ports for SSH tcp/22 or RDP tcp/3389 ingress traffic for network access control lists (NACLs) is unrestricted. The rule is NON_COMPLIANT if a NACL inbound entry allows a source CIDR block of &#x27;0.0.0.0/0&#x27; or &#x27;::/0&#x27; for ports 22 or 3389.</div>
+            <div class="controls-list">
+                <h4>Referenced by 3 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.3: Control the flow of CUI in accordance with approved authorizations. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.20: Verify and control/limit connections to and use of external systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="NETFW_LOGGING_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#NETFW_LOGGING_ENABLED">NETFW_LOGGING_ENABLED</a></span></div>
+            <div class="rule-description">Checks if AWS Network Firewall firewalls have logging enabled. The rule is NON_COMPLIANT if a logging type is not configured. You can specify which logging type you want the rule to check.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS">NETFW_POLICY_DEFAULT_ACTION_FRAGMENT_PACKETS</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 4 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.3: Control the flow of CUI in accordance with approved authorizations. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.14: Route remote access via managed access control points. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.6: Deny network communications traffic by default and allow network communications traffic by exception (i.e., deny all, permit by exception). (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="NETFW_POLICY_RULE_GROUP_ASSOCIATED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#NETFW_POLICY_RULE_GROUP_ASSOCIATED">NETFW_POLICY_RULE_GROUP_ASSOCIATED</a></span></div>
+            <div class="rule-description">Check AWS Network Firewall policy is associated with stateful OR stateless rule groups. This rule is NON_COMPLIANT if no stateful or stateless rule groups are associated with the Network Firewall policy else COMPLIANT if any one of the rule group exists.</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.3: Control the flow of CUI in accordance with approved authorizations. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#NETFW_STATELESS_RULE_GROUP_NOT_EMPTY">NETFW_STATELESS_RULE_GROUP_NOT_EMPTY</a></span></div>
+            <div class="rule-description">Checks if a Stateless Network Firewall Rule Group contains rules. The rule is NON_COMPLIANT if there are no rules in a Stateless Network Firewall Rule Group.</div>
+            <div class="controls-list">
+                <h4>Referenced by 4 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.3: Control the flow of CUI in accordance with approved authorizations. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.14: Route remote access via managed access control points. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.6: Deny network communications traffic by default and allow network communications traffic by exception (i.e., deny all, permit by exception). (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED">S3_BUCKET_BLACKLISTED_ACTIONS_PROHIBITED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.13.4: Prevent unauthorized and unintended information transfer via shared system resources. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_DEFAULT_ENCRYPTION_KMS">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#S3_DEFAULT_ENCRYPTION_KMS">S3_DEFAULT_ENCRYPTION_KMS</a></span></div>
+            <div class="rule-description">Checks if the S3 buckets are encrypted with AWS Key Management Service (AWS KMS). The rule is NON_COMPLIANT if the S3 bucket is not encrypted with an AWS KMS key.</div>
+            <div class="controls-list">
+                <h4>Referenced by 3 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.8.9: Protect the confidentiality of backup CUI at storage locations. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.8 - Media Protection</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.11: Employ FIPS-validated cryptography when used to protect the confidentiality of CUI. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.16: Protect the confidentiality of CUI at rest. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="S3_EVENT_NOTIFICATIONS_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#S3_EVENT_NOTIFICATIONS_ENABLED">S3_EVENT_NOTIFICATIONS_ENABLED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.3.8: Protect audit information and audit logging tools from unauthorized access, modification, and deletion. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.3 - Audit and Accountability</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="SERVICE_VPC_ENDPOINT_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#SERVICE_VPC_ENDPOINT_ENABLED">SERVICE_VPC_ENDPOINT_ENABLED</a></span></div>
+            <div class="rule-description">No description available</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.3: Control the flow of CUI in accordance with approved authorizations. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.13.1: Monitor, control, and protect communications (i.e., information transmitted or received by organizational systems) at the external boundaries and key internal boundaries of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.13 - System and Communications Protection</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="VPC_NETWORK_ACL_UNUSED_CHECK">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#VPC_NETWORK_ACL_UNUSED_CHECK">VPC_NETWORK_ACL_UNUSED_CHECK</a></span></div>
+            <div class="rule-description">Checks if there are unused Network Access Control Lists (NACLs). The rule is NON_COMPLIANT if an NACL is not associated with a subnet.</div>
+            <div class="controls-list">
+                <h4>Referenced by 1 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.4.7: Restrict, disable, or prevent the use of nonessential programs, functions, ports, protocols, and services. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.4 - Configuration Management</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="VPC_VPN_2_TUNNELS_UP">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#VPC_VPN_2_TUNNELS_UP">VPC_VPN_2_TUNNELS_UP</a></span></div>
+            <div class="rule-description">Checks if both virtual private network (VPN) tunnels provided by AWS Site-to-Site VPN are in UP status. The rule is NON_COMPLIANT if one or both tunnels are in DOWN status.</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.1.13: Employ cryptographic mechanisms to protect the confidentiality of remote access sessions. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.1.20: Verify and control/limit connections to and use of external systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.1 - Access Controls</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="rule-entry" id="WAFV2_RULEGROUP_LOGGING_ENABLED">
+            <h3></h3>
+            <div><span class="rule-keyword"><a href="template_report_NIST_800-171_Revision_2__Protecting_Controlled_Unc_control_catalog.html#WAFV2_RULEGROUP_LOGGING_ENABLED">WAFV2_RULEGROUP_LOGGING_ENABLED</a></span></div>
+            <div class="rule-description">Checks if Amazon CloudWatch security metrics collection on AWS WAFv2 rule groups is enabled. The rule is NON_COMPLIANT if the &#x27;VisibilityConfig.CloudWatchMetricsEnabled&#x27; field is set to false.</div>
+            <div class="controls-list">
+                <h4>Referenced by 2 control(s):</h4>
+
+                <div class="control-item">
+                    <div>3.14.6: Monitor organizational systems, including inbound and outbound communications traffic, to detect attacks and indicators of potential attacks. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.14 - System and Information Integrity</div>
+                </div>
+
+                <div class="control-item">
+                    <div>3.14.7: Identify unauthorized use of organizational systems. (NIST-SP-800-171-r2)</div>
+                    <div class="control-set">3.14 - System and Information Integrity</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

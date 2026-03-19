@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance Summary - Australian Cyber Security Center (ACSC) Essential Eight</title>
+    <style>
+        
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .nav a {
+            margin-right: 20px;
+            font-weight: 500;
+        }
+        .nav a.active {
+            color: #1a365d;
+            border-bottom: 2px solid #1a365d;
+            padding-bottom: 2px;
+        }
+        .report-header {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a365d;
+        }
+        .card.compliant .value {
+            color: #22543d;
+        }
+        .card.non-compliant .value {
+            color: #c53030;
+        }
+        .compliance-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .compliance-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+            border-radius: 4px;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #1a365d;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: #f7fafc;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge.compliant {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        .badge.non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge.not-applicable {
+            background: #e2e8f0;
+            color: #718096;
+        }
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge.missing {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .count-compliant {
+            color: #22543d;
+            font-weight: 600;
+        }
+        .count-non-compliant {
+            color: #c53030;
+            font-weight: 600;
+        }
+        .control-set {
+            margin-bottom: 30px;
+        }
+        .control-set-header {
+            background: #edf2f7;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .control-set-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #2d3748;
+        }
+        .control-set-header .stats {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 5px;
+        }
+        .mono {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 13px;
+        }
+        .config-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .config-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .resource-entry {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .resource-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .resource-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .resource-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .resource-type {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+        .resource-meta {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .resource-meta span {
+            margin-right: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav {
+                display: none;
+            }
+            .report-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Australian_Cyber_Security_Center__ACSC__Essential_summary.html" class=" active">Summary Report</a> <a href="template_report_Australian_Cyber_Security_Center__ACSC__Essential_evidence.html" class="">Evidence Sources</a> <a href="template_report_Australian_Cyber_Security_Center__ACSC__Essential_control_catalog.html" class="">Control Catalog</a>
+    </nav>
+    
+    
+    <div class="report-header">
+        <h1>Australian Cyber Security Center (ACSC) Essential Eight</h1>
+        <div class="meta">
+            <div>Conformance Pack Template: Operational Best Practices for ACSC Essential 8</div><div>Generated: 2026-03-18T15:50:46.516996+00:00</div>
+        </div>
+    </div>
+    
+
+    <div style="background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 15px; margin-bottom: 20px;">
+        <strong style="color: #0369a1;">Template Analysis Mode</strong>
+        <p style="color: #0369a1; margin: 5px 0 0 0; font-size: 14px;">
+            This report analyzes the framework against a conformance pack template. No deployed conformance pack was evaluated,
+            so resource compliance data is not available. Deploy the conformance pack to see actual compliance results.
+        </p>
+    </div>
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Control Sets</h3>
+            <div class="value">3</div>
+        </div>
+        <div class="card">
+            <h3>Framework Controls</h3>
+            <div class="value">193</div>
+        </div>
+    </div>
+
+    <div class="section" style="padding: 15px 20px; margin-bottom: 20px;">
+        <p style="color: #4a5568; font-size: 14px; margin: 0; line-height: 1.6;">
+            <strong>Config Rules Coverage:</strong> The cards below show the overlap between Config rules in the
+            Audit Manager framework, the Conformance Pack template, and the Security Hub standard.
+            "Intersection" shows framework rules that appear in the template or standard.
+            "Not Covered" shows framework rules that do not appear in either the template or standard.
+        </p>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Config Rules in Framework</h3>
+            <div class="value">18</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Template</h3>
+            <div class="value">10</div>
+        </div>
+        <div class="card">
+            <h3>Intersection with Standard</h3>
+            <div class="value">N/A</div>
+        </div>
+        <div class="card">
+            <h3>Not Covered</h3>
+            <div class="value">8</div>
+        </div>
+    </div>
+
+    <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px;">
+        <h3 style="margin: 0 0 10px 0; color: white;">Rules Manifest</h3>
+        <p style="margin: 0 0 15px 0; opacity: 0.9; font-size: 14px;">
+            View the complete inventory of all Config rules, filtered to show rules referenced by this framework,
+            its associated security standard, or conformance pack template.
+        </p>
+        <a href="../../rule-manifest/rule_manifest.html?framework=Australian%20Cyber%20Security%20Center%20%28ACSC%29%20Essential%20Eight&template=Operational-Best-Practices-for-ACSC-Essential8" style="display: inline-block; background: white; color: #667eea; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">
+            Open Rules Manifest
+        </a>
+    </div>
+
+    <div class="section" style="text-align: center;">
+        <h3 style="margin-bottom: 10px;">Config Rules Coverage Venn Diagram</h3>
+        <p style="color: #718096; font-size: 13px; margin-bottom: 20px;">
+            Visualization of rule overlap between Framework, Template, and Security Standard.
+            Numbers show unique rules in each region. Click a number to view those rules in the manifest.
+        </p>
+        
+    <svg viewBox="0 0 400 340" style="max-width: 500px; width: 100%;">
+        <defs>
+            <style>
+                .venn-circle { fill-opacity: 0.3; stroke-width: 2; }
+                .venn-framework { fill: #4299e1; stroke: #2b6cb0; }
+                .venn-template { fill: #48bb78; stroke: #276749; }
+                .venn-standard { fill: #9f7aea; stroke: #6b46c1; }
+                .venn-label { font-size: 12px; font-weight: bold; fill: #2d3748; }
+                .venn-count { font-size: 14px; font-weight: bold; fill: #1a202c; }
+                .venn-link { cursor: pointer; }
+                .venn-link:hover { fill: #4c51bf; text-decoration: underline; }
+                .venn-title { font-size: 11px; fill: #4a5568; }
+            </style>
+        </defs>
+
+        <!-- Framework circle (top-left, blue) -->
+        <circle cx="150" cy="130" r="90" class="venn-circle venn-framework"/>
+
+        <!-- Template circle (top-right, green) -->
+        <circle cx="250" cy="130" r="90" class="venn-circle venn-template"/>
+
+        <!-- Standard circle (bottom, purple) -->
+        <circle cx="200" cy="210" r="90" class="venn-circle venn-standard"/>
+
+        <!-- Labels for each region -->
+        <!-- Framework only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=Australian%20Cyber%20Security%20Center%20%28ACSC%29%20Essential%20Eight&template=Operational-Best-Practices-for-ACSC-Essential8&venn=f" style="text-decoration: none;"><text x="95" y="110" class="venn-count venn-link" text-anchor="middle">8</text></a>
+
+        <!-- Template only -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=Australian%20Cyber%20Security%20Center%20%28ACSC%29%20Essential%20Eight&template=Operational-Best-Practices-for-ACSC-Essential8&venn=t" style="text-decoration: none;"><text x="305" y="110" class="venn-count venn-link" text-anchor="middle">39</text></a>
+
+        <!-- Standard only -->
+        <text x="200" y="280" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Framework & Template (not Standard) -->
+        <a href="../../rule-manifest/rule_manifest.html?framework=Australian%20Cyber%20Security%20Center%20%28ACSC%29%20Essential%20Eight&template=Operational-Best-Practices-for-ACSC-Essential8&venn=ft" style="text-decoration: none;"><text x="200" y="95" class="venn-count venn-link" text-anchor="middle">10</text></a>
+
+        <!-- Framework & Standard (not Template) -->
+        <text x="140" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Template & Standard (not Framework) -->
+        <text x="260" y="195" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- All three -->
+        <text x="200" y="160" class="venn-count" text-anchor="middle">0</text>
+
+        <!-- Circle labels -->
+        <text x="70" y="50" class="venn-label">Framework</text>
+        <text x="70" y="65" class="venn-title">(18 rules)</text>
+
+        <text x="280" y="50" class="venn-label">Template</text>
+        <text x="280" y="65" class="venn-title">(49 rules)</text>
+
+        <text x="200" y="320" class="venn-label" text-anchor="middle">Standard</text>
+        <text x="200" y="335" class="venn-title" text-anchor="middle">(0 rules)</text>
+    </svg>
+    
+    </div>
+
+    <div class="section">
+        <h3>Conformance Pack Template Cross-Check</h3>
+        <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+            <em>Note: The AWS Config API does not indicate which template was used when a conformance pack was deployed.
+            The following templates are associated with this framework and may have been used:</em>
+        </p>
+        <ul style="margin: 0; padding-left: 20px;">
+            <li><a href="..\..\conformance-packs\conformance-pack-yamls\Operational-Best-Practices-for-ACSC-Essential8.yaml"><strong>Operational-Best-Practices-for-ACSC-Essential8</strong></a> — 49 Config Rules</li>
+
+        </ul>
+        <div style="margin-top: 15px; padding: 12px; background: #f7fafc; border-radius: 6px; border-left: 3px solid #4299e1;">
+            <p style="color: #4a5568; font-size: 13px; margin: 0 0 8px 0;"><strong>Understanding the "In Template" column:</strong></p>
+            <ul style="color: #4a5568; font-size: 13px; margin: 0; padding-left: 20px;">
+                <li><span class="badge compliant" style="font-size: 11px;">Yes</span> — Rule is in the conformance pack template</li>
+                <li><span class="badge warning" style="font-size: 11px;">No</span> — Rule is not in the conformance pack template (check Gap Report for details)</li>
+                <li><span class="badge not-applicable" style="font-size: 11px;">-</span> — No Config rule referenced for this control</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Framework Controls by Control Set</h2>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Appendix A: Maturity Level One</h3>
+                <div class="stats">
+                    38 Framework Controls mapped to 7 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-1: Application control ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.1: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.2: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.3: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.4: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.5: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.6: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-2.7: Patch applications ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-3.1: Configure Microsoft Office macro settings ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-3.2: Configure Microsoft Office macro settings ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-3.3: Configure Microsoft Office macro settings ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-3.4: Configure Microsoft Office macro settings ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-4.1: User application hardening ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-4.2: User application hardening ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-4.3: User application hardening ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-4.4: User application hardening ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-5.1: Restrict administrative privileges ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-5.2: Restrict administrative privileges ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-5.3: Restrict administrative privileges ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-5.4: Restrict administrative privileges ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-5.5: Restrict administrative privileges ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.1: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.2: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.3: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.4: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.5: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.6: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-6.7: Patch operating systems ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-7.1: Multi-factor authentication ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-7.2: Multi-factor authentication ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-7.3: Multi-factor authentication ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-7.4: Multi-factor authentication ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-8.1: Regular backups ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK">BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-8.2: Regular backups ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-8.3: Regular backups ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-8.4: Regular backups ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-8.5: Regular backups ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML1-8.6: Regular backups ML1 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Appendix B: Maturity Level Two</h3>
+                <div class="stats">
+                    65 Framework Controls mapped to 12 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-1.1: Application control ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-1.2: Application control ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-1.3: Application control ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.1: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.2: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.3: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.4: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.5: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.6: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.7: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.8: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-2.9: Patch applications ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-3.1: Configure Microsoft Office macro settings ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-3.2: Configure Microsoft Office macro settings ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-3.3: Configure Microsoft Office macro settings ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-3.4: Configure Microsoft Office macro settings ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-3.5: Configure Microsoft Office macro settings ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-3.6: Configure Microsoft Office macro settings ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.1: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.2: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.3: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.4: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.5: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.6: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.7: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.8: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.9: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.10: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.11: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.12: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-4.13: User application hardening ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.1: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.2: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.3: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.4: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.5: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.6: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.7: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.8: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.9: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.10: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.11: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-5.12: Restrict administrative privileges ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.1: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.2: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.3: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.4: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.5: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.6: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-6.7: Patch operating systems ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.1: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.2: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.3: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.4: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.5: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.6: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-7.7: Multi-factor authentication ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.1: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK">BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.2: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.3: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.4: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.5: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.6: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED">BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.7: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML2-8.8: Regular backups ML2 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED">BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="control-set">
+            <div class="control-set-header">
+                <h3>Appendix C: Maturity Level Three</h3>
+                <div class="stats">
+                    90 Framework Controls mapped to 18 Config Rules
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30%">Framework Control</th>
+                        <th style="width: 34%">Evidence Source (Config Rule)</th>
+                        <th style="width: 12%; text-align: center;">In Standard</th>
+                        <th style="width: 12%; text-align: center;">In Template</th>
+                        <th style="width: 12%; text-align: center;">In Catalog</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.1: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.2: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.3: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.4: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.5: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.6: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.7: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-1.8: Application control ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.1: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.2: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.3: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.4: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.5: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.6: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.7: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.8: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-2.9: Patch applications ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.1: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.2: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.3: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.4: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.5: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.6: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.7: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.8: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.9: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.10: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.11: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-3.12: Configure Microsoft Office macro settings ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.1: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.2: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.3: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.4: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.5: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.6: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.7: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.8: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.9: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.10: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.11: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.12: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.13: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.14: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.15: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.16: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.17: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-4.18: User application hardening ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.1: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.2: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.3: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_UNUSED_CREDENTIALS_CHECK">IAM_USER_UNUSED_CREDENTIALS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.4: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.5: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.6: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.7: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.8: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.9: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.10: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_NO_INLINE_POLICY_CHECK">IAM_NO_INLINE_POLICY_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#IAM_USER_GROUP_MEMBERSHIP_CHECK">IAM_USER_GROUP_MEMBERSHIP_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.11: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.12: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.13: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.14: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.15: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.16: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_VERSIONING_ENABLED">S3_BUCKET_VERSIONING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-5.17: Restrict administrative privileges ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.1: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.2: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.3: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.4: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK">EC2_MANAGEDINSTANCE_PATCH_COMPLIANCE_STATUS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.5: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.6: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.7: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-6.8: Patch operating systems ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.1: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.2: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.3: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.4: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.5: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.6: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.7: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_HARDWARE_MFA_ENABLED">ROOT_ACCOUNT_HARDWARE_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#ROOT_ACCOUNT_MFA_ENABLED">ROOT_ACCOUNT_MFA_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.8: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDTRAIL_SECURITY_TRAIL_ENABLED">CLOUDTRAIL_SECURITY_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_ENABLED">CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#MULTI_REGION_CLOUD_TRAIL_ENABLED">MULTI_REGION_CLOUD_TRAIL_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.9: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#S3_BUCKET_VERSIONING_ENABLED">S3_BUCKET_VERSIONING_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED">CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-7.10: Multi-factor authentication ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_SETTINGS_CHECK">CLOUDWATCH_ALARM_SETTINGS_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#CLOUDWATCH_ALARM_ACTION_CHECK">CLOUDWATCH_ALARM_ACTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.1: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK">BACKUP_PLAN_MIN_FREQUENCY_AND_MIN_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK">BACKUP_RECOVERY_POINT_MINIMUM_RETENTION_CHECK</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.2: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.3: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_ENCRYPTED">BACKUP_RECOVERY_POINT_ENCRYPTED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.4: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.5: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.6: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED">BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.7: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td style="color: #718096; font-style: italic;">No Config rules referenced</td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                        <td style="text-align: center;"><span class="badge not-applicable">-</span></td>
+                    </tr>
+
+                    <tr>
+                        <td>ACSC-EE-ML3-8.8: Regular backups ML3 (ACSC-Essential-Eight-Nov-2022)</td>
+                        <td><a href="../../rule-manifest/rule_manifest.html#BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED">BACKUP_RECOVERY_POINT_MANUAL_DELETION_DISABLED</a></td>
+                        <td style="text-align: center;"><span class="badge warning">No</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                        <td style="text-align: center;"><span class="badge compliant">Yes</span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>

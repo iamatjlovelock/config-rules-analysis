@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Catalog - Gramm-Leach-Bliley Act (GLBA)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        a {
+            color: #2b6cb0;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .nav {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .report-header {
+            background: linear-gradient(135deg, #553c9a 0%, #805ad5 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .report-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        .report-header .meta {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #553c9a;
+        }
+        .section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            margin: 0 0 20px 0;
+            color: #553c9a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .control-entry {
+            border-left: 4px solid #805ad5;
+            padding: 20px;
+            margin-bottom: 25px;
+            background: #faf5ff;
+            border-radius: 0 8px 8px 0;
+        }
+        .control-entry h3 {
+            margin: 0 0 5px 0;
+            color: #553c9a;
+            font-size: 18px;
+        }
+        .control-identifier {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 14px;
+            color: #805ad5;
+            background: #e9d8fd;
+            padding: 3px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .control-rule-names {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 12px;
+            color: #4a5568;
+            margin: 10px 0;
+            padding: 8px 12px;
+            background: #edf2f7;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        .control-rule-names strong {
+            color: #2d3748;
+        }
+        .control-description {
+            color: #4a5568;
+            margin: 15px 0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .control-arn {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-size: 11px;
+            color: #718096;
+            margin: 10px 0 15px 0;
+            word-break: break-all;
+        }
+        .control-mappings {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .mappings-label {
+            color: #718096;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .mappings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .mapping-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #e9d8fd;
+        }
+        .mapping-framework {
+            font-weight: 600;
+            color: #553c9a;
+            display: block;
+            font-size: 13px;
+        }
+        .mapping-detail {
+            color: #718096;
+            font-size: 12px;
+            margin-top: 3px;
+            display: block;
+        }
+        .mapping-item.current-framework {
+            background: #faf5ff;
+            border: 2px solid #805ad5;
+            box-shadow: 0 2px 4px rgba(128, 90, 213, 0.2);
+        }
+        .mapping-item.current-framework .mapping-framework {
+            color: #553c9a;
+        }
+        .other-frameworks {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-top: 8px;
+        }
+        .other-frameworks-label {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .other-frameworks-list {
+            font-size: 12px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        .other-frameworks-list span {
+            display: inline-block;
+            background: #edf2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin: 2px 4px 2px 0;
+        }
+        .control-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .meta-item {
+            font-size: 13px;
+        }
+        .meta-item .label {
+            color: #718096;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .meta-item .value {
+            color: #2d3748;
+            font-weight: 500;
+            margin-top: 3px;
+        }
+        .source-badges {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0 15px 0;
+            flex-wrap: wrap;
+        }
+        .source-badge {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .badge-framework {
+            background: #ebf8ff;
+            color: #2b6cb0;
+            border: 1px solid #90cdf4;
+        }
+        .badge-template {
+            background: #f0fff4;
+            color: #276749;
+            border: 1px solid #9ae6b4;
+        }
+        .badge-standard {
+            background: #faf5ff;
+            color: #553c9a;
+            border: 1px solid #d6bcfa;
+        }
+        .badge-not-in {
+            background: #fff5f5;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+        }
+        .badge-catalog {
+            background: #e6fffa;
+            color: #234e52;
+            border: 1px solid #81e6d9;
+        }
+        .control-meta {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .badge-critical {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .badge-high {
+            background: #feebc8;
+            color: #c05621;
+        }
+        .badge-medium {
+            background: #fefcbf;
+            color: #975a16;
+        }
+        .badge-low {
+            background: #c6f6d5;
+            color: #276749;
+        }
+        .badge-compliant {
+            background: #c6f6d5;
+            color: #276749;
+        }
+        .badge-non-compliant {
+            background: #fed7d7;
+            color: #c53030;
+        }
+        .control-remediation {
+            margin-top: 15px;
+        }
+        .control-remediation a {
+            color: #4299e1;
+            text-decoration: none;
+        }
+        .control-remediation a:hover {
+            text-decoration: underline;
+        }
+        .info-box {
+            background: #faf5ff;
+            border: 1px solid #d6bcfa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin: 0 0 10px 0;
+            color: #553c9a;
+            font-size: 16px;
+        }
+        .info-box p {
+            margin: 0;
+            color: #44337a;
+            font-size: 14px;
+        }
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #ed8936;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .warning-box h3 {
+            margin: 0 0 10px 0;
+            color: #c05621;
+            font-size: 16px;
+        }
+        .warning-box p {
+            margin: 0;
+            color: #744210;
+            font-size: 14px;
+        }
+        .toc {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .toc h3 {
+            margin: 0 0 15px 0;
+            color: #553c9a;
+        }
+        .toc-list {
+            column-count: 3;
+            column-gap: 20px;
+        }
+        .toc-list a {
+            display: block;
+            padding: 3px 0;
+            font-size: 13px;
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+        }
+        .toc-list a.not-in-catalog {
+            color: #c53030;
+        }
+        .toc-list a.not-mapped {
+            color: #805ad5;
+        }
+        .toc-list a.mapped {
+            color: #38a169;
+        }
+        @media (max-width: 900px) {
+            .toc-list {
+                column-count: 2;
+            }
+        }
+        @media (max-width: 600px) {
+            .toc-list {
+                column-count: 1;
+            }
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+            font-size: 13px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .nav, .toc {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav class="nav">
+        <a href="template_report_Gramm-Leach-Bliley_Act__GLBA__summary.html">Summary Report</a> <a href="template_report_Gramm-Leach-Bliley_Act__GLBA__evidence.html">Evidence Sources</a> <a href="template_report_Gramm-Leach-Bliley_Act__GLBA__control_catalog.html" class="active">Control Catalog</a>
+    </nav>
+
+    <div class="report-header">
+        <h1>Control Catalog Report</h1>
+        <div class="meta">
+            <div>Framework: Gramm-Leach-Bliley Act (GLBA)</div>
+            <div>Conformance Pack: Template: Operational-Best-Practices-for-Gramm-Leach-Bliley-Act</div>
+            <div>Generated: 2026-03-18T15:45:56.451449+00:00</div>
+        </div>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card">
+            <h3>Total Rules</h3>
+            <div class="value">63</div>
+        </div>
+        <div class="card">
+            <h3>In Catalog</h3>
+            <div class="value">56</div>
+        </div>
+        <div class="card">
+            <h3>Not In Catalog</h3>
+            <div class="value">7</div>
+        </div>
+        <div class="card">
+            <h3>Not Mapped to Framework</h3>
+            <div class="value">56</div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h3>What does this report show?</h3>
+        <p>
+            The AWS Control Catalog is a centralized repository of AWS-managed controls that provides detailed information
+            about each Config rule, including its description, severity, behavior, and which compliance frameworks reference it.
+            This report cross-references all Config rules from the selected Audit Manager framework and conformance pack
+            against the Control Catalog to show you comprehensive details about each rule.
+        </p>
+        <p style="margin-top: 10px;">
+            <strong>Summary:</strong> There are <strong>63</strong> unique rules referenced in the framework
+            and/or conformance pack. Of these, <strong>56</strong> have entries in the Control Catalog
+            and <strong>7</strong> do not. Of the rules in the catalog,
+            <strong>56</strong> are not mapped to this specific framework by AWS.
+        </p>
+        <p style="margin-top: 10px;">
+            <strong>How to use this report:</strong> Use the Quick Navigation below to jump to any rule. Each entry shows
+            the rule's description, ARN, severity level, and a list of all compliance frameworks that reference it
+            according to AWS Control Catalog. Rules highlighted in green are mapped to the current framework,
+            purple rules are in the catalog but mapped to other frameworks, and red rules are not found in the Control Catalog.
+        </p>
+    </div>
+
+    <div class="toc">
+        <h3>Quick Navigation</h3>
+        <p style="font-size: 13px; color: #718096; margin: 0 0 15px 0;">
+            Entries in Control Catalog that reference the framework are shown in <span style="color: #38a169; font-weight: 600;">green</span>.
+            Entries in Control Catalog that do not reference the framework are shown in <span style="color: #805ad5; font-weight: 600;">purple</span>.
+            Rules without an entry in Control Catalog are shown in <span style="color: #c53030; font-weight: 600;">Red</span>.
+        </p>
+        <div class="toc-list">
+            <a href="#ACCESS_KEYS_ROTATED" class="not-in-catalog">ACCESS_KEYS_ROTATED</a>
+            <a href="#API_GW_CACHE_ENABLED_AND_ENCRYPTED" class="not-mapped">API_GW_CACHE_ENABLED_AND_ENCRYPTED</a>
+            <a href="#AUTOSCALING_LAUNCH_CONFIG_PUBLIC_IP_DISABLED" class="not-mapped">AUTOSCALING_LAUNCH_CONFIG_PUBLIC_IP_DISABLED</a>
+            <a href="#BACKUP_RECOVERY_POINT_ENCRYPTED" class="not-mapped">BACKUP_RECOVERY_POINT_ENCRYPTED</a>
+            <a href="#CLOUDWATCH_LOG_GROUP_ENCRYPTED" class="not-mapped">CLOUDWATCH_LOG_GROUP_ENCRYPTED</a>
+            <a href="#CLOUD_TRAIL_ENCRYPTION_ENABLED" class="not-mapped">CLOUD_TRAIL_ENCRYPTION_ENABLED</a>
+            <a href="#CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION" class="not-in-catalog">CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION</a>
+            <a href="#CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED" class="not-mapped">CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED</a>
+            <a href="#DMS_REPLICATION_NOT_PUBLIC" class="not-mapped">DMS_REPLICATION_NOT_PUBLIC</a>
+            <a href="#DYNAMODB_TABLE_ENCRYPTED_KMS" class="not-mapped">DYNAMODB_TABLE_ENCRYPTED_KMS</a>
+            <a href="#EBS_SNAPSHOT_PUBLIC_RESTORABLE_CHECK" class="not-mapped">EBS_SNAPSHOT_PUBLIC_RESTORABLE_CHECK</a>
+            <a href="#EC2_EBS_ENCRYPTION_BY_DEFAULT" class="not-mapped">EC2_EBS_ENCRYPTION_BY_DEFAULT</a>
+            <a href="#EC2_INSTANCE_NO_PUBLIC_IP" class="not-mapped">EC2_INSTANCE_NO_PUBLIC_IP</a>
+            <a href="#ECS_CONTAINERS_READONLY_ACCESS" class="not-mapped">ECS_CONTAINERS_READONLY_ACCESS</a>
+            <a href="#EFS_ACCESS_POINT_ENFORCE_ROOT_DIRECTORY" class="not-mapped">EFS_ACCESS_POINT_ENFORCE_ROOT_DIRECTORY</a>
+            <a href="#EFS_ACCESS_POINT_ENFORCE_USER_IDENTITY" class="not-mapped">EFS_ACCESS_POINT_ENFORCE_USER_IDENTITY</a>
+            <a href="#EFS_ENCRYPTED_CHECK" class="not-mapped">EFS_ENCRYPTED_CHECK</a>
+            <a href="#ELASTICSEARCH_ENCRYPTED_AT_REST" class="not-mapped">ELASTICSEARCH_ENCRYPTED_AT_REST</a>
+            <a href="#ELASTICSEARCH_IN_VPC_ONLY" class="not-mapped">ELASTICSEARCH_IN_VPC_ONLY</a>
+            <a href="#ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK" class="not-mapped">ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a>
+            <a href="#EMR_MASTER_NO_PUBLIC_IP" class="not-mapped">EMR_MASTER_NO_PUBLIC_IP</a>
+            <a href="#ENCRYPTED_VOLUMES" class="not-mapped">ENCRYPTED_VOLUMES</a>
+            <a href="#GUARDDUTY_ENABLED_CENTRALIZED" class="not-mapped">GUARDDUTY_ENABLED_CENTRALIZED</a>
+            <a href="#IAM_GROUP_HAS_USERS_CHECK" class="not-mapped">IAM_GROUP_HAS_USERS_CHECK</a>
+            <a href="#IAM_PASSWORD_POLICY" class="not-mapped">IAM_PASSWORD_POLICY</a>
+            <a href="#IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS" class="not-mapped">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</a>
+            <a href="#IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS" class="not-mapped">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</a>
+            <a href="#IAM_ROOT_ACCESS_KEY_CHECK" class="not-mapped">IAM_ROOT_ACCESS_KEY_CHECK</a>
+            <a href="#IAM_USER_GROUP_MEMBERSHIP_CHECK" class="not-mapped">IAM_USER_GROUP_MEMBERSHIP_CHECK</a>
+            <a href="#IAM_USER_NO_POLICIES_CHECK" class="not-mapped">IAM_USER_NO_POLICIES_CHECK</a>
+            <a href="#IAM_USER_UNUSED_CREDENTIALS_CHECK" class="not-in-catalog">IAM_USER_UNUSED_CREDENTIALS_CHECK</a>
+            <a href="#INSTANCES_IN_VPC" class="not-in-catalog">INSTANCES_IN_VPC</a>
+            <a href="#INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY" class="not-mapped">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</a>
+            <a href="#KINESIS_STREAM_ENCRYPTED" class="not-mapped">KINESIS_STREAM_ENCRYPTED</a>
+            <a href="#LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED" class="not-mapped">LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED</a>
+            <a href="#LAMBDA_INSIDE_VPC" class="not-mapped">LAMBDA_INSIDE_VPC</a>
+            <a href="#MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS" class="not-mapped">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</a>
+            <a href="#OPENSEARCH_ACCESS_CONTROL_ENABLED" class="not-mapped">OPENSEARCH_ACCESS_CONTROL_ENABLED</a>
+            <a href="#OPENSEARCH_ENCRYPTED_AT_REST" class="not-mapped">OPENSEARCH_ENCRYPTED_AT_REST</a>
+            <a href="#OPENSEARCH_IN_VPC_ONLY" class="not-mapped">OPENSEARCH_IN_VPC_ONLY</a>
+            <a href="#OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK" class="not-mapped">OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</a>
+            <a href="#RDS_INSTANCE_PUBLIC_ACCESS_CHECK" class="not-mapped">RDS_INSTANCE_PUBLIC_ACCESS_CHECK</a>
+            <a href="#RDS_SNAPSHOTS_PUBLIC_PROHIBITED" class="not-mapped">RDS_SNAPSHOTS_PUBLIC_PROHIBITED</a>
+            <a href="#RDS_SNAPSHOT_ENCRYPTED" class="not-mapped">RDS_SNAPSHOT_ENCRYPTED</a>
+            <a href="#RDS_STORAGE_ENCRYPTED" class="not-mapped">RDS_STORAGE_ENCRYPTED</a>
+            <a href="#REDSHIFT_CLUSTER_CONFIGURATION_CHECK" class="not-in-catalog">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</a>
+            <a href="#REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK" class="not-mapped">REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK</a>
+            <a href="#S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC" class="not-mapped">S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC</a>
+            <a href="#S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED" class="not-mapped">S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED</a>
+            <a href="#S3_BUCKET_POLICY_GRANTEE_CHECK" class="not-mapped">S3_BUCKET_POLICY_GRANTEE_CHECK</a>
+            <a href="#S3_BUCKET_PUBLIC_READ_PROHIBITED" class="not-mapped">S3_BUCKET_PUBLIC_READ_PROHIBITED</a>
+            <a href="#S3_BUCKET_PUBLIC_WRITE_PROHIBITED" class="not-mapped">S3_BUCKET_PUBLIC_WRITE_PROHIBITED</a>
+            <a href="#S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED" class="not-mapped">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</a>
+            <a href="#S3_DEFAULT_ENCRYPTION_KMS" class="not-mapped">S3_DEFAULT_ENCRYPTION_KMS</a>
+            <a href="#SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED" class="not-mapped">SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED</a>
+            <a href="#SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED" class="not-mapped">SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED</a>
+            <a href="#SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS" class="not-mapped">SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS</a>
+            <a href="#SECRETSMANAGER_ROTATION_ENABLED_CHECK" class="not-in-catalog">SECRETSMANAGER_ROTATION_ENABLED_CHECK</a>
+            <a href="#SECURITYHUB_ENABLED" class="not-mapped">SECURITYHUB_ENABLED</a>
+            <a href="#SNS_ENCRYPTED_KMS" class="not-mapped">SNS_ENCRYPTED_KMS</a>
+            <a href="#SSM_DOCUMENT_NOT_PUBLIC" class="not-mapped">SSM_DOCUMENT_NOT_PUBLIC</a>
+            <a href="#SUBNET_AUTO_ASSIGN_PUBLIC_IP_DISABLED" class="not-mapped">SUBNET_AUTO_ASSIGN_PUBLIC_IP_DISABLED</a>
+            <a href="#VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS" class="not-in-catalog">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</a>
+
+        </div>
+    </div>
+
+    <div class="warning-box">
+        <h3>Framework Not in Control Catalog Mappings</h3>
+        <p>
+            The AWS Control Catalog does not include control mappings for the <strong>Gramm-Leach-Bliley Act (GLBA)</strong> framework.
+            The Control Catalog currently provides framework mappings for select compliance standards such as PCI-DSS, NIST, ISO 27001, and FedRAMP.
+            While detailed rule information is shown below, specific control mappings for this framework are not available from the Control Catalog API.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Config Rule Details</h2>
+
+        <div class="control-entry" id="ACCESS_KEYS_ROTATED">
+            <h3>ACCESS_KEYS_ROTATED</h3>
+            <div class="control-identifier">ACCESS_KEYS_ROTATED</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+        <div class="control-entry" id="API_GW_CACHE_ENABLED_AND_ENCRYPTED">
+            <h3>Checks if all methods in Amazon API Gateway stages have cache enabled and cache encrypted</h3>
+            <div class="control-identifier">API_GW_CACHE_ENABLED_AND_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if all methods in Amazon API Gateway stages have cache enabled and cache encrypted. The rule is NON_COMPLIANT if any method in an Amazon API Gateway stage is not configured to cache or the cache is not encrypted.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/8yfgv1as4flg600mdijhjyq69</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::ApiGateway::Stage</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="AUTOSCALING_LAUNCH_CONFIG_PUBLIC_IP_DISABLED">
+            <h3>Detect whether public IP addresses for Amazon EC2 Auto Scaling are enabled through launch configurations</h3>
+            <div class="control-identifier">AUTOSCALING_LAUNCH_CONFIG_PUBLIC_IP_DISABLED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether Amazon EC2 Auto Scaling groups have public IP addresses enabled through launch configurations. This rule is NON_COMPLIANT if the launch configuration for an Auto Scaling group has the value of the field AssociatePublicIpAddress set as True.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/aemn4s3hxv9erree434pvjboi</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::AutoScaling::LaunchConfiguration</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="BACKUP_RECOVERY_POINT_ENCRYPTED">
+            <h3>Checks if a recovery point is encrypted</h3>
+            <div class="control-identifier">BACKUP_RECOVERY_POINT_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if a recovery point is encrypted. The rule is NON_COMPLIANT if the recovery point is not encrypted.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/f2z4q47tqvr1h0ovoy5klwp7o</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">N/A</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="CLOUDWATCH_LOG_GROUP_ENCRYPTED">
+            <h3>Checks if Amazon CloudWatch Log Groups are encrypted with any AWS KMS key or a specified AWS KMS key Id</h3>
+            <div class="control-identifier">CLOUDWATCH_LOG_GROUP_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon CloudWatch Log Groups are encrypted with any AWS KMS key or a specified AWS KMS key Id. The rule is NON_COMPLIANT if a CloudWatch Log Group is not encrypted with a KMS key or is encrypted with a KMS key not supplied in the rule parameter.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/497wrm2xnk1wxlf4obrdo7mej</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Logs::LogGroup</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>CCCS-Medium-Cloud-Control-May-2019</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="CLOUD_TRAIL_ENCRYPTION_ENABLED">
+            <h3>Checks if AWS CloudTrail is configured to use the server side encryption (SSE) AWS Key Management Service (AWS KMS) encryption</h3>
+            <div class="control-identifier">CLOUD_TRAIL_ENCRYPTION_ENABLED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if AWS CloudTrail is configured to use the server side encryption (SSE) AWS Key Management Service (AWS KMS) encryption. The rule is COMPLIANT if the KmsKeyId is defined.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/b5uo2i5cg3b32u00h3fx6fbrt</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::CloudTrail::Trail</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION">
+            <h3>CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION</h3>
+            <div class="control-identifier">CODEBUILD_PROJECT_ARTIFACT_ENCRYPTION</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+        <div class="control-entry" id="CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED">
+            <h3>Checks if a AWS CodeBuild project configured with Amazon S3 Logs has encryption enabled for its logs</h3>
+            <div class="control-identifier">CODEBUILD_PROJECT_S3_LOGS_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if a AWS CodeBuild project configured with Amazon S3 Logs has encryption enabled for its logs. The rule is NON_COMPLIANT if &#x27;encryptionDisabled&#x27; is set to &#x27;true&#x27; in a S3LogsConfig of a CodeBuild project.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/648oowjtx4ky4vsoam2pgmtn0</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">LOW</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::CodeBuild::Project</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="DMS_REPLICATION_NOT_PUBLIC">
+            <h3>Detect whether replication instances for AWS Database Migration Service are public</h3>
+            <div class="control-identifier">DMS_REPLICATION_NOT_PUBLIC</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether AWS Database Migration Service replication instances are public. The rule is NON_COMPLIANT if the value of the PubliclyAccessible field is set as True.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/dekrrxbiux86m6jdowdsbamze</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::DMS::ReplicationInstance</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>CCCS-Medium-Cloud-Control-May-2019</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="DYNAMODB_TABLE_ENCRYPTED_KMS">
+            <h3>Checks whether Amazon DynamoDB table is encrypted with AWS Key Management Service (KMS)</h3>
+            <div class="control-identifier">DYNAMODB_TABLE_ENCRYPTED_KMS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks whether Amazon DynamoDB table is encrypted with AWS Key Management Service (KMS). The rule is NON_COMPLIANT if Amazon DynamoDB table is not encrypted with AWS KMS.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/a0ufrfbomg90qbskltuop262u</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::DynamoDB::Table</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-v7.1</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="EBS_SNAPSHOT_PUBLIC_RESTORABLE_CHECK">
+            <h3>Detect whether Amazon EBS snapshots are restorable by all AWS accounts</h3>
+            <div class="control-identifier">EBS_SNAPSHOT_PUBLIC_RESTORABLE_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether all AWS accounts have access to restore Amazon EBS snapshots. The rule is NON_COMPLIANT if any snapshots have the RestorableByUserIds field set to the value All. In that case, the Amazon EBS snapshots are public.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/87qo8rsoettjrxjevmjqcw1tu</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EC2::Volume</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="EC2_EBS_ENCRYPTION_BY_DEFAULT">
+            <h3>Checks if Amazon Elastic Block Store (EBS) encryption is enabled by default</h3>
+            <div class="control-identifier">EC2_EBS_ENCRYPTION_BY_DEFAULT</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon Elastic Block Store (EBS) encryption is enabled by default. The rule is NON_COMPLIANT if the encryption is not enabled.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/do2podvuuqioqdro24fny7tbf</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EC2::Volume</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="EC2_INSTANCE_NO_PUBLIC_IP">
+            <h3>Detect whether any Amazon EC2 instance has an associated public IPv4 address</h3>
+            <div class="control-identifier">EC2_INSTANCE_NO_PUBLIC_IP</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether an Amazon Elastic Compute Cloud (Amazon EC2) instance has an associated public IPv4 address. The rule is NON_COMPLIANT if the public IP field is present in the Amazon EC2 instance configuration item. This guardrail applies only to IPv4 addresses.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/4v7xtm83uvvyulk1wwpm4qm3s</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EC2::Instance</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>CCCS-Medium-Cloud-Control-May-2019</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="ECS_CONTAINERS_READONLY_ACCESS">
+            <h3>Checks if Amazon Elastic Container Service (Amazon ECS) Containers only have read-only access to its root filesystems</h3>
+            <div class="control-identifier">ECS_CONTAINERS_READONLY_ACCESS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon Elastic Container Service (Amazon ECS) Containers only have read-only access to its root filesystems. The rule is NON_COMPLIANT if the readonlyRootFilesystem parameter in the container definition of ECSTaskDefinitions is set to &#x27;false&#x27;.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/o97ps7jz77phulwdjbgous4m</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::ECS::TaskDefinition</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="EFS_ACCESS_POINT_ENFORCE_ROOT_DIRECTORY">
+            <h3>Checks if Amazon Elastic File System (Amazon EFS) access points are configured to enforce a root directory</h3>
+            <div class="control-identifier">EFS_ACCESS_POINT_ENFORCE_ROOT_DIRECTORY</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon Elastic File System (Amazon EFS) access points are configured to enforce a root directory. The rule is NON_COMPLIANT if the value of &#x27;Path&#x27; is set to &#x27;/&#x27; (default root directory of the file system).</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/110ut5q8qpnl7xpegp1h3l6he</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EFS::AccessPoint</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="EFS_ACCESS_POINT_ENFORCE_USER_IDENTITY">
+            <h3>Checks if Amazon Elastic File System (Amazon EFS) access points are configured to enforce a user identity</h3>
+            <div class="control-identifier">EFS_ACCESS_POINT_ENFORCE_USER_IDENTITY</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon Elastic File System (Amazon EFS) access points are configured to enforce a user identity. The rule is NON_COMPLIANT if &#x27;PosixUser&#x27; is not defined or if parameters are provided and there is no match in the corresponding parameter.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/ah3x6zmzlhwmxsliu037dw9pu</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EFS::AccessPoint</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="EFS_ENCRYPTED_CHECK">
+            <h3>Checks whether Amazon EFS are configured to encrypt file data using AWS KMS</h3>
+            <div class="control-identifier">EFS_ENCRYPTED_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks whether Amazon EFS are configured to encrypt file data using AWS KMS. The rule is NON_COMPLIANT if the Encrypted key is set to False on DescribeFileSystems or, if specified, KmsKeyId key on DescribeFileSystems is not matching KmsKeyId parameter.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/8qmzz7l2841u6bvwpkiug38ta</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EFS::FileSystem</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="ELASTICSEARCH_ENCRYPTED_AT_REST">
+            <h3>Checks if Amazon OpenSearch Service domains have encryption at rest configuration enabled</h3>
+            <div class="control-identifier">ELASTICSEARCH_ENCRYPTED_AT_REST</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon OpenSearch Service domains have encryption at rest configuration enabled. The rule is NON_COMPLIANT if the EncryptionAtRestOptions field is not enabled.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1htmm2mdbikdwrhu5bv79cmlr</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Elasticsearch::Domain</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="ELASTICSEARCH_IN_VPC_ONLY">
+            <h3>Detect whether an Amazon OpenSearch Service domain is in Amazon VPC</h3>
+            <div class="control-identifier">ELASTICSEARCH_IN_VPC_ONLY</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether Amazon OpenSearch Service domains are in Amazon Virtual Private Cloud (Amazon VPC). The rule is NON_COMPLIANT if the OpenSearch Service domain endpoint is public.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/2civrte1w8tqff4vbtzdl4abq</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Elasticsearch::Domain</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>AWS-WAF-v10</span><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">
+            <h3>Check that Amazon OpenSearch Service nodes are encrypted end to end</h3>
+            <div class="control-identifier">ELASTICSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Check that Amazon OpenSearch Service nodes are encrypted end to end. The rule is NON_COMPLIANT if the node-to-node encryption is not enabled on the domain.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/e6hqqjlnxgc60q5iectnqc3r9</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Elasticsearch::Domain</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="EMR_MASTER_NO_PUBLIC_IP">
+            <h3>Detect whether any Amazon EMR cluster master nodes have public IP addresses</h3>
+            <div class="control-identifier">EMR_MASTER_NO_PUBLIC_IP</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether any Amazon Elastic MapReduce (EMR) cluster master nodes have public IP addresses. The rule is NON_COMPLIANT if a master node has a public IP. This guardrail checks clusters that are in RUNNING or WAITING state.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/5cnql6so7p7bs0khdjodjr9e2</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EMR::Cluster</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.2</span><span>CIS-AWS-Benchmark-v1.3</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="ENCRYPTED_VOLUMES">
+            <h3>Enable encryption for EBS volumes attached to EC2 instances</h3>
+            <div class="control-identifier">ENCRYPTED_VOLUMES</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Secure EBS volumes attached to EC2 instances through encryption.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/503uicglhjkokaajywfpt6ros</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EC2::Volume</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>CIS-v7.1</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="GUARDDUTY_ENABLED_CENTRALIZED">
+            <h3>Checks if Amazon GuardDuty is enabled in your AWS account and AWS Region</h3>
+            <div class="control-identifier">GUARDDUTY_ENABLED_CENTRALIZED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon GuardDuty is enabled in your AWS account and AWS Region. If you provide an AWS account for centralization, the rule evaluates the GuardDuty results in the centralized account. The rule is COMPLIANT when GuardDuty is enabled.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/9xv17a25orapqa36e19o5b8lp</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::GuardDuty::Detector</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="IAM_GROUP_HAS_USERS_CHECK">
+            <h3>Checks whether IAM groups have at least one IAM user</h3>
+            <div class="control-identifier">IAM_GROUP_HAS_USERS_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks whether IAM groups have at least one IAM user.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/3jw8po9x95lr2nob65iaqhqir</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">LOW</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::IAM::Group</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>NIST-SP-800-53-r5</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="IAM_PASSWORD_POLICY">
+            <h3>Checks if the account password policy for AWS Identity and Access Management (IAM) users meets the specified requirements indicated in the parameters</h3>
+            <div class="control-identifier">IAM_PASSWORD_POLICY</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if the account password policy for AWS Identity and Access Management (IAM) users meets the specified requirements indicated in the parameters. The rule is NON_COMPLIANT if the account password policy does not meet the specified requirements.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/dmb52g7tw004w9iede1pgb1fj</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">N/A</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.2</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS">
+            <h3>Checks whether the default version of AWS Identity and Access Management (IAM) policies do not have administrator access</h3>
+            <div class="control-identifier">IAM_POLICY_NO_STATEMENTS_WITH_ADMIN_ACCESS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks whether the default version of AWS Identity and Access Management (IAM) policies do not have administrator access. If any statement has &quot;Effect&quot;: &quot;Allow&quot; with &quot;Action&quot;: &quot;*&quot; over &quot;Resource&quot;: &quot;*&quot;, the rule is non-compliant.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/byrg7iwyl4azhecyhqtq8ocw1</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::IAM::Policy</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS">
+            <h3>Checks if AWS Identity and Access Management (IAM) policies grant permissions to all actions on individual AWS resources</h3>
+            <div class="control-identifier">IAM_POLICY_NO_STATEMENTS_WITH_FULL_ACCESS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if AWS Identity and Access Management (IAM) policies grant permissions to all actions on individual AWS resources. The rule is NON_COMPLIANT if the managed IAM policy allows full access to at least 1 AWS service.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1y2qzm1bd1pnickalkqh0613s</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">LOW</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::IAM::Policy</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="IAM_ROOT_ACCESS_KEY_CHECK">
+            <h3>Checks if the root user access key is available</h3>
+            <div class="control-identifier">IAM_ROOT_ACCESS_KEY_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if the root user access key is available. The rule is COMPLIANT if the user access key does not exist. Otherwise, NON_COMPLIANT.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/9utgo6tl86bg3e9jaq073vmqw</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">N/A</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="IAM_USER_GROUP_MEMBERSHIP_CHECK">
+            <h3>Checks whether IAM users are members of at least one IAM group</h3>
+            <div class="control-identifier">IAM_USER_GROUP_MEMBERSHIP_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks whether IAM users are members of at least one IAM group.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/36e8sbe5pvii5djj6ladnb4kj</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">LOW</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::IAM::User</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-Essential-Eight-Nov-2022</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="IAM_USER_NO_POLICIES_CHECK">
+            <h3>Checks if none of your AWS Identity and Access Management (IAM) users have policies attached</h3>
+            <div class="control-identifier">IAM_USER_NO_POLICIES_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if none of your AWS Identity and Access Management (IAM) users have policies attached. IAM users must inherit permissions from IAM groups or roles. The rule is NON_COMPLIANT if there is at least one policy that is attached to the IAM user.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/edlyctp7fji2loww5ndk0ym5w</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">LOW</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::IAM::User</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="IAM_USER_UNUSED_CREDENTIALS_CHECK">
+            <h3>IAM_USER_UNUSED_CREDENTIALS_CHECK</h3>
+            <div class="control-identifier">IAM_USER_UNUSED_CREDENTIALS_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+        <div class="control-entry" id="INSTANCES_IN_VPC">
+            <h3>INSTANCES_IN_VPC</h3>
+            <div class="control-identifier">INSTANCES_IN_VPC</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+        <div class="control-entry" id="INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY">
+            <h3>Checks if internet gateways are attached to an authorized virtual private cloud (Amazon VPC)</h3>
+            <div class="control-identifier">INTERNET_GATEWAY_AUTHORIZED_VPC_ONLY</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if internet gateways are attached to an authorized virtual private cloud (Amazon VPC). The rule is NON_COMPLIANT if internet gateways are attached to an unauthorized VPC.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1d908j9c0qtyr5vq7mora1ht2</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EC2::InternetGateway</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-171-r2</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="KINESIS_STREAM_ENCRYPTED">
+            <h3>Checks if Amazon Kinesis streams are encrypted at rest with server-side encryption</h3>
+            <div class="control-identifier">KINESIS_STREAM_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon Kinesis streams are encrypted at rest with server-side encryption. The rule is NON_COMPLIANT for a Kinesis stream if &#x27;StreamEncryption&#x27; is not present.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/6u0kww8esj0lcjf72i3duupeu</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Kinesis::Stream</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED">
+            <h3>Detect whether the AWS Lambda function policy attached to the Lambda resource blocks public access</h3>
+            <div class="control-identifier">LAMBDA_FUNCTION_PUBLIC_ACCESS_PROHIBITED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether the AWS Lambda function policy attached to the Lambda resource prohibits public access. The rule is NON_COMPLIANT if the Lambda function policy allows public access.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/b2gzofz99eb7nsuj5g8wcimse</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Lambda::Function</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="LAMBDA_INSIDE_VPC">
+            <h3>Checks if a Lambda function is allowed access to a virtual private cloud (VPC)</h3>
+            <div class="control-identifier">LAMBDA_INSIDE_VPC</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if a Lambda function is allowed access to a virtual private cloud (VPC). The rule is NON_COMPLIANT if the Lambda function is not VPC enabled.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/jy5yd51dcuq7lndh6tzq1odh</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">LOW</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Lambda::Function</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS">
+            <h3>Disallow console access to IAM users without MFA</h3>
+            <div class="control-identifier">MFA_ENABLED_FOR_IAM_CONSOLE_ACCESS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Protect your account by requiring multi-factor authentication (MFA) for any AWS Identity and Access Management (IAM) user using the console. MFA adds an extra authentication code on top of a user name and password.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1fvktjhpo9wdpt3pjb2wsz7nt</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::IAM::User</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-Essential-Eight-Nov-2022</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.2</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>CIS-v7.1</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="OPENSEARCH_ACCESS_CONTROL_ENABLED">
+            <h3>Checks if Amazon OpenSearch Service domains have fine-grained access control enabled</h3>
+            <div class="control-identifier">OPENSEARCH_ACCESS_CONTROL_ENABLED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon OpenSearch Service domains have fine-grained access control enabled. The rule is NON_COMPLIANT if AdvancedSecurityOptions is not enabled for the OpenSearch Service domain.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/ddbp3n81g63sq1c709vrl3zpu</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::OpenSearchService::Domain</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="OPENSEARCH_ENCRYPTED_AT_REST">
+            <h3>Checks if Amazon OpenSearch Service domains have encryption at rest configuration enabled</h3>
+            <div class="control-identifier">OPENSEARCH_ENCRYPTED_AT_REST</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon OpenSearch Service domains have encryption at rest configuration enabled. The rule is NON_COMPLIANT if EncryptionAtRestOptions field is not enabled.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/70u9gks728rcr33237rckvzbo</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::OpenSearchService::Domain</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="OPENSEARCH_IN_VPC_ONLY">
+            <h3>Checks if Amazon OpenSearch Service domains are in an Amazon Virtual Private Cloud (VPC)</h3>
+            <div class="control-identifier">OPENSEARCH_IN_VPC_ONLY</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon OpenSearch Service domains are in an Amazon Virtual Private Cloud (VPC). The rule is NON_COMPLIANT if an OpenSearch Service domain endpoint is public.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/eii6ethb01dgch5ruy0ycag5g</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::OpenSearchService::Domain</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK">
+            <h3>Check that Amazon OpenSearch Service nodes are encrypted end to end</h3>
+            <div class="control-identifier">OPENSEARCH_NODE_TO_NODE_ENCRYPTION_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Check that Amazon OpenSearch Service nodes are encrypted end to end. The rule is NON_COMPLIANT if the node-to-node encryption is not enabled on the domain</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/6zhndmw4dunmhrc0kgb7hbs4q</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::OpenSearchService::Domain</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="RDS_INSTANCE_PUBLIC_ACCESS_CHECK">
+            <h3>Disallow public access to RDS database instances</h3>
+            <div class="control-identifier">RDS_INSTANCE_PUBLIC_ACCESS_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Secure your Amazon RDS database instances by disallowing public access.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/4jc77cq1lcr7g64xywwypykv8</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::RDS::DBInstance</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="RDS_SNAPSHOTS_PUBLIC_PROHIBITED">
+            <h3>Disallow public access to RDS database snapshots</h3>
+            <div class="control-identifier">RDS_SNAPSHOTS_PUBLIC_PROHIBITED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Secure your Amazon RDS database snapshots by disallowing public access.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1h4eyqyyonp19dlrreqf1i3w0</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">N/A</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="RDS_SNAPSHOT_ENCRYPTED">
+            <h3>Checks if Amazon Relational Database Service (Amazon RDS) DB snapshots are encrypted</h3>
+            <div class="control-identifier">RDS_SNAPSHOT_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if Amazon Relational Database Service (Amazon RDS) DB snapshots are encrypted. The rule is NON_COMPLIANT if the Amazon RDS DB snapshots are not encrypted.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/84hd48gyrb6e5ribkmsoub44c</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">N/A</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="RDS_STORAGE_ENCRYPTED">
+            <h3>Disallow RDS database instances without storage encryption</h3>
+            <div class="control-identifier">RDS_STORAGE_ENCRYPTED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Secure your Amazon RDS database instances at rest by encrypting the underlying storage for database instances and their automated backups, Read Replicas, and snapshots.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/e34kieahgkm0lggs5g0s412jt</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::RDS::DBInstance</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-v7.1</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="REDSHIFT_CLUSTER_CONFIGURATION_CHECK">
+            <h3>REDSHIFT_CLUSTER_CONFIGURATION_CHECK</h3>
+            <div class="control-identifier">REDSHIFT_CLUSTER_CONFIGURATION_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+        <div class="control-entry" id="REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK">
+            <h3>Detect whether Amazon Redshift clusters are blocked from public access</h3>
+            <div class="control-identifier">REDSHIFT_CLUSTER_PUBLIC_ACCESS_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether Amazon Redshift clusters are blocked from public access. The rule is NON_COMPLIANT if the publiclyAccessible field is true in the cluster configuration item.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1oxkwnc4hwhi2ndv6ekwy7np7</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::Redshift::Cluster</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC">
+            <h3>Detect whether Amazon S3 settings to block public access are set as true for the account</h3>
+            <div class="control-identifier">S3_ACCOUNT_LEVEL_PUBLIC_ACCESS_BLOCKS_PERIODIC</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Periodically detects whether the required Amazon S3 settings to block public access are configured as true for the account, rather than for a bucket or an access point.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/6wmutsohbkwhfw6sf7cbt5e81</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::AccessPoint, AWS::S3::Bucket, AWS::S3::BucketPolicy, AWS::S3::MultiRegionAccessPoint, AWS::S3::MultiRegionAccessPointPolicy</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.2</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED">
+            <h3>Checks if S3 buckets are publicly accessible</h3>
+            <div class="control-identifier">S3_BUCKET_LEVEL_PUBLIC_ACCESS_PROHIBITED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if S3 buckets are publicly accessible. The rule is NON_COMPLIANT if an S3 bucket is not listed in the excludedPublicBuckets parameter and bucket level settings are public.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/2i4ram4ies12xq8qqfu4sj959</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::Bucket</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="S3_BUCKET_POLICY_GRANTEE_CHECK">
+            <h3>Checks that the access granted by the Amazon S3 bucket is restricted to any of the AWS principals, federated users, service principals, IP addresses, or VPCs that you provide</h3>
+            <div class="control-identifier">S3_BUCKET_POLICY_GRANTEE_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks that the access granted by the Amazon S3 bucket is restricted to any of the AWS principals, federated users, service principals, IP addresses, or VPCs that you provide. The rule is COMPLIANT if a bucket policy is not present.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/6cxj9kl0x1rhagbipexjockey</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::Bucket</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="S3_BUCKET_PUBLIC_READ_PROHIBITED">
+            <h3>Disallow public read access to log archive</h3>
+            <div class="control-identifier">S3_BUCKET_PUBLIC_READ_PROHIBITED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Control access to your log archive&#x27;s Amazon S3 bucket by disallowing public read access.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/9jzlkwys54gzgsx3pmkqnx8l1</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::Bucket</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.2</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="S3_BUCKET_PUBLIC_WRITE_PROHIBITED">
+            <h3>Disallow public write access to log archive</h3>
+            <div class="control-identifier">S3_BUCKET_PUBLIC_WRITE_PROHIBITED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Control access to your log archive&#x27;s Amazon S3 bucket by disallowing public write access.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/ci9ov6vzjoi6vzkajgademvvo</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::Bucket</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.2</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED">
+            <h3>Checks if S3 buckets have default encryption enabled or have bucket policies that explicitly deny put-object requests without server side encryption using AES-256 or AWS KMS</h3>
+            <div class="control-identifier">S3_BUCKET_SERVER_SIDE_ENCRYPTION_ENABLED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if S3 buckets have default encryption enabled or have bucket policies that explicitly deny put-object requests without server side encryption using AES-256 or AWS KMS. The rule is NON_COMPLIANT if an S3 bucket is not encrypted by default.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/d4wgeffz6izrb627c2yb8nq8d</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::Bucket</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-AWS-Benchmark-v1.3</span><span>CIS-AWS-Benchmark-v1.4</span><span>CIS-v7.1</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="S3_DEFAULT_ENCRYPTION_KMS">
+            <h3>Checks if the S3 buckets are encrypted with AWS Key Management Service (AWS KMS)</h3>
+            <div class="control-identifier">S3_DEFAULT_ENCRYPTION_KMS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if the S3 buckets are encrypted with AWS Key Management Service (AWS KMS). The rule is NON_COMPLIANT if the S3 bucket is not encrypted with an AWS KMS key.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/733aqnvt31s52f1avti1exmx2</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::S3::Bucket</div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="control-entry" id="SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED">
+            <h3>Checks if AWS Key Management Service (AWS KMS) key is configured for an Amazon SageMaker endpoint configuration</h3>
+            <div class="control-identifier">SAGEMAKER_ENDPOINT_CONFIGURATION_KMS_KEY_CONFIGURED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if AWS Key Management Service (AWS KMS) key is configured for an Amazon SageMaker endpoint configuration. The rule is NON_COMPLIANT if &#x27;KmsKeyId&#x27; is not specified for the Amazon SageMaker endpoint configuration.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/i4cdcl01auws2k0z9x9nt0ka</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::SageMaker::EndpointConfig</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED">
+            <h3>Checks if an AWS Key Management Service (AWS KMS) key is configured for an Amazon SageMaker notebook instance</h3>
+            <div class="control-identifier">SAGEMAKER_NOTEBOOK_INSTANCE_KMS_KEY_CONFIGURED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if an AWS Key Management Service (AWS KMS) key is configured for an Amazon SageMaker notebook instance. The rule is NON_COMPLIANT if &#x27;KmsKeyId&#x27; is not specified for the SageMaker notebook instance.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/3b7ib9mi87kcw90atgx2nboax</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::SageMaker::NotebookInstance</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS">
+            <h3>Detect whether an Amazon SageMaker notebook instance allows direct internet access</h3>
+            <div class="control-identifier">SAGEMAKER_NOTEBOOK_NO_DIRECT_INTERNET_ACCESS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether direct internet access is allowed for an Amazon SageMaker notebook instance. The rule is NON_COMPLIANT if Amazon SageMaker notebook instances allow direct internet access.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/66gfl06uj1v999z53szvu0exa</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::SageMaker::NotebookInstance</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="SECRETSMANAGER_ROTATION_ENABLED_CHECK">
+            <h3>SECRETSMANAGER_ROTATION_ENABLED_CHECK</h3>
+            <div class="control-identifier">SECRETSMANAGER_ROTATION_ENABLED_CHECK</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+        <div class="control-entry" id="SECURITYHUB_ENABLED">
+            <h3>Checks if AWS Security Hub is enabled for an AWS Account</h3>
+            <div class="control-identifier">SECURITYHUB_ENABLED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if AWS Security Hub is enabled for an AWS Account. The rule is NON_COMPLIANT if AWS Security Hub is not enabled.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/1klk5z4sby5l0cfx65dmq2dsk</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">HIGH</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::SecurityHub::Hub</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>CIS-v7.1</span><span>CIS-v8.0</span><span>FedRAMP-r4</span><span>NIST-CSF-v1.1</span><span>NIST-SP-800-53-r5</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="SNS_ENCRYPTED_KMS">
+            <h3>Checks if SNS topics are encrypted with AWS Key Management Service (AWS KMS)</h3>
+            <div class="control-identifier">SNS_ENCRYPTED_KMS</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Checks if SNS topics are encrypted with AWS Key Management Service (AWS KMS). The rule is NON_COMPLIANT if an SNS topic is not encrypted with AWS KMS. Optionally, specify the key ARNs, the alias ARNs, the alias name, or the key IDs for the rule to check.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/bn8ygh3zsy33drdeojmu09a4z</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::SNS::Topic</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ACSC-ISM-02-Mar-2023</span><span>AWS-WAF-v10</span><span>CCCS-Medium-Cloud-Control-May-2019</span><span>ISO-IEC-27001:2013-Annex-A</span><span>NIST-SP-800-171-r2</span><span>PCI-DSS-v4.0</span><span>SSAE-18-SOC-2-Oct-2023</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="SSM_DOCUMENT_NOT_PUBLIC">
+            <h3>Detect whether AWS Systems Manager documents owned by the account are public</h3>
+            <div class="control-identifier">SSM_DOCUMENT_NOT_PUBLIC</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether AWS Systems Manager (SSM) documents owned by the account are public. This rule is NON_COMPLIANT if any documents with owner &#x27;Self&#x27; are public.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/dfanrd8y5p7oj8fjyugqnakfr</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">CRITICAL</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::SSM::Document</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>AWS-WAF-v10</span><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="SUBNET_AUTO_ASSIGN_PUBLIC_IP_DISABLED">
+            <h3>Detect whether any Amazon VPC subnets are assigned a public IP address</h3>
+            <div class="control-identifier">SUBNET_AUTO_ASSIGN_PUBLIC_IP_DISABLED</div>
+            <div class="source-badges"><span class="source-badge badge-catalog">In Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">Detects whether Amazon Virtual Private Cloud (Amazon VPC) subnets are assigned a public IP address. The rule is COMPLIANT if Amazon VPC does not have subnets that are assigned a public IP address. The rule is NON_COMPLIANT if Amazon VPC has subnets that are assigned a public IP address.</div>
+            <div class="control-arn">ARN: arn:aws:controlcatalog:::control/50z1ot237wl8u1lv5ufau6qqo</div>
+            <div class="control-meta">
+                <div class="meta-item">
+                    <div class="label">Severity</div>
+                    <div class="value">MEDIUM</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Behavior</div>
+                    <div class="value">DETECTIVE</div>
+                </div>
+                <div class="meta-item">
+                    <div class="label">Governed Resources</div>
+                    <div class="value" style="font-size: 12px;">AWS::EC2::Subnet</div>
+                </div>
+            </div>
+            
+            <div class="control-mappings">
+                <div class="mappings-label">Control Mappings</div>
+                <div class="mappings-list">
+
+                    <div class="mapping-item" style="background: #fff5f5; border: 1px solid #feb2b2;">
+                        <span class="mapping-detail" style="color: #c53030;">Control Catalog does not contain mapping for Gramm-Leach-Bliley Act (GLBA)</span>
+                    </div>
+
+                    <div class="other-frameworks">
+                        <div class="other-frameworks-label">Other Frameworks</div>
+                        <div class="other-frameworks-list"><span>ISO-IEC-27001:2013-Annex-A</span><span>PCI-DSS-v3.2.1</span><span>PCI-DSS-v4.0</span></div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="control-entry" id="VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS">
+            <h3>VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</h3>
+            <div class="control-identifier">VPC_SG_OPEN_ONLY_TO_AUTHORIZED_PORTS</div>
+            <div class="source-badges"><span class="source-badge badge-not-in">Not in Control Catalog</span><span class="source-badge badge-not-in">Not in Framework</span><span class="source-badge badge-template">In Conformance Pack Template</span></div>
+            
+            <div class="control-description">
+                This rule identifier was not found in the AWS Control Catalog.
+                It may be a custom rule or a rule that has been deprecated.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Generated by AWS Compliance Reporting Workflow
+    </div>
+</body>
+</html>
