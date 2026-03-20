@@ -382,7 +382,11 @@ Example usage:
         configs_file = os.path.join(output_folder, f"compliance_report_{args.conformance_pack}_configurations.json")
         html_prefix = os.path.join(output_folder, f"compliance_report_{args.conformance_pack}")
     html_summary = f"{html_prefix}_summary.html"
-    html_evidence = f"{html_prefix}_evidence.html"
+    # Use rules_manifest in template mode, evidence in live mode
+    if template_mode:
+        html_rules_manifest = f"{html_prefix}_rules_manifest.html"
+    else:
+        html_evidence = f"{html_prefix}_evidence.html"
     html_resources = f"{html_prefix}_resources.html"
     html_gaps = f"{html_prefix}_gaps.html"
     html_extra_rules = f"{html_prefix}_extra_rules.html"
@@ -413,8 +417,10 @@ Example usage:
     if args.security_hub_file:
         print(f"  Security Hub File: {args.security_hub_file}")
     print(f"  HTML Summary: {html_summary}")
-    print(f"  HTML Evidence: {html_evidence}")
-    if not template_mode:
+    if template_mode:
+        print(f"  HTML Rules Manifest: {html_rules_manifest}")
+    else:
+        print(f"  HTML Evidence: {html_evidence}")
         print(f"  HTML Resources: {html_resources}")
     print(f"  HTML Control Catalog: {html_control_catalog}")
     print(f"  HTML Gap Report: {html_gaps}")
@@ -659,8 +665,10 @@ Example usage:
         generated_files.append(("Config Rules", cached_config_rules_file))
     if not args.skip_html:
         generated_files.append(("HTML Summary", html_summary))
-        generated_files.append(("HTML Evidence", html_evidence))
-        if not template_mode:
+        if template_mode:
+            generated_files.append(("HTML Rules Manifest", html_rules_manifest))
+        else:
+            generated_files.append(("HTML Evidence", html_evidence))
             generated_files.append(("HTML Resources", html_resources))
         generated_files.append(("HTML Control Catalog", html_control_catalog))
         if not no_template_available:

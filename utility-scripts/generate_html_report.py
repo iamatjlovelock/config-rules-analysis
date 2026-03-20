@@ -1201,10 +1201,13 @@ def generate_navigation(active_page: str, prefix: str, template_mode: bool = Fal
     """Generate navigation bar HTML."""
     pages = [
         ("summary", "Summary Report"),
-        ("evidence", "Evidence Sources"),
     ]
-    # Only include Resources page if not in template mode
-    if not template_mode:
+    # Use Rules Manifest in template mode, Evidence Sources in live mode
+    if template_mode:
+        pages.append(("rules_manifest", "Rules Manifest"))
+    else:
+        pages.append(("evidence", "Evidence Sources"))
+        # Only include Resources page in live mode
         pages.append(("resources", "Resources"))
     # Always include Control Catalog
     pages.append(("control_catalog", "Control Catalog"))
@@ -1951,13 +1954,17 @@ def generate_evidence_page(
 
     html_parts = []
 
+    # Page title and header differ for template mode
+    page_title = "Rules Manifest" if template_mode else "Evidence Sources"
+    active_page = "rules_manifest" if template_mode else "evidence"
+
     # HTML Header
     html_parts.append(f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evidence Sources - {escape_html(framework_name)}</title>
+    <title>{page_title} - {escape_html(framework_name)}</title>
     <style>
         {get_common_styles()}
         .evidence-entry {{
@@ -2010,13 +2017,13 @@ def generate_evidence_page(
     </style>
 </head>
 <body>
-    {generate_navigation("evidence", prefix, template_mode)}
+    {generate_navigation(active_page, prefix, template_mode)}
     {generate_page_header(framework_name, conformance_pack, generated_at)}
 
     <div class="section">
-        <h2>Evidence Sources (AWS Config Rules)</h2>
+        <h2>{page_title}</h2>
         <p style="color: #718096; margin-bottom: 20px;">
-            {f"{len(evidence_sources)} Config rules mapped from the conformance pack template. This is a template analysis - no deployed conformance pack evaluations are available." if template_mode else f"{len(evidence_sources)} Config rules evaluated across the conformance pack. Click on a resource to view its configuration."}
+            {f"{len(evidence_sources)} Config rules referenced by the framework. This is a template analysis - no deployed conformance pack evaluations are available." if template_mode else f"{len(evidence_sources)} Config rules evaluated across the conformance pack. Click on a resource to view its configuration."}
         </p>
 """)
 
@@ -2538,12 +2545,16 @@ def main():
             f.write(summary_html)
         print(f"  Summary page: {summary_file}")
 
-        # Evidence sources page
+        # Evidence sources page (or Rules Manifest in template mode)
         evidence_html = generate_evidence_page(compliance_report, evidence_sources, link_prefix, control_catalog_link, template_mode)
-        evidence_file = f"{output_prefix}_evidence.html"
+        if template_mode:
+            evidence_file = f"{output_prefix}_rules_manifest.html"
+            print(f"  Rules Manifest page: {evidence_file}")
+        else:
+            evidence_file = f"{output_prefix}_evidence.html"
+            print(f"  Evidence sources page: {evidence_file}")
         with open(evidence_file, "w", encoding="utf-8") as f:
             f.write(evidence_html)
-        print(f"  Evidence sources page: {evidence_file}")
 
         # Resources page (skip in template mode)
         if template_mode:
