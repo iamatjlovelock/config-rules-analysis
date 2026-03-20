@@ -18,6 +18,18 @@ Provide a single command to run the complete compliance reporting workflow, with
 8. **Generate Gap Report** - Generate gap analysis report
 9. **Generate Extra Rules Report** - Generate extra rules report
 
+### Template Analysis Mode Differences
+When `--conformance-pack none` is specified:
+- Steps 4-5 are replaced with template-based analysis
+- HTML summary page navigation links to **Rules Manifest** instead of Evidence Sources
+- No Evidence Sources or Resources pages are generated (no actual evaluations exist)
+- Rules Manifest page shows all Config rules from framework with template mapping status
+
+**Implementation:** When detecting template mode (`--conformance-pack none`), the workflow must:
+1. Pass `--template-mode` flag to `generate_html_report.py`
+2. Generate `*_rules_manifest.html` instead of `*_evidence.html`
+3. Skip generation of `*_resources.html`
+
 ### Caching Behavior
 
 1. **Framework Controls Cache**
@@ -32,6 +44,7 @@ Provide a single command to run the complete compliance reporting workflow, with
 
 ### Output Structure
 
+**Live Compliance Mode:**
 ```
 framework-controls/
 └── {framework_id}_controls.json
@@ -50,6 +63,19 @@ compliance-dashboards/
     ├── compliance_report_{pack}_control_catalog.html
     ├── compliance_report_{pack}_gaps.html
     └── compliance_report_{pack}_extra_rules.html
+```
+
+**Template Analysis Mode:**
+```
+compliance-dashboards/
+└── {output_prefix}/
+    ├── {prefix}_config_mapping.json
+    ├── {prefix}_template_report.json
+    ├── {prefix}_summary.html
+    ├── {prefix}_rules_manifest.html      # Replaces evidence.html
+    ├── {prefix}_control_catalog.html
+    ├── {prefix}_gaps.html
+    └── {prefix}_extra_rules.html
 ```
 
 ### CLI Arguments
@@ -71,11 +97,17 @@ compliance-dashboards/
 ### Example Usage
 
 ```bash
-# Full workflow (uses cache if available)
+# Full workflow - Live Compliance Mode (uses cache if available)
 python run_compliance_workflow.py \
     --framework-id 1f50f59a-fc3c-4b99-be05-6a79cf3f9538 \
     --conformance-pack PCI-DSS-CPAC \
     --output-prefix "PCI_DSS_v4"
+
+# Template Analysis Mode (no deployed conformance pack)
+# Generates Rules Manifest instead of Evidence Sources
+python run_compliance_workflow.py \
+    --framework-id 1f50f59a-fc3c-4b99-be05-6a79cf3f9538 \
+    --conformance-pack none
 
 # Force refresh all cached data
 python run_compliance_workflow.py \

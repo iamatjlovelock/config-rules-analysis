@@ -14,8 +14,23 @@ Generate a set of linked HTML pages that present compliance data in a user-frien
 ### Output Files
 Three interconnected HTML pages:
 1. `*_summary.html` - Compliance overview and controls by control set
-2. `*_evidence.html` - Evidence sources with resource details
-3. `*_resources.html` - Full resource configurations
+2. `*_evidence.html` - Evidence sources with resource details (Live Mode only)
+3. `*_resources.html` - Full resource configurations (Live Mode only)
+
+### Two Operational Modes
+
+The report generator supports two modes that affect navigation and content:
+
+#### Live Compliance Mode
+Used when a conformance pack is deployed and actual evaluation results are available.
+- Navigation: Summary | Evidence Sources | Resources
+- Shows compliance status from actual resource evaluations
+
+#### Template Analysis Mode
+Used when analyzing a conformance pack template without deployment (`--conformance-pack none`).
+- Navigation: Summary | Rules Manifest
+- No Evidence Sources or Resources pages (no actual evaluations exist)
+- Rules Manifest shows all Config rules from the framework and template mapping
 
 ### Key Features
 
@@ -26,7 +41,8 @@ Three interconnected HTML pages:
    - Each control set header shows: number of controls, config rules with non-compliant resources, missing rules count
    - Evidence sources for each control with compliance counts and status badges
    - Missing rules shown with "Missing" badge linking to gap report
-   - Links to evidence sources page
+   - **Live Mode**: Links to Evidence Sources page in navigation
+   - **Template Analysis Mode**: Links to Rules Manifest page in navigation
 
 2. **Evidence Sources Page**
    - All Config rules with descriptions from Control Catalog
@@ -34,20 +50,32 @@ Three interconnected HTML pages:
    - Links to resource configurations page
    - Anchor IDs for deep linking from summary page
 
-3. **Resources Page**
+3. **Resources Page** (Live Mode only)
    - All evaluated resources grouped by resource type
    - Full configuration items from AWS Config
    - Supplementary configuration and tags
    - Collapsible JSON sections for large configurations
 
+4. **Rules Manifest Page** (Template Analysis Mode only)
+   - All Config rules referenced by the framework
+   - Mapping status showing which rules are in the template
+   - Links to Control Catalog for detailed rule information
+   - Replaces Evidence Sources in navigation for template analysis
+
 ### HTML Structure
 
 ```html
-<!-- Common navigation -->
+<!-- Navigation for Live Compliance Mode -->
 <nav class="nav">
     <a href="*_summary.html">Summary</a> |
     <a href="*_evidence.html">Evidence Sources</a> |
     <a href="*_resources.html">Resources</a>
+</nav>
+
+<!-- Navigation for Template Analysis Mode -->
+<nav class="nav">
+    <a href="*_summary.html">Summary</a> |
+    <a href="*_rules_manifest.html">Rules Manifest</a>
 </nav>
 
 <!-- Page header -->
@@ -69,6 +97,7 @@ Three interconnected HTML pages:
 - `-o, --output`: Output file prefix (generates 3 files)
 - `--gap-report-link`: Link to gap analysis report
 - `--extra-rules-report-link`: Link to extra rules report
+- `--template-mode`: Generate reports for Template Analysis Mode (links to Rules Manifest instead of Evidence Sources)
 
 ### Helper Functions
 - `escape_html(text)` - Escape HTML special characters
